@@ -4,7 +4,9 @@ Collects `@official_aimai` videos and emits `data/videos.json` using the X API v
 
 ## Backend
 
-X API v2 — `GET /2/users/{user_id}/tweets` with media expansion (`expansions=attachments.media_keys`, `media.fields=type,duration_ms`). Native videos are kept; photos / animated_gifs / non-media tweets are filtered out.
+X API v2 — `GET /2/tweets/search/all` with `query=from:official_aimai filter:native_video`. The `filter:native_video` predicate restricts results to tweets containing X-hosted videos, so most filtering happens server-side. We still inspect `includes.media[].type` defensively before extracting `duration_ms`.
+
+Pagination uses `next_token`; incremental runs add `start_time={last_synced_at}`.
 
 ## Required environment
 

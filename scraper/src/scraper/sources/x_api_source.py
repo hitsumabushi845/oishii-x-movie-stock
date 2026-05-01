@@ -1,4 +1,4 @@
-"""X API v2 backed implementation of Source."""
+"""X API v2 backed implementation of Source (search/all)."""
 
 from __future__ import annotations
 
@@ -9,13 +9,17 @@ import httpx
 
 from .base import FetchedVideo
 
-USER_LOOKUP_URL = "https://api.twitter.com/2/users/by/username/{username}"
-USER_TWEETS_URL = "https://api.twitter.com/2/users/{user_id}/tweets"
+SEARCH_ALL_URL = "https://api.twitter.com/2/tweets/search/all"
 DEFAULT_USERNAME = "official_aimai"
 
 
 class XApiSource:
-    """Fetch native videos from a single user's timeline via X API v2."""
+    """Fetch native videos via X API v2 search/all.
+
+    The search query (typically `from:{username} filter:native_video`) is
+    passed in by the caller. The username is kept here only to construct
+    canonical tweet URLs in the result; no user lookup is performed.
+    """
 
     def __init__(
         self,
@@ -29,17 +33,12 @@ class XApiSource:
         self._username = username
         self._client = client
         self._page_size = page_size
-        self._user_id: str | None = None
 
     async def fetch(
         self, query: str, *, since: datetime | None = None
     ) -> list[FetchedVideo]:
-        # `query` is ignored for parity with the Source protocol; we always
-        # fetch the configured user's timeline.
-        del query
         async with self._maybe_owned_client() as client:
-            user_id = await self._get_user_id(client)
-            return await self._fetch_user_videos(client, user_id, since)
+            return await self._search(client, query, since)
 
     def _maybe_owned_client(self) -> "_ClientCtx":
         if self._client is not None:
@@ -50,23 +49,14 @@ class XApiSource:
         )
         return _ClientCtx.owned(owned)
 
-    async def _get_user_id(self, client: httpx.AsyncClient) -> str:
-        if self._user_id:
-            return self._user_id
-        url = USER_LOOKUP_URL.format(username=self._username)
-        r = await client.get(url, headers=self._auth_headers())
-        r.raise_for_status()
-        self._user_id = r.json()["data"]["id"]
-        return self._user_id
-
-    async def _fetch_user_videos(
+    async def _search(
         self,
         client: httpx.AsyncClient,
-        user_id: str,
+        query: str,
         since: datetime | None,
     ) -> list[FetchedVideo]:
-        url = USER_TWEETS_URL.format(user_id=user_id)
         params: dict[str, Any] = {
+            "query": query,
             "max_results": self._page_size,
             "tweet.fields": "created_at,text,attachments",
             "expansions": "attachments.media_keys",
@@ -81,7 +71,7 @@ class XApiSource:
             page_params = dict(params)
             if next_token:
                 page_params["pagination_token"] = next_token
-            r = await client.get(url, params=page_params, headers=self._auth_headers())
+            r = await client.get(SEARCH_ALL_URL, params=page_params, headers=self._auth_headers())
             r.raise_for_status()
             payload = r.json()
             out.extend(_extract_videos(payload, self._username))
@@ -95,11 +85,15 @@ class XApiSource:
 
     @staticmethod
     def _format_start_time(dt: datetime) -> str:
-        # X API expects RFC 3339 (YYYY-MM-DDTHH:MM:SSZ).
         return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedVideo]:
+    """Yield FetchedVideo for each tweet in the page that has a video media.
+
+    Server-side `filter:native_video` should already restrict results to
+    video tweets, but the type check is kept defensively.
+    """
     tweets = payload.get("data") or []
     media_by_key: dict[str, dict[str, Any]] = {
         m["media_key"]: m for m in payload.get("includes", {}).get("media", [])
@@ -125,7 +119,6 @@ def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedV
 
 
 def _parse_created_at(value: str) -> datetime:
-    # X API created_at is ISO 8601 with Z suffix and may include milliseconds.
     return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
