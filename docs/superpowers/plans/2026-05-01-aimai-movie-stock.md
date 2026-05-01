@@ -6,7 +6,7 @@
 
 **Architecture:** Three components in one repo. `scraper/` (Python + uv) collects video metadata from X via search query. `web/` (Vite + TS + Fuse.js) reads `data/videos.json` and renders a compact, searchable, infinite-scroll list with X embeds expanded on click. `.github/workflows/` orchestrates: `update-data.yml` (weekly cron → PR), `deploy.yml` (main push → Pages), `ci.yml` (PR tests).
 
-**Tech Stack:** Python 3.12, uv, pydantic v2, jsonschema, twscrape (primary scraper candidate), Node 22, pnpm, Vite, TypeScript, Fuse.js, Vitest + happy-dom, GitHub Actions, `actions/deploy-pages`, `peter-evans/create-pull-request`, `slackapi/slack-github-action`, pinact for SHA pinning.
+**Tech Stack:** Python 3.12, uv, pydantic v2, jsonschema, httpx (calling X API v2), Node 22, pnpm, Vite, TypeScript, Fuse.js, Vitest + happy-dom, GitHub Actions, `actions/deploy-pages`, `peter-evans/create-pull-request`, `slackapi/slack-github-action`, pinact for SHA pinning.
 
 **Spec reference:** `docs/superpowers/specs/2026-05-01-aimai-movie-stock-design.md`
 
@@ -38,7 +38,7 @@ aimai-x-movie-stock/
 │   ├── src/scraper/merge.py                  # Phase 2
 │   ├── src/scraper/sources/__init__.py       # Phase 3
 │   ├── src/scraper/sources/base.py           # Phase 3
-│   ├── src/scraper/sources/twscrape_source.py # Phase 3 (primary)
+│   ├── src/scraper/sources/x_api_source.py   # Phase 3 (X API v2)
 │   ├── tests/__init__.py                     # Phase 2
 │   ├── tests/conftest.py                     # Phase 2
 │   ├── tests/fixtures/sample_videos.json     # Phase 2
@@ -1023,75 +1023,39 @@ git add scraper/src/scraper/sources/ scraper/tests/test_sources_fake.py
 git commit -m "feat(scraper): add Source protocol and fake test source"
 ```
 
-### Task 3.2: Verify a real scraping backend works (Milestone 0)
+### Task 3.2: Verify X API works (Milestone 0)
 
-**Goal:** Confirm a tool can actually fetch `from:official_aimai filter:native_video` results in 2026-05.
+**Goal:** Confirm the X API Bearer Token can fetch user timeline + media expansion.
 
-**Files:** No code commit. This task may produce notes only.
+**Outcome (recorded 2026-05-01):** ✅ X API v2 verified.
 
-- [ ] **Step 1: Try `twscrape` (primary candidate)**
+- `GET /2/users/by/username/official_aimai` → 200, user_id `1202179244136128512`
+- `GET /2/users/{user_id}/tweets` with `expansions=attachments.media_keys` and `media.fields=type,duration_ms` → 200, returns tweets with media. Sample video tweet had `duration_ms: 194700`.
 
-```bash
-cd scraper
-uv add twscrape
-uv run python -c "
-import asyncio
-from twscrape import API
-async def main():
-    api = API()
-    # accounts must be added first via 'twscrape add_accounts ...' for protected search.
-    # If no accounts are added this will raise.
-    n = 0
-    async for tweet in api.search('from:official_aimai filter:native_video', limit=5):
-        print(tweet.id, tweet.date, len(tweet.media.videos) if tweet.media else 0)
-        n += 1
-    print('total', n)
-asyncio.run(main())
-" 2>&1 | head -20
-```
+**Files:** Update `scraper/README.md` only.
 
-Expected outcomes:
-- If 5 lines of tweet IDs → twscrape works, proceed to Task 3.3.
-- If "no accounts" error → record this; will need an X account / cookie pair, then re-try after `twscrape add_accounts`.
-- If protocol error → twscrape has broken, try fallback.
-
-- [ ] **Step 2: Fallback A: `snscrape` from a recent fork**
-
-If twscrape fails:
+- [ ] **Step 1: Confirm `.env` exists with `X_BEARER_TOKEN` (local only)**
 
 ```bash
-cd scraper
-uv remove twscrape
-uv add "snscrape @ git+https://github.com/JustAnotherArchivist/snscrape.git@master"
-uv run python -c "
-import snscrape.modules.twitter as sn
-n = 0
-for t in sn.TwitterSearchScraper('from:official_aimai filter:native_video').get_items():
-    print(t.id, t.date)
-    n += 1
-    if n >= 5: break
-print('total', n)
-"
+test -f scraper/.env && grep -c X_BEARER_TOKEN scraper/.env
 ```
 
-Expected: 5 lines or a clear failure.
+Expected: `1`.
 
-- [ ] **Step 3: Fallback B: X API v2 (manual decision)**
+- [ ] **Step 2: Write `scraper/README.md`**
 
-If both fail, the project requires X API Basic ($100/mo). Stop and discuss with user before continuing.
-
-- [ ] **Step 4: Record the chosen backend in `scraper/README.md`**
-
-`scraper/README.md`:
 ```markdown
 # scraper
 
-Collects `@official_aimai` videos and emits `data/videos.json`.
+Collects `@official_aimai` videos and emits `data/videos.json` using the X API v2.
 
 ## Backend
 
-This project uses **twscrape** as of 2026-05-01.
-(If you replace it, update both this README and `src/scraper/sources/`.)
+X API v2 — `GET /2/users/{user_id}/tweets` with media expansion.
+
+## Required environment
+
+- `X_BEARER_TOKEN` — App-only Bearer Token. In CI: GitHub Secrets. Locally: `scraper/.env`.
 
 ## Local usage
 
@@ -1110,91 +1074,238 @@ uv run python -m scraper \
 ```
 ```
 
-(Adjust the backend name in the README if Step 1 fell back to snscrape.)
-
-- [ ] **Step 5: Commit**
+- [ ] **Step 3: Commit**
 
 ```bash
-git add scraper/pyproject.toml scraper/uv.lock scraper/README.md
-git commit -m "feat(scraper): pin scraping backend (Milestone 0)"
+git add scraper/README.md scraper/pyproject.toml scraper/uv.lock
+git commit -m "docs(scraper): record X API v2 as backend (Milestone 0)"
 ```
 
-### Task 3.3: Implement the chosen Source
+### Task 3.3: Implement XApiSource
 
-This task assumes **twscrape** won Task 3.2. If snscrape won, swap the implementation but keep the same interface.
+The query argument from `Source.fetch()` is ignored by this source (it always pulls the user timeline). The signature is preserved for interface symmetry with FakeSource.
 
 **Files:**
-- Create: `scraper/src/scraper/sources/twscrape_source.py`
+- Create: `scraper/src/scraper/sources/x_api_source.py`
+- Modify: `scraper/tests/test_sources_fake.py` (add lightweight unit tests for `_extract_videos`)
 
-- [ ] **Step 1: Implement `TwscrapeSource`**
+- [ ] **Step 1: Implement `XApiSource`**
 
-`scraper/src/scraper/sources/twscrape_source.py`:
+`scraper/src/scraper/sources/x_api_source.py`:
 ```python
-"""twscrape-backed implementation of Source."""
+"""X API v2 backed implementation of Source."""
 
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Iterable
+from datetime import datetime, timezone
+from typing import Any, Iterator
 
-from twscrape import API  # type: ignore[import-not-found]
+import httpx
 
 from .base import FetchedVideo
 
+USER_LOOKUP_URL = "https://api.twitter.com/2/users/by/username/{username}"
+USER_TWEETS_URL = "https://api.twitter.com/2/users/{user_id}/tweets"
+DEFAULT_USERNAME = "official_aimai"
 
-class TwscrapeSource:
-    def __init__(self, api: API | None = None) -> None:
-        self._api = api or API()
+
+class XApiSource:
+    """Fetch native videos from a single user's timeline via X API v2."""
+
+    def __init__(
+        self,
+        bearer_token: str,
+        *,
+        username: str = DEFAULT_USERNAME,
+        client: httpx.AsyncClient | None = None,
+        page_size: int = 100,
+    ) -> None:
+        self._bearer = bearer_token
+        self._username = username
+        self._client = client
+        self._page_size = page_size
+        self._user_id: str | None = None
 
     async def fetch(
         self, query: str, *, since: datetime | None = None
     ) -> list[FetchedVideo]:
-        full_query = self._with_since(query, since)
+        # `query` is ignored for parity with the Source protocol; we always
+        # fetch the configured user's timeline.
+        del query
+        async with self._maybe_owned_client() as client:
+            user_id = await self._get_user_id(client)
+            return await self._fetch_user_videos(client, user_id, since)
+
+    def _maybe_owned_client(self) -> "_ClientCtx":
+        if self._client is not None:
+            return _ClientCtx.shared(self._client)
+        owned = httpx.AsyncClient(
+            headers={"Authorization": f"Bearer {self._bearer}"},
+            timeout=30.0,
+        )
+        return _ClientCtx.owned(owned)
+
+    async def _get_user_id(self, client: httpx.AsyncClient) -> str:
+        if self._user_id:
+            return self._user_id
+        url = USER_LOOKUP_URL.format(username=self._username)
+        r = await client.get(url, headers=self._auth_headers())
+        r.raise_for_status()
+        self._user_id = r.json()["data"]["id"]
+        return self._user_id
+
+    async def _fetch_user_videos(
+        self,
+        client: httpx.AsyncClient,
+        user_id: str,
+        since: datetime | None,
+    ) -> list[FetchedVideo]:
+        url = USER_TWEETS_URL.format(user_id=user_id)
+        params: dict[str, Any] = {
+            "max_results": self._page_size,
+            "tweet.fields": "created_at,text,attachments",
+            "expansions": "attachments.media_keys",
+            "media.fields": "type,duration_ms",
+        }
+        if since is not None:
+            params["start_time"] = self._format_start_time(since)
+
         out: list[FetchedVideo] = []
-        async for tweet in self._api.search(full_query):
-            video = self._extract_video(tweet)
-            if video is not None:
-                out.append(video)
+        next_token: str | None = None
+        while True:
+            page_params = dict(params)
+            if next_token:
+                page_params["pagination_token"] = next_token
+            r = await client.get(url, params=page_params, headers=self._auth_headers())
+            r.raise_for_status()
+            payload = r.json()
+            out.extend(_extract_videos(payload, self._username))
+            next_token = payload.get("meta", {}).get("next_token")
+            if not next_token:
+                break
         return out
 
-    @staticmethod
-    def _with_since(query: str, since: datetime | None) -> str:
-        if since is None:
-            return query
-        # X search uses date-only since: predicate (YYYY-MM-DD).
-        return f"{query} since:{since.date().isoformat()}"
+    def _auth_headers(self) -> dict[str, str]:
+        return {"Authorization": f"Bearer {self._bearer}"}
 
     @staticmethod
-    def _extract_video(tweet) -> FetchedVideo | None:
-        media = getattr(tweet, "media", None)
-        videos: Iterable = getattr(media, "videos", []) if media else []
-        first = next(iter(videos), None)
-        if first is None:
-            return None
-        duration_ms = int(getattr(first, "duration", 0) or 0)
-        return FetchedVideo(
-            id=str(tweet.id),
-            url=f"https://x.com/{tweet.user.username}/status/{tweet.id}",
-            posted_at=tweet.date,
+    def _format_start_time(dt: datetime) -> str:
+        # X API expects RFC 3339 (YYYY-MM-DDTHH:MM:SSZ).
+        return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedVideo]:
+    tweets = payload.get("data") or []
+    media_by_key: dict[str, dict[str, Any]] = {
+        m["media_key"]: m for m in payload.get("includes", {}).get("media", [])
+    }
+    for tweet in tweets:
+        media_keys = (tweet.get("attachments") or {}).get("media_keys") or []
+        videos = [
+            media_by_key[k]
+            for k in media_keys
+            if k in media_by_key and media_by_key[k].get("type") == "video"
+        ]
+        if not videos:
+            continue
+        first = videos[0]
+        duration_ms = int(first.get("duration_ms") or 0)
+        yield FetchedVideo(
+            id=str(tweet["id"]),
+            url=f"https://x.com/{username}/status/{tweet['id']}",
+            posted_at=_parse_created_at(tweet["created_at"]),
             duration_sec=round(duration_ms / 1000),
-            text=tweet.rawContent or "",
+            text=tweet.get("text", ""),
         )
+
+
+def _parse_created_at(value: str) -> datetime:
+    # X API created_at is ISO 8601 with Z suffix and may include milliseconds.
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+class _ClientCtx:
+    def __init__(self, client: httpx.AsyncClient, owned: bool) -> None:
+        self._client = client
+        self._owned = owned
+
+    @classmethod
+    def owned(cls, client: httpx.AsyncClient) -> "_ClientCtx":
+        return cls(client, True)
+
+    @classmethod
+    def shared(cls, client: httpx.AsyncClient) -> "_ClientCtx":
+        return cls(client, False)
+
+    async def __aenter__(self) -> httpx.AsyncClient:
+        return self._client
+
+    async def __aexit__(self, *exc_info) -> None:
+        if self._owned:
+            await self._client.aclose()
 ```
 
-- [ ] **Step 2: Light unit test for `_with_since`**
+- [ ] **Step 2: Add unit tests for `_extract_videos`**
 
 Append to `scraper/tests/test_sources_fake.py`:
 ```python
-from scraper.sources.twscrape_source import TwscrapeSource
+from datetime import datetime, timezone
+from scraper.sources.x_api_source import _extract_videos, XApiSource, _parse_created_at
 
 
-def test_with_since_appends_date_predicate():
-    out = TwscrapeSource._with_since("from:foo filter:native_video", datetime(2026, 4, 28, tzinfo=timezone.utc))
-    assert out == "from:foo filter:native_video since:2026-04-28"
+SAMPLE = {
+    "data": [
+        {
+            "id": "100",
+            "created_at": "2026-04-30T14:12:09.000Z",
+            "text": "video tweet",
+            "attachments": {"media_keys": ["13_xxx"]},
+        },
+        {
+            "id": "200",
+            "created_at": "2026-04-30T13:30:00.000Z",
+            "text": "photo tweet",
+            "attachments": {"media_keys": ["3_yyy"]},
+        },
+        {
+            "id": "300",
+            "created_at": "2026-04-30T12:00:00.000Z",
+            "text": "no media",
+        },
+    ],
+    "includes": {
+        "media": [
+            {"media_key": "13_xxx", "type": "video", "duration_ms": 194700},
+            {"media_key": "3_yyy", "type": "photo"},
+        ]
+    },
+}
 
 
-def test_with_since_returns_query_unchanged_when_none():
-    assert TwscrapeSource._with_since("q", None) == "q"
+def test_extract_videos_keeps_only_video_tweets():
+    out = list(_extract_videos(SAMPLE, "official_aimai"))
+    assert [v.id for v in out] == ["100"]
+    assert out[0].duration_sec == 195  # 194700ms rounded
+    assert out[0].url == "https://x.com/official_aimai/status/100"
+
+
+def test_extract_videos_ignores_unknown_media_keys():
+    payload = {
+        "data": [{"id": "1", "created_at": "2026-01-01T00:00:00Z", "text": "x", "attachments": {"media_keys": ["missing"]}}],
+        "includes": {"media": []},
+    }
+    assert list(_extract_videos(payload, "u")) == []
+
+
+def test_format_start_time_uses_z_suffix():
+    out = XApiSource._format_start_time(datetime(2026, 4, 28, 11, 23, 45, tzinfo=timezone.utc))
+    assert out == "2026-04-28T11:23:45Z"
+
+
+def test_parse_created_at_handles_milliseconds():
+    dt = _parse_created_at("2026-04-30T14:12:09.000Z")
+    assert dt.year == 2026
+    assert dt.tzinfo is not None
 ```
 
 - [ ] **Step 3: Run tests**
@@ -1203,13 +1314,13 @@ def test_with_since_returns_query_unchanged_when_none():
 cd scraper && uv run pytest -v
 ```
 
-Expected: all tests pass (the live network call is NOT exercised).
+Expected: all tests pass (no live network calls).
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add scraper/src/scraper/sources/twscrape_source.py scraper/tests/test_sources_fake.py
-git commit -m "feat(scraper): implement TwscrapeSource"
+git add scraper/src/scraper/sources/x_api_source.py scraper/tests/test_sources_fake.py
+git commit -m "feat(scraper): implement XApiSource against X API v2"
 ```
 
 ### Task 3.4: CLI + main entry point
@@ -1477,8 +1588,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--query", default=DEFAULT_QUERY)
     args = parser.parse_args(argv)
 
-    from .sources.twscrape_source import TwscrapeSource
-    source = TwscrapeSource()
+    bearer = os.environ.get("X_BEARER_TOKEN")
+    if not bearer:
+        print("error: X_BEARER_TOKEN environment variable is required", file=sys.stderr)
+        return 1
+    from .sources.x_api_source import XApiSource
+    source = XApiSource(bearer_token=bearer)
 
     try:
         return asyncio.run(
@@ -2682,8 +2797,7 @@ jobs:
       - name: Run scraper
         working-directory: scraper
         env:
-          # Populate these only if the chosen scraping backend requires them.
-          TWSCRAPE_ACCOUNTS: ${{ secrets.TWSCRAPE_ACCOUNTS }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
         run: |
           uv run python -m scraper \
             --data-file ../data/videos.json \
@@ -2777,23 +2891,27 @@ git commit -m "ci: pin third-party actions via pinact"
 **Files:**
 - Create: `data/videos.json` (generated)
 
-- [ ] **Step 1: Set up scraping backend credentials if required**
-
-If twscrape requires accounts (most likely):
+- [ ] **Step 1: Confirm `scraper/.env` has the bearer token**
 
 ```bash
-cd scraper
-# Follow twscrape docs to add a throwaway account or login cookie:
-uv run twscrape add_accounts accounts.txt username:password:email:email_password
-uv run twscrape login_accounts
+test -f scraper/.env && grep -c X_BEARER_TOKEN scraper/.env
 ```
 
-Keep `accounts.txt` out of git (already covered by `.env*` patterns; add explicitly if needed).
+Expected: `1`. If missing, place it (NOT through chat):
+
+```fish
+echo 'X_BEARER_TOKEN=AAAA...your_actual_token...' > scraper/.env
+chmod 600 scraper/.env
+```
 
 - [ ] **Step 2: Run the backfill**
 
+The CLI loads `.env` via the wrapper script; if the CLI does NOT auto-load `.env`, export the token first:
+
 ```bash
-cd scraper && uv run python -m scraper \
+cd scraper
+set -a; source .env; set +a    # bash; for fish use: set -x X_BEARER_TOKEN (cat .env | string match -r 'X_BEARER_TOKEN=(.*)' --groups-only)
+uv run python -m scraper \
   --data-file ../data/videos.json \
   --schema ../schema/videos.schema.json \
   --backfill
@@ -2840,7 +2958,7 @@ Repo → Settings → Pages → Source: **GitHub Actions**.
 Repo → Settings → Secrets and variables → Actions → New repository secret:
 
 - `SLACK_WEBHOOK_URL` — incoming webhook URL.
-- (If twscrape requires) `TWSCRAPE_ACCOUNTS` — accounts file content or env var the scraper reads.
+- `X_BEARER_TOKEN` — X API v2 App-only Bearer Token.
 
 - [ ] **Step 4: Manually trigger `deploy.yml`**
 
