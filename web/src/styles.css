@@ -61,8 +61,8 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
   border-bottom: 1px solid var(--border);
 }
 .row:hover { background: var(--row-hover); }
-.row .date, .row .dur { font-size: 11px; color: var(--muted); }
-.row .text { font-size: 13px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; }
+.row .date, .row .dur { font-size: 12px; color: var(--muted); }
+.row .text { font-size: 14px; line-height: 1.4; }
 .play-btn {
   font-size: 11px; padding: 4px 10px;
   background: var(--bg); color: var(--fg);
@@ -70,10 +70,86 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 }
 .play-btn.open { background: var(--accent); color: white; border-color: var(--accent); }
 .embed-host {
-  grid-column: 3 / 5; margin-top: 10px; min-height: 40px;
+  grid-column: 1 / -1; margin-top: 10px; min-height: 40px;
 }
 
 .site-footer {
   padding: 14px 20px; font-size: 10px; color: var(--muted);
   border-top: 1px solid var(--border); text-align: center;
+}
+
+@media (max-width: 639px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 8px;
+    row-gap: 6px;
+    padding: 12px 14px;
+  }
+  .row .text {
+    flex-basis: 100%;
+    order: 3;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .row .dur::before {
+    content: "·";
+    margin-right: 6px;
+    color: var(--muted);
+  }
+  .row .play-btn {
+    margin-left: auto;
+    padding: 6px 12px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+  .row .embed-host {
+    flex-basis: 100%;
+    order: 4;
+  }
+  .toolbar {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .toolbar input[type=search] {
+    flex-basis: 100%;
+    min-width: 0;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  .sort button {
+    padding: 8px 14px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+  .filter {
+    font-size: 12px;
+  }
+  .count {
+    font-size: 11px;
+    margin-left: auto;
+  }
+  .site-header {
+    padding: 12px 14px;
+  }
+  .site-header > div {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .site-title {
+    font-size: 14px;
+  }
+  .site-sub {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .site-footer {
+    padding: 12px 14px;
+  }
 }
