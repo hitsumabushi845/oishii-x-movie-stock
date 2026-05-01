@@ -1029,8 +1029,11 @@ git commit -m "feat(scraper): add Source protocol and fake test source"
 
 **Outcome (recorded 2026-05-01):** ✅ X API v2 verified.
 
-- `GET /2/users/by/username/official_aimai` → 200, user_id `1202179244136128512`
-- `GET /2/users/{user_id}/tweets` with `expansions=attachments.media_keys` and `media.fields=type,duration_ms` → 200, returns tweets with media. Sample video tweet had `duration_ms: 194700`.
+- `GET /2/users/by/username/official_aimai` → 200, user_id `1202179244136128512` (no longer used after the search/all switch)
+- `GET /2/users/{user_id}/tweets` with media expansion → 200 (initial design, replaced by search/all)
+- `GET /2/tweets/search/all` with `query=from:official_aimai filter:native_video` → 402 *credits depleted*; endpoint is accessible to this account on the dev tier (no entitlement issues), only credit balance gates use.
+
+**Decision:** Switch to `search/all` because it server-side-filters to video tweets, eliminating wasted requests on photos/text and removing the user lookup step.
 
 **Files:** Update `scraper/README.md` only.
 
