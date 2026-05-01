@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hitsumabushi845/aimai-x-movie-stock/schema/videos.schema.json",
+  "title": "VideosFile",
+  "type": "object",
+  "required": ["generated_at", "last_synced_at", "source_query", "videos"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "last_synced_at": { "type": "string", "format": "date-time" },
+    "source_query": { "type": "string", "minLength": 1 },
+    "videos": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/video" }
+    }
+  },
+  "$defs": {
+    "video": {
+      "type": "object",
+      "required": ["id", "url", "posted_at", "duration_sec", "text", "tags"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-9]+$" },
+        "url": { "type": "string", "format": "uri" },
+        "posted_at": { "type": "string", "format": "date-time" },
+        "duration_sec": { "type": "integer", "minimum": 0 },
+        "text": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
