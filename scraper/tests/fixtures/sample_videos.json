@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-04-29T03:00:12Z",
+  "last_synced_at": "2026-04-28T11:23:45Z",
+  "source_query": "from:official_aimai filter:native_video",
+  "videos": [
+    {
+      "id": "1789012345678901234",
+      "url": "https://x.com/official_aimai/status/1789012345678901234",
+      "posted_at": "2026-04-28T11:23:45Z",
+      "duration_sec": 187,
+      "text": "sample tweet body",
+      "tags": ["live"]
+    }
+  ]
+}
