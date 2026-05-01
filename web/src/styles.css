@@ -133,4 +133,19 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
     font-size: 11px;
     margin-left: auto;
   }
+  .site-header {
+    padding: 12px 14px;
+  }
+  .site-title {
+    font-size: 14px;
+  }
+  .site-sub {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .site-footer {
+    padding: 12px 14px;
+  }
 }
