@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from datetime import datetime, timezone
 from typing import Any, Iterator
 
@@ -11,6 +12,7 @@ from .base import FetchedVideo
 
 SEARCH_ALL_URL = "https://api.twitter.com/2/tweets/search/all"
 DEFAULT_USERNAME = "official_aimai"
+DEFAULT_PAGE_DELAY_SEC = 2.0
 
 
 class XApiSource:
@@ -28,11 +30,13 @@ class XApiSource:
         username: str = DEFAULT_USERNAME,
         client: httpx.AsyncClient | None = None,
         page_size: int = 100,
+        page_delay_sec: float = DEFAULT_PAGE_DELAY_SEC,
     ) -> None:
         self._bearer = bearer_token
         self._username = username
         self._client = client
         self._page_size = page_size
+        self._page_delay_sec = page_delay_sec
 
     async def fetch(
         self, query: str, *, since: datetime | None = None
@@ -78,6 +82,8 @@ class XApiSource:
             next_token = payload.get("meta", {}).get("next_token")
             if not next_token:
                 break
+            # Sleep between pages to stay under the search/all rate limit.
+            await asyncio.sleep(self._page_delay_sec)
         return out
 
     def _auth_headers(self) -> dict[str, str]:

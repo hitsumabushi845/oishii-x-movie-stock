@@ -8,6 +8,8 @@ X API v2 — `GET /2/tweets/search/all` with `query=from:official_aimai filter:n
 
 Pagination uses `next_token`. Incremental runs add `start_time={last_synced_at}`. Backfill runs send `start_time=2010-01-01T00:00:00Z` to override search/all's default ~30-day window and get the full archive.
 
+A 2-second sleep is inserted between paginated requests to stay under the search/all rate limit on the dev tier.
+
 ## Required environment
 
 - `X_BEARER_TOKEN` — App-only Bearer Token. In CI: GitHub Secrets. Locally: `scraper/.env`.
