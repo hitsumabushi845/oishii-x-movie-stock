@@ -1,1 +1,19 @@
+# brainstorming companion
 .superpowers/
+
+# python
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+scraper/.venv/
+
+# node
+web/node_modules/
+web/dist/
+
+# env
+.env
+.env.local
+
+# os
+.DS_Store
