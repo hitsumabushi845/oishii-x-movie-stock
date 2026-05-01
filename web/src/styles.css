@@ -110,4 +110,25 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
     flex-basis: 100%;
     order: 4;
   }
+  .toolbar {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .toolbar input[type=search] {
+    flex-basis: 100%;
+    min-width: 0;
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  .sort button {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+  .filter {
+    font-size: 12px;
+  }
+  .count {
+    font-size: 11px;
+    margin-left: auto;
+  }
 }
