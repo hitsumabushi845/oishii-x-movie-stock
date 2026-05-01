@@ -7,7 +7,7 @@ export type Searcher = {
 
 export function createSearcher(videos: Video[]): Searcher {
   const fuse = new Fuse(videos, {
-    keys: ["text"],
+    keys: ["text", "tags"],
     threshold: 0.3,
     ignoreLocation: true,
     minMatchCharLength: 2,

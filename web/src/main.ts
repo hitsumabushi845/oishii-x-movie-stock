@@ -14,7 +14,10 @@ type State = {
   visible: number;
   order: SortOrder;
   query: string;
+  minDurationSec: number;
 };
+
+const MIN_1M = 60;
 
 async function bootstrap(): Promise<void> {
   initTheme();
@@ -25,12 +28,16 @@ async function bootstrap(): Promise<void> {
   const updatedEl = document.getElementById("updated") as HTMLElement;
   const search = document.getElementById("q") as HTMLInputElement;
   const sortBtns = document.querySelectorAll<HTMLButtonElement>(".sort button");
+  const min1m = document.getElementById("min-1m") as HTMLInputElement;
 
   const file = await loadVideosFile(DATA_URL);
   updatedEl.textContent = `最終更新: ${file.generated_at.replace("T", " ").replace("Z", " UTC")}`;
 
-  const initialQuery = new URL(window.location.href).searchParams.get("q") ?? "";
+  const url = new URL(window.location.href);
+  const initialQuery = url.searchParams.get("q") ?? "";
+  const initialMin1m = url.searchParams.get("min1m") === "1";
   search.value = initialQuery;
+  min1m.checked = initialMin1m;
 
   const searcher = createSearcher(file.videos);
   const state: State = {
@@ -39,10 +46,15 @@ async function bootstrap(): Promise<void> {
     visible: 0,
     order: "desc",
     query: initialQuery,
+    minDurationSec: initialMin1m ? MIN_1M : 0,
   };
 
   function recompute(): void {
-    const filtered = state.query ? searcher.search(state.query) : state.all;
+    const searched = state.query ? searcher.search(state.query) : state.all;
+    const filtered =
+      state.minDurationSec > 0
+        ? searched.filter((v) => v.duration_sec >= state.minDurationSec)
+        : searched;
     state.view = sortVideos(filtered, state.order);
     state.visible = Math.min(BATCH, state.view.length);
     countEl.textContent = `全 ${state.view.length} 件`;
@@ -60,7 +72,7 @@ async function bootstrap(): Promise<void> {
 
   search.addEventListener("input", () => {
     state.query = search.value;
-    syncQueryParam(state.query);
+    syncUrlParams(state);
     recompute();
   });
 
@@ -73,6 +85,12 @@ async function bootstrap(): Promise<void> {
     });
   }
 
+  min1m.addEventListener("change", () => {
+    state.minDurationSec = min1m.checked ? MIN_1M : 0;
+    syncUrlParams(state);
+    recompute();
+  });
+
   const io = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) appendNext();
   });
@@ -81,10 +99,12 @@ async function bootstrap(): Promise<void> {
   recompute();
 }
 
-function syncQueryParam(q: string): void {
+function syncUrlParams(state: State): void {
   const url = new URL(window.location.href);
-  if (q) url.searchParams.set("q", q);
+  if (state.query) url.searchParams.set("q", state.query);
   else url.searchParams.delete("q");
+  if (state.minDurationSec > 0) url.searchParams.set("min1m", "1");
+  else url.searchParams.delete("min1m");
   window.history.replaceState(null, "", url.toString());
 }
 

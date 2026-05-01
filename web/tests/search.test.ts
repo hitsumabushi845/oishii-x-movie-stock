@@ -2,13 +2,13 @@ import { describe, it, expect } from "vitest";
 import { createSearcher } from "../src/search.js";
 import type { Video } from "../src/types.js";
 
-const v = (id: string, text: string): Video => ({
+const v = (id: string, text: string, tags: string[] = []): Video => ({
   id,
   url: "",
   posted_at: "2026-04-01T00:00:00Z",
   duration_sec: 0,
   text,
-  tags: [],
+  tags,
 });
 
 describe("createSearcher", () => {
@@ -26,5 +26,14 @@ describe("createSearcher", () => {
   it("returns empty when nothing matches", () => {
     const s = createSearcher([v("1", "abc")]);
     expect(s.search("xyz")).toEqual([]);
+  });
+
+  it("matches against tags as well as text", () => {
+    const s = createSearcher([
+      v("1", "本文に手がかりは無い", ["live", "digest"]),
+      v("2", "別の動画", ["mv"]),
+    ]);
+    expect(s.search("live").map((x) => x.id)).toEqual(["1"]);
+    expect(s.search("mv").map((x) => x.id)).toEqual(["2"]);
   });
 });
