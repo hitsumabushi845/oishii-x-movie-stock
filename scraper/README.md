@@ -6,7 +6,7 @@ Collects `@official_aimai` videos and emits `data/videos.json` using the X API v
 
 X API v2 — `GET /2/tweets/search/all` with `query=from:official_aimai filter:native_video`. The `filter:native_video` predicate restricts results to tweets containing X-hosted videos, so most filtering happens server-side. We still inspect `includes.media[].type` defensively before extracting `duration_ms`.
 
-Pagination uses `next_token`; incremental runs add `start_time={last_synced_at}`.
+Pagination uses `next_token`. Incremental runs add `start_time={last_synced_at}`. Backfill runs send `start_time=2010-01-01T00:00:00Z` to override search/all's default ~30-day window and get the full archive.
 
 ## Required environment
 

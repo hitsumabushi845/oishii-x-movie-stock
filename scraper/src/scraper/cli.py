@@ -6,6 +6,7 @@ import argparse
 import asyncio
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .io_ import (
@@ -19,8 +20,12 @@ from .merge import merge_videos
 from .models import Video, VideosFile
 from .sources import FetchedVideo, Source
 
-DEFAULT_QUERY = "from:official_aimai filter:native_video"
+DEFAULT_QUERY = "from:official_aimai has:videos"
 SCHEMA_POINTER = "../schema/videos.schema.json"
+
+# search/all defaults to roughly the last 30 days when start_time is unset.
+# For backfill we want the full archive, so we send an explicit early date.
+BACKFILL_EPOCH = datetime(2010, 1, 1, tzinfo=timezone.utc)
 
 
 async def run(
@@ -43,7 +48,12 @@ async def run(
         )
         return 5
 
-    since = None if backfill or existing_file is None else existing_file.last_synced_at
+    if backfill:
+        since = BACKFILL_EPOCH
+    elif existing_file is None:
+        since = None
+    else:
+        since = existing_file.last_synced_at
 
     try:
         fetched = await source.fetch(query, since=since)

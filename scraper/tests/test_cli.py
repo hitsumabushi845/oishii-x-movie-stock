@@ -4,15 +4,17 @@ from pathlib import Path
 
 import pytest
 
-from scraper.cli import run
+from scraper.cli import BACKFILL_EPOCH, run
 from scraper.sources import FetchedVideo
 
 
 class FakeSource:
     def __init__(self, videos: list[FetchedVideo]):
         self._videos = videos
+        self.last_since: datetime | None = None
 
     async def fetch(self, query: str, *, since=None) -> list[FetchedVideo]:
+        self.last_since = since
         if since is None:
             return list(self._videos)
         return [v for v in self._videos if v.posted_at > since]
@@ -31,7 +33,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     ])
     code = await run(
         source=src,
-        query="from:official_aimai filter:native_video",
+        query="from:official_aimai has:videos",
         data_file=data_file,
         schema_file=_schema_path(),
         backfill=True,
@@ -42,6 +44,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     assert data_file.exists()
     payload = json.loads(data_file.read_text())
     assert [v["id"] for v in payload["videos"]] == ["2", "1"]
+    assert src.last_since == BACKFILL_EPOCH
 
 
 @pytest.mark.asyncio
