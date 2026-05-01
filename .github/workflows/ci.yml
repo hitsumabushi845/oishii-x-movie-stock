@@ -1,0 +1,66 @@
+name: ci
+
+on:
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  scraper-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      - name: Install
+        working-directory: scraper
+        run: uv sync --frozen --extra dev
+      - name: Test
+        working-directory: scraper
+        run: uv run pytest -q
+
+  web-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - name: Install
+        working-directory: web
+        run: pnpm install --frozen-lockfile
+      - name: Test
+        working-directory: web
+        run: pnpm test
+      - name: Build
+        working-directory: web
+        run: pnpm build
+
+  schema-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: hashFiles('data/videos.json') != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema==4.22.0
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          import jsonschema
+          payload = json.load(open("data/videos.json", encoding="utf-8"))
+          payload.pop("$schema", None)
+          schema = json.load(open("schema/videos.schema.json", encoding="utf-8"))
+          jsonschema.validate(payload, schema)
+          print("ok")
+          PY
