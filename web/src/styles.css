@@ -61,8 +61,8 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
   border-bottom: 1px solid var(--border);
 }
 .row:hover { background: var(--row-hover); }
-.row .date, .row .dur { font-size: 11px; color: var(--muted); }
-.row .text { font-size: 13px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; }
+.row .date, .row .dur { font-size: 12px; color: var(--muted); }
+.row .text { font-size: 14px; line-height: 1.4; }
 .play-btn {
   font-size: 11px; padding: 4px 10px;
   background: var(--bg); color: var(--fg);
@@ -70,7 +70,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 }
 .play-btn.open { background: var(--accent); color: white; border-color: var(--accent); }
 .embed-host {
-  grid-column: 3 / 5; margin-top: 10px; min-height: 40px;
+  grid-column: 1 / -1; margin-top: 10px; min-height: 40px;
 }
 
 .site-footer {
