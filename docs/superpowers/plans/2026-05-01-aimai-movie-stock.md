@@ -433,7 +433,7 @@ def test_videos_file_minimal_valid():
     f = VideosFile(
         generated_at=datetime(2026, 5, 1, tzinfo=timezone.utc),
         last_synced_at=datetime(2026, 4, 30, tzinfo=timezone.utc),
-        source_query="from:official_aimai has:videos",
+        source_query="from:official_aimai has:videos -is:retweet",
         videos=[],
     )
     assert f.videos == []
@@ -534,7 +534,7 @@ def schema_path() -> Path:
 {
   "generated_at": "2026-04-29T03:00:12Z",
   "last_synced_at": "2026-04-28T11:23:45Z",
-  "source_query": "from:official_aimai has:videos",
+  "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
     {
       "id": "1789012345678901234",
@@ -553,7 +553,7 @@ def schema_path() -> Path:
 {
   "generated_at": "2026-04-29T03:00:12Z",
   "last_synced_at": "2026-04-29T03:00:12Z",
-  "source_query": "from:official_aimai has:videos",
+  "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": []
 }
 ```
@@ -1031,7 +1031,7 @@ git commit -m "feat(scraper): add Source protocol and fake test source"
 
 - `GET /2/users/by/username/official_aimai` → 200, user_id `1202179244136128512` (no longer used after the search/all switch)
 - `GET /2/users/{user_id}/tweets` with media expansion → 200 (initial design, replaced by search/all)
-- `GET /2/tweets/search/all` with `query=from:official_aimai has:videos` → 402 *credits depleted*; endpoint is accessible to this account on the dev tier (no entitlement issues), only credit balance gates use.
+- `GET /2/tweets/search/all` with `query=from:official_aimai has:videos -is:retweet` → 402 *credits depleted*; endpoint is accessible to this account on the dev tier (no entitlement issues), only credit balance gates use.
 
 **Decision:** Switch to `search/all` because it server-side-filters to video tweets, eliminating wasted requests on photos/text and removing the user lookup step.
 
@@ -1370,7 +1370,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     ])
     code = await run(
         source=src,
-        query="from:official_aimai has:videos",
+        query="from:official_aimai has:videos -is:retweet",
         data_file=data_file,
         schema_file=_schema_path(),
         backfill=True,
@@ -1481,7 +1481,7 @@ from .merge import merge_videos
 from .models import Video, VideosFile
 from .sources import FetchedVideo, Source
 
-DEFAULT_QUERY = "from:official_aimai has:videos"
+DEFAULT_QUERY = "from:official_aimai has:videos -is:retweet"
 SCHEMA_POINTER = "../schema/videos.schema.json"
 
 

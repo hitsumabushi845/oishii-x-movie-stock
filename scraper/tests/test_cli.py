@@ -33,7 +33,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     ])
     code = await run(
         source=src,
-        query="from:official_aimai has:videos",
+        query="from:official_aimai has:videos -is:retweet",
         data_file=data_file,
         schema_file=_schema_path(),
         backfill=True,

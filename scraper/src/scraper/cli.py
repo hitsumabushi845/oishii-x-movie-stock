@@ -20,7 +20,7 @@ from .merge import merge_videos
 from .models import Video, VideosFile
 from .sources import FetchedVideo, Source
 
-DEFAULT_QUERY = "from:official_aimai has:videos"
+DEFAULT_QUERY = "from:official_aimai has:videos -is:retweet"
 SCHEMA_POINTER = "../schema/videos.schema.json"
 
 # search/all defaults to roughly the last 30 days when start_time is unset.
