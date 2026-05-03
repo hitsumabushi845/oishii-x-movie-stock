@@ -3,6 +3,7 @@ import { createSearcher } from "./search.js";
 import { renderList, replaceList, appendBatch } from "./render.js";
 import { embedTweet } from "./embed.js";
 import { initTheme } from "./theme.js";
+import { initAnalytics } from "./analytics.js";
 import type { SortOrder, Video } from "./types.js";
 
 const BATCH = 20;
@@ -21,6 +22,7 @@ const MIN_1M = 60;
 
 async function bootstrap(): Promise<void> {
   initTheme();
+  initAnalytics();
 
   const list = document.getElementById("list") as HTMLElement;
   const sentinel = document.getElementById("sentinel") as HTMLElement;
