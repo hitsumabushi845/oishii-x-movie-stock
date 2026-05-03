@@ -71,6 +71,11 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 .play-btn.open { background: var(--accent); color: white; border-color: var(--accent); }
 .embed-host {
   grid-column: 1 / -1; margin-top: 10px; min-height: 40px;
+  max-width: 100%; overflow: hidden;
+}
+/* overrides inline width that widgets.js sets on twitter-widget */
+.embed-host > * {
+  max-width: 100% !important;
 }
 
 .site-footer {
@@ -79,6 +84,9 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 }
 
 @media (max-width: 639px) {
+  .row > * {
+    min-width: 0;
+  }
   .row {
     display: flex;
     flex-wrap: wrap;
