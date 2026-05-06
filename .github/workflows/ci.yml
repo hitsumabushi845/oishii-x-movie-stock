@@ -56,10 +56,23 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import pathlib
           import jsonschema
-          payload = json.load(open("data/videos.json", encoding="utf-8"))
-          payload.pop("$schema", None)
-          schema = json.load(open("schema/videos.schema.json", encoding="utf-8"))
-          jsonschema.validate(payload, schema)
+
+          data_dir = pathlib.Path("data")
+          videos_schema = json.load(open("schema/videos.schema.json", encoding="utf-8"))
+          groups_schema = json.load(open("schema/groups.schema.json", encoding="utf-8"))
+
+          manifest = json.load(open(data_dir / "groups.json", encoding="utf-8"))
+          manifest_check = {k: v for k, v in manifest.items() if k != "$schema"}
+          jsonschema.validate(manifest_check, groups_schema)
+
+          for group in manifest["groups"]:
+              path = data_dir / group["data_file"]
+              if not path.exists():
+                  raise SystemExit(f"missing data file: {path}")
+              payload = json.load(open(path, encoding="utf-8"))
+              payload.pop("$schema", None)
+              jsonschema.validate(payload, videos_schema)
           print("ok")
           PY

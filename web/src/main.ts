@@ -7,7 +7,7 @@ import { initAnalytics } from "./analytics.js";
 import type { SortOrder, Video } from "./types.js";
 
 const BATCH = 20;
-const DATA_URL = "./data/videos.json";
+const DATA_URL = "./data/aimai.json";
 
 type State = {
   all: Video[];
