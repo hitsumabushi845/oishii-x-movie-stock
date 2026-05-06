@@ -1,10 +1,14 @@
+import io
 import json
+import json as _json
+from contextlib import redirect_stderr
 from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 
 from scraper.cli import BACKFILL_EPOCH, run
+from scraper.cli import main as cli_main
 from scraper.sources import FetchedVideo
 
 
@@ -107,3 +111,158 @@ async def test_run_dry_run_does_not_write(tmp_path):
     )
     assert code == 0
     assert not data_file.exists()
+
+
+def _write_groups_manifest(tmp_path: Path) -> Path:
+    payload = {
+        "groups": [
+            {
+                "slug": "aimai",
+                "display_name": "Aimai",
+                "x_handle": "official_aimai",
+                "data_file": "aimai.json",
+                "color": "#bc2956",
+            },
+            {
+                "slug": "shokuzai",
+                "display_name": "Shokuzai",
+                "x_handle": "ofc_shokuzai",
+                "data_file": "shokuzai.json",
+                "color": "#1A1A1A",
+            },
+        ]
+    }
+    p = tmp_path / "groups.json"
+    p.write_text(_json.dumps(payload), encoding="utf-8")
+    return p
+
+
+def _groups_schema_path() -> Path:
+    return Path(__file__).resolve().parents[2] / "schema" / "groups.schema.json"
+
+
+def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
+    """When invoked with --group, the CLI must resolve the manifest into the
+    correct query string and write to data/<slug>.json."""
+    from scraper import cli as cli_module
+
+    captured: dict[str, object] = {}
+
+    class CapturingSource:
+        async def fetch(self, query, *, since=None):
+            captured["query"] = query
+            captured["since"] = since
+            return [
+                FetchedVideo(
+                    "1", "u1",
+                    datetime(2026, 4, 1, tzinfo=timezone.utc), 60, "x",
+                ),
+            ]
+
+    def fake_factory(_token: str) -> CapturingSource:
+        return CapturingSource()
+
+    monkeypatch.setattr(cli_module, "_default_source_factory", fake_factory)
+    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+
+    manifest = _write_groups_manifest(tmp_path)
+    data_dir = tmp_path
+    code = cli_main([
+        "--group", "shokuzai",
+        "--manifest", str(manifest),
+        "--data-dir", str(data_dir),
+        "--manifest-schema", str(_groups_schema_path()),
+        "--schema", str(_schema_path()),
+        "--backfill",
+    ])
+    assert code == 0
+    assert captured["query"] == "from:ofc_shokuzai has:videos -is:retweet"
+    assert (data_dir / "shokuzai.json").exists()
+
+
+def test_run_with_group_and_legacy_query_is_rejected(tmp_path, monkeypatch):
+    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    manifest = _write_groups_manifest(tmp_path)
+    err = io.StringIO()
+    with redirect_stderr(err):
+        code = cli_main([
+            "--group", "aimai",
+            "--manifest", str(manifest),
+            "--manifest-schema", str(_groups_schema_path()),
+            "--data-dir", str(tmp_path),
+            "--schema", str(_schema_path()),
+            "--query", "extra-query",
+        ])
+    assert code == 3
+    assert "--query" in err.getvalue() or "incompatible" in err.getvalue().lower()
+
+
+def test_run_with_all_iterates_all_groups(tmp_path, monkeypatch):
+    from scraper import cli as cli_module
+
+    seen: list[str] = []
+
+    class TrackingSource:
+        async def fetch(self, query, *, since=None):
+            seen.append(query)
+            return [
+                FetchedVideo(
+                    "1", "u1",
+                    datetime(2026, 4, 1, tzinfo=timezone.utc), 60, "x",
+                ),
+            ]
+
+    monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: TrackingSource())
+    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    manifest = _write_groups_manifest(tmp_path)
+    code = cli_main([
+        "--all",
+        "--manifest", str(manifest),
+        "--manifest-schema", str(_groups_schema_path()),
+        "--data-dir", str(tmp_path),
+        "--schema", str(_schema_path()),
+        "--backfill",
+    ])
+    assert code == 0
+    assert seen == [
+        "from:official_aimai has:videos -is:retweet",
+        "from:ofc_shokuzai has:videos -is:retweet",
+    ]
+    assert (tmp_path / "aimai.json").exists()
+    assert (tmp_path / "shokuzai.json").exists()
+
+
+def test_run_with_all_continues_after_one_group_fails(tmp_path, monkeypatch):
+    from scraper import cli as cli_module
+
+    calls: list[str] = []
+
+    class FlakySource:
+        async def fetch(self, query, *, since=None):
+            calls.append(query)
+            if "official_aimai" in query:
+                raise RuntimeError("boom")
+            return [
+                FetchedVideo(
+                    "1", "u1",
+                    datetime(2026, 4, 1, tzinfo=timezone.utc), 60, "x",
+                ),
+            ]
+
+    monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: FlakySource())
+    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    manifest = _write_groups_manifest(tmp_path)
+    code = cli_main([
+        "--all",
+        "--manifest", str(manifest),
+        "--manifest-schema", str(_groups_schema_path()),
+        "--data-dir", str(tmp_path),
+        "--schema", str(_schema_path()),
+        "--backfill",
+    ])
+    # 1 group failed → exit 2 (non-zero)
+    assert code == 2
+    assert len(calls) == 2
+    # Successful group's file is written even though a sibling failed
+    assert (tmp_path / "shokuzai.json").exists()
+    assert not (tmp_path / "aimai.json").exists()
