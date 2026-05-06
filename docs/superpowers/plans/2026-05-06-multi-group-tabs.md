@@ -12,6 +12,41 @@
 
 **Branch:** `feat/multi-group-tabs` (already created with the spec committed).
 
+## Progress (as of 2026-05-06)
+
+Implementation is being executed via `superpowers:subagent-driven-development` (continuous, no human checkpoints between tasks). Each task gets: implementer subagent → spec compliance reviewer → code quality reviewer → mark complete.
+
+| Plan Task | Status | Commit |
+| --- | --- | --- |
+| 1. Manifest JSON schema (`schema/groups.schema.json`) | ✅ done | `241661f` |
+| 2. Manifest data file (`data/groups.json`) | ✅ done | `4c2b559` |
+| 3. Rename `data/videos.json` → `data/aimai.json` (+vite/CI/deploy refs) | ✅ done | `fb01747` (amended to also cover `web/vite.config.ts`) |
+| 4. Scraper manifest loader (`scraper/src/scraper/groups.py` + tests) | ✅ done | `d2b1ebb` |
+| 5. Scraper CLI `--group/--all/--manifest` (+tests) | ✅ done | `81e6466` |
+| 6. Web types `GroupDef` / `GroupsManifest` | ✅ done | `b2f518b` |
+| 7. Web manifest parser (`parseGroupsManifest`, `loadGroupsManifest`) | ✅ done | `4dd8a72` |
+| 8. Stub data files for shokuzai / mizutama (epoch `last_synced_at`) | ✅ done | `f95e52e` |
+| 9. HTML rebrand to OISHII Movie Stock + empty `<nav id="tabs">` | ✅ done | `39d1ddc` |
+| 10. CSS `--group-accent` variable + `.tabs` styles (incl. mobile) | ✅ done | `5b160fd` |
+| 11. `web/src/groups.ts` (theme + tabs DOM, TDD) | ✅ done | `f870497` |
+| 12. Wire tabs into `web/src/main.ts` (state / lazy load / cache / popstate / URL) | ⏳ pending | — |
+| 13. Update `web/tests/index-html.test.ts` for new branding + tabs nav | ⏳ pending | — |
+| 14. `update-data.yml` matrix scrape + aggregate PR | ⏳ pending | — |
+| 15. README updates (multi-group install + group-add section) | ⏳ pending | — |
+| 16. **User actions** — local backfill of shokuzai/mizutama, place `web/public/oishii_movie_stock.png`, push branch, open PR | ⏳ pending | — (operational, not auto-runnable) |
+| (Final) End-to-end code review of full implementation | ⏳ pending | — |
+
+**Known intentional CI failure on this branch (until Task 13 lands):** `web/tests/index-html.test.ts` asserts the old "aimai movie stock" title and `aimai_movie_stock.png` URL. Task 9 changed the HTML; Task 13 will rewrite the test. Do not "fix" this in any other task.
+
+**Pending CI signal worth noting:** matrix scrape workflow has not been exercised — `update-data.yml` still targets `data/videos.json` until Task 14. The next `workflow_dispatch` of `update-data.yml` will fail until Task 14 lands. CI's `schema-validate` job (rewritten in Task 3) should pass now that all three per-group data files exist (Task 8).
+
+### How to resume in a future session
+
+1. Read this plan file in full (`docs/superpowers/plans/2026-05-06-multi-group-tabs.md`) and the spec (`docs/superpowers/specs/2026-05-06-multi-group-tabs-design.md`).
+2. Re-invoke `superpowers:subagent-driven-development` with this plan; start at Task 12.
+3. Use the same TDD + two-stage review (spec → code quality) pattern as the previous tasks. The earlier commits' diffs are good references for tone (small commits, exact messages from the task text).
+4. After Task 15, dispatch a final whole-branch code review, then run Task 16 (mostly user-driven: backfill + OGP image + open PR).
+
 **File structure (added / changed):**
 
 | Path | Responsibility |
