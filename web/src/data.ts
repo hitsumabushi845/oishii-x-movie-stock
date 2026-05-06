@@ -1,4 +1,4 @@
-import type { Video, VideosFile, SortOrder } from "./types.js";
+import type { Video, VideosFile, SortOrder, GroupDef, GroupsManifest } from "./types.js";
 
 export async function loadVideosFile(url: string): Promise<VideosFile> {
   const res = await fetch(url);
@@ -47,4 +47,45 @@ export function sortVideos(videos: Video[], order: SortOrder): Video[] {
     return order === "desc" ? -cmp : cmp;
   });
   return copy;
+}
+
+export async function loadGroupsManifest(url: string): Promise<GroupsManifest> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`failed to fetch ${url}: ${res.status}`);
+  return parseGroupsManifest(await res.json());
+}
+
+export function parseGroupsManifest(raw: unknown): GroupsManifest {
+  if (!raw || typeof raw !== "object") throw new Error("invalid manifest payload");
+  const r = raw as Record<string, unknown>;
+  if (!Array.isArray(r.groups)) throw new Error("groups must be array");
+  if (r.groups.length === 0) throw new Error("manifest must contain at least one group");
+  const seen = new Set<string>();
+  const groups: GroupDef[] = r.groups.map((g) => {
+    const def = parseGroupDef(g);
+    if (seen.has(def.slug)) throw new Error(`duplicate group slug: ${def.slug}`);
+    seen.add(def.slug);
+    return def;
+  });
+  return { groups };
+}
+
+function parseGroupDef(raw: unknown): GroupDef {
+  if (!raw || typeof raw !== "object") throw new Error("invalid group");
+  const r = raw as Record<string, unknown>;
+  const required = ["slug", "display_name", "x_handle", "data_file", "color"] as const;
+  for (const k of required) {
+    if (typeof r[k] !== "string" || (r[k] as string).length === 0) {
+      throw new Error(`group missing required field: ${k}`);
+    }
+  }
+  const def: GroupDef = {
+    slug: String(r.slug),
+    displayName: String(r.display_name),
+    xHandle: String(r.x_handle),
+    dataFile: String(r.data_file),
+    color: String(r.color),
+  };
+  if (r.color_dark !== undefined) def.colorDark = String(r.color_dark);
+  return def;
 }
