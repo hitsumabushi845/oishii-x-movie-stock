@@ -14,6 +14,8 @@ const SITE_URL = "https://hitsumabushi845.github.io/aimai-x-movie-stock/";
 const IMAGE_URL = `${SITE_URL}aimai_movie_stock.png`;
 const DESCRIPTION =
   "@official_aimai のライブダイジェスト等の動画一覧。X 投稿動画を一覧 / 検索 / 並び替えできる非公式ファンサイト。";
+const IMAGE_ALT =
+  "aimai movie stock — Archive of videos from Oishii Aimai's Official X (Unofficial)";
 
 function parseHead(): Document {
   const window = new Window();
@@ -71,10 +73,8 @@ describe("index.html metadata", () => {
     expect(metaContent(doc, "property", "og:image:height")).toBe("1024");
   });
 
-  it("has a non-empty og:image:alt", () => {
-    const alt = metaContent(doc, "property", "og:image:alt");
-    expect(alt).toBeTruthy();
-    expect(alt!.length).toBeGreaterThan(10);
+  it("has og:image:alt", () => {
+    expect(metaContent(doc, "property", "og:image:alt")).toBe(IMAGE_ALT);
   });
 
   it("has og:locale = ja_JP", () => {
