@@ -82,6 +82,8 @@ async function bootstrap(): Promise<void> {
           generatedAt: file.generated_at,
         };
       })();
+      // Drop rejected promises so a transient fetch failure can be retried on the next click.
+      pending.catch(() => groupCache.delete(slug));
       groupCache.set(slug, pending);
     }
     return pending;
