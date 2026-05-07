@@ -36,15 +36,20 @@ Implementation is being executed via `superpowers:subagent-driven-development` (
 | 16. **User actions** — local backfill of shokuzai/mizutama, place `web/public/oishii_movie_stock.png`, push branch, open PR | ⏳ pending | — (operational, not auto-runnable) |
 | (Final) End-to-end code review of full implementation | ✅ done | (see "Final review punch list" below) |
 
-### Final review punch list (Minor — non-blocking, follow-up candidates)
+### Final review punch list — disposition
 
-The whole-branch review verdict was **✅ Ready to merge after Task 16** with no Critical or Important issues. Minor items found that the per-task reviews did not catch (because each was scoped to a single task):
+The whole-branch review verdict was **✅ Ready to merge after Task 16** with no Critical or Important issues. Minor items the per-task reviews missed have now been addressed:
 
-- **Spec gap: keyboard arrow nav between tabs.** Spec line 298 requires "矢印キーでタブ間移動を可能にする". `web/src/groups.ts:48-67` sets `tabindex` and `aria-selected` correctly but never registers a `keydown` handler — ArrowLeft / ArrowRight don't move focus. ARIA ergonomics gap, not a functional break. Plan Task 11's `buildTabs` code block omitted this, so the implementer faithfully copied a plan that didn't match the spec.
-- **`scraper/README.md` is stale.** Still documents only `--data-file ../data/videos.json` and doesn't mention `--group`/`--all`/`--manifest`. Top-level README was rewritten by Task 15; this sub-README was missed.
-- **`Makefile`'s `scrape-dry` target is broken.** Invokes legacy `--data-file ../data/videos.json` which no longer exists — `make scrape-dry` will fail or write a stray file. Switch to manifest mode (e.g. `--all --manifest ../data/groups.json --manifest-schema ../schema/groups.schema.json --schema ../schema/videos.schema.json --data-dir ../data --dry-run`).
-- **Failed-fetch caching footgun.** `groupCache` (`web/src/main.ts:71`) stores rejected Promises permanently — a transient 5xx on first tab visit means subsequent clicks rethrow forever until reload. A `.catch(() => groupCache.delete(slug))` would self-heal.
-- **`web/index.html:31`** still hardcodes `href="https://x.com/official_aimai"` as the static fallback. `updateHeaderForGroup` overrides on bootstrap so JS users don't see it; non-JS users do.
+- ✅ **Keyboard arrow nav between tabs** (spec line 298) — `web/src/groups.ts:buildTabs` now registers `keydown` for ArrowLeft / ArrowRight / Home / End, with 7 new vitest cases. Commit `f80c62f`.
+- ✅ **`scraper/README.md` rewritten** for `--group` / `--all` / `--manifest` mode. Commit `9508fb3`.
+- ✅ **`Makefile` `scrape-dry`** switched to manifest mode (`--all --manifest ... --data-dir ../data --dry-run`). Commit `430b353`.
+- ✅ **`groupCache` self-heal** — `pending.catch(() => groupCache.delete(slug))` so a transient fetch failure can be retried on the next click. Commit `99bb6e2`.
+- ⏭ **`web/index.html:31` hardcoded `https://x.com/official_aimai`** — left as-is on reflection: the default tab is `aimai`, so the static fallback already matches the default group. JS overrides on every group switch via `updateHeaderForGroup`, so non-default-tab users always see the correct handle.
+- ✅ **Cleanup**: removed superseded `web/public/aimai_movie_stock.png` (the OGP is now `oishii_movie_stock.png`). Commit `02d4024`.
+
+### Late bugfix found during local preview
+
+- ✅ **shokuzai `.site-link` invisible on the inverted header.** `:site-header` uses `background: var(--fg); color: var(--bg)` (inverted), and shokuzai's brand colors (greyscale) matched the inverted bg in both themes. Introduced `--group-accent-on-header` that flips for groups with `colorDark`. Commit `983e7cf`. (3 affected files: `web/src/groups.ts`, `web/src/styles.css`, `web/tests/groups.test.ts`.)
 
 ### How to resume in a future session
 
