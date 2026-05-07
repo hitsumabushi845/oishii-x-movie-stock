@@ -59,7 +59,7 @@ export function buildTabs(
   onSelect: TabSelectHandler,
 ): void {
   container.replaceChildren();
-  groups.forEach((g, idx) => {
+  for (const g of groups) {
     const btn = container.ownerDocument.createElement("button");
     btn.type = "button";
     btn.setAttribute("role", "tab");
@@ -69,35 +69,7 @@ export function buildTabs(
     btn.setAttribute("aria-selected", active ? "true" : "false");
     btn.setAttribute("tabindex", active ? "0" : "-1");
     btn.addEventListener("click", () => onSelect(g.slug));
-    btn.addEventListener("keydown", (e) => {
-      const target = nextTabIndex(e.key, idx, groups.length);
-      if (target === null) return;
-      e.preventDefault();
-      const nextSlug = groups[target]!.slug;
-      onSelect(nextSlug);
-      const nextBtn = container.children[target] as HTMLElement | undefined;
-      nextBtn?.focus();
-    });
     container.appendChild(btn);
-  });
-}
-
-function nextTabIndex(
-  key: string,
-  current: number,
-  count: number,
-): number | null {
-  switch (key) {
-    case "ArrowRight":
-      return (current + 1) % count;
-    case "ArrowLeft":
-      return (current - 1 + count) % count;
-    case "Home":
-      return 0;
-    case "End":
-      return count - 1;
-    default:
-      return null;
   }
 }
 
