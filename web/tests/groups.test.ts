@@ -55,6 +55,23 @@ describe("applyGroupTheme", () => {
     expect(css).toContain('[data-theme="dark"][data-group="shokuzai"]');
     expect(css).toContain("#f7f9f9");
   });
+  it("inverts on-header accent for groups with colorDark so it reads on the inverted header", () => {
+    applyGroupTheme(doc as unknown as Document, GROUPS, "shokuzai");
+    const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
+    expect(css).toMatch(
+      /:root\[data-group="shokuzai"\][^}]*--group-accent-on-header:\s*#f7f9f9/,
+    );
+    expect(css).toMatch(
+      /\[data-theme="dark"\]\[data-group="shokuzai"\][^}]*--group-accent-on-header:\s*#1A1A1A/,
+    );
+  });
+  it("uses plain color for on-header accent when no colorDark is provided", () => {
+    applyGroupTheme(doc as unknown as Document, GROUPS, "aimai");
+    const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
+    expect(css).toMatch(
+      /:root\[data-group="aimai"\][^}]*--group-accent-on-header:\s*#bc2956/,
+    );
+  });
 });
 
 describe("buildTabs", () => {

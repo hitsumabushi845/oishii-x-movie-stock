@@ -33,10 +33,17 @@ function ensureStyleTag(doc: Document, groups: GroupDef[]): void {
 function generateGroupCss(groups: GroupDef[]): string {
   const lines: string[] = [];
   for (const g of groups) {
-    lines.push(`:root[data-group="${g.slug}"] { --group-accent: ${g.color}; }`);
+    // The site header inverts the palette (background: var(--fg); color: var(--bg)),
+    // so a brand color calibrated for the page bg can match the header bg and become
+    // invisible (e.g. shokuzai #1A1A1A on the dark header). For groups that opted into
+    // colorDark, swap the two on the header so the accent always reads.
+    const onHeaderLight = g.colorDark ?? g.color;
+    lines.push(
+      `:root[data-group="${g.slug}"] { --group-accent: ${g.color}; --group-accent-on-header: ${onHeaderLight}; }`,
+    );
     if (g.colorDark) {
       lines.push(
-        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; }`,
+        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-on-header: ${g.color}; }`,
       );
     }
   }

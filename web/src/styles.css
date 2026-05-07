@@ -4,6 +4,7 @@
   --muted: #888888;
   --accent: #1d9bf0;
   --group-accent: var(--accent);
+  --group-accent-on-header: var(--accent);
   --border: #eeeeee;
   --row-hover: #f7f7f8;
   --row-open: #fafafa;
@@ -26,7 +27,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 }
 .site-title { font-weight: 700; font-size: 15px; }
 .site-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
-.site-link { color: var(--group-accent); font-size: 12px; text-decoration: none; }
+.site-link { color: var(--group-accent-on-header); font-size: 12px; text-decoration: none; }
 
 .toolbar {
   position: sticky; top: 0; z-index: 10;
