@@ -12,7 +12,7 @@
 
 **Branch:** `feat/multi-group-tabs` (already created with the spec committed).
 
-## Progress (as of 2026-05-06)
+## Progress (as of 2026-05-08)
 
 Implementation is being executed via `superpowers:subagent-driven-development` (continuous, no human checkpoints between tasks). Each task gets: implementer subagent → spec compliance reviewer → code quality reviewer → mark complete.
 
@@ -29,23 +29,27 @@ Implementation is being executed via `superpowers:subagent-driven-development` (
 | 9. HTML rebrand to OISHII Movie Stock + empty `<nav id="tabs">` | ✅ done | `39d1ddc` |
 | 10. CSS `--group-accent` variable + `.tabs` styles (incl. mobile) | ✅ done | `5b160fd` |
 | 11. `web/src/groups.ts` (theme + tabs DOM, TDD) | ✅ done | `f870497` |
-| 12. Wire tabs into `web/src/main.ts` (state / lazy load / cache / popstate / URL) | ⏳ pending | — |
-| 13. Update `web/tests/index-html.test.ts` for new branding + tabs nav | ⏳ pending | — |
-| 14. `update-data.yml` matrix scrape + aggregate PR | ⏳ pending | — |
-| 15. README updates (multi-group install + group-add section) | ⏳ pending | — |
+| 12. Wire tabs into `web/src/main.ts` (state / lazy load / cache / popstate / URL) | ✅ done | `d248f88` (race-guard added in amend after code review) |
+| 13. Update `web/tests/index-html.test.ts` for new branding + tabs nav | ✅ done | `61119d1` |
+| 14. `update-data.yml` matrix scrape + aggregate PR | ✅ done | `db48627` (Slack-on-failure conditional widened in amend after code review) |
+| 15. README updates (multi-group install + group-add section) | ✅ done | `75e1fee` |
 | 16. **User actions** — local backfill of shokuzai/mizutama, place `web/public/oishii_movie_stock.png`, push branch, open PR | ⏳ pending | — (operational, not auto-runnable) |
-| (Final) End-to-end code review of full implementation | ⏳ pending | — |
+| (Final) End-to-end code review of full implementation | ✅ done | (see "Final review punch list" below) |
 
-**Known intentional CI failure on this branch (until Task 13 lands):** `web/tests/index-html.test.ts` asserts the old "aimai movie stock" title and `aimai_movie_stock.png` URL. Task 9 changed the HTML; Task 13 will rewrite the test. Do not "fix" this in any other task.
+### Final review punch list (Minor — non-blocking, follow-up candidates)
 
-**Pending CI signal worth noting:** matrix scrape workflow has not been exercised — `update-data.yml` still targets `data/videos.json` until Task 14. The next `workflow_dispatch` of `update-data.yml` will fail until Task 14 lands. CI's `schema-validate` job (rewritten in Task 3) should pass now that all three per-group data files exist (Task 8).
+The whole-branch review verdict was **✅ Ready to merge after Task 16** with no Critical or Important issues. Minor items found that the per-task reviews did not catch (because each was scoped to a single task):
+
+- **Spec gap: keyboard arrow nav between tabs.** Spec line 298 requires "矢印キーでタブ間移動を可能にする". `web/src/groups.ts:48-67` sets `tabindex` and `aria-selected` correctly but never registers a `keydown` handler — ArrowLeft / ArrowRight don't move focus. ARIA ergonomics gap, not a functional break. Plan Task 11's `buildTabs` code block omitted this, so the implementer faithfully copied a plan that didn't match the spec.
+- **`scraper/README.md` is stale.** Still documents only `--data-file ../data/videos.json` and doesn't mention `--group`/`--all`/`--manifest`. Top-level README was rewritten by Task 15; this sub-README was missed.
+- **`Makefile`'s `scrape-dry` target is broken.** Invokes legacy `--data-file ../data/videos.json` which no longer exists — `make scrape-dry` will fail or write a stray file. Switch to manifest mode (e.g. `--all --manifest ../data/groups.json --manifest-schema ../schema/groups.schema.json --schema ../schema/videos.schema.json --data-dir ../data --dry-run`).
+- **Failed-fetch caching footgun.** `groupCache` (`web/src/main.ts:71`) stores rejected Promises permanently — a transient 5xx on first tab visit means subsequent clicks rethrow forever until reload. A `.catch(() => groupCache.delete(slug))` would self-heal.
+- **`web/index.html:31`** still hardcodes `href="https://x.com/official_aimai"` as the static fallback. `updateHeaderForGroup` overrides on bootstrap so JS users don't see it; non-JS users do.
 
 ### How to resume in a future session
 
-1. Read this plan file in full (`docs/superpowers/plans/2026-05-06-multi-group-tabs.md`) and the spec (`docs/superpowers/specs/2026-05-06-multi-group-tabs-design.md`).
-2. Re-invoke `superpowers:subagent-driven-development` with this plan; start at Task 12.
-3. Use the same TDD + two-stage review (spec → code quality) pattern as the previous tasks. The earlier commits' diffs are good references for tone (small commits, exact messages from the task text).
-4. After Task 15, dispatch a final whole-branch code review, then run Task 16 (mostly user-driven: backfill + OGP image + open PR).
+1. The implementation is complete through Task 15. Outstanding work is Task 16 (operational, user-driven) plus the optional follow-up punch list above.
+2. Task 16 lives at the bottom of this plan and runs the local backfill, places the OGP image, and pushes/opens the PR.
 
 **File structure (added / changed):**
 
