@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/hitsumabushi845/aimai-x-movie-stock/schema/groups.schema.json",
+  "$id": "https://github.com/hitsumabushi845/oishii-x-movie-stock/schema/groups.schema.json",
   "title": "GroupsManifest",
   "type": "object",
   "required": ["groups"],
