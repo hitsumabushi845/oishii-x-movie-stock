@@ -1,7 +1,96 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-06T00:00:00Z",
-  "last_synced_at": "2010-01-01T00:00:00Z",
+  "generated_at": "2026-05-07T16:10:16Z",
+  "last_synced_at": "2026-05-05T12:05:00Z",
   "source_query": "from:ofc_shokuzai has:videos -is:retweet",
-  "videos": []
+  "videos": [
+    {
+      "id": "2051634264542970105",
+      "url": "https://x.com/official_aimai/status/2051634264542970105",
+      "posted_at": "2026-05-05T12:05:00Z",
+      "duration_sec": 225,
+      "text": "2026.05.05(TUE)\nSHIBUYA TAKE OFF 7\n「美味しいイベント」\n-ワンコインディナー- の映像を一部公開。\n\nそして本日！\n新曲「MOSAIQ」を初披露させていただきました！\n\n#美味しい贖罪 https://t.co/Tax6PXy7Pp",
+      "tags": []
+    },
+    {
+      "id": "2044058617503199246",
+      "url": "https://x.com/official_aimai/status/2044058617503199246",
+      "posted_at": "2026-04-14T14:22:05Z",
+      "duration_sec": 75,
+      "text": "【🎥ライブ映像公開】\n2026.04.14(TUE) SHIBUYA THE GAME\nMade in Maiden定期主催Live「alphaism Vol.7」より\n新曲「シカクと詭弁」の映像を一部公開！\n\n#美味しい贖罪 https://t.co/OgpX81LHLl",
+      "tags": []
+    },
+    {
+      "id": "1998025160025424360",
+      "url": "https://x.com/official_aimai/status/1998025160025424360",
+      "posted_at": "2025-12-08T13:41:34Z",
+      "duration_sec": 131,
+      "text": "2025.12.08(MON)\n美味しい贖罪 始動主催公演\n「邂逅」\nat 高田馬場CLUB PHASE https://t.co/LPYwi8tSne",
+      "tags": []
+    },
+    {
+      "id": "1997637221147443419",
+      "url": "https://x.com/official_aimai/status/1997637221147443419",
+      "posted_at": "2025-12-07T12:00:02Z",
+      "duration_sec": 24,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n　　美味しい贖罪\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/SpnY49fSPX",
+      "tags": []
+    },
+    {
+      "id": "1997274960151318778",
+      "url": "https://x.com/official_aimai/status/1997274960151318778",
+      "posted_at": "2025-12-06T12:00:32Z",
+      "duration_sec": 24,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n　　切兎うずめ\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/llHMJvYLgl",
+      "tags": []
+    },
+    {
+      "id": "1996912449535254678",
+      "url": "https://x.com/official_aimai/status/1996912449535254678",
+      "posted_at": "2025-12-05T12:00:03Z",
+      "duration_sec": 24,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n　　可惜世りな\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/t0gA7gQLfp",
+      "tags": []
+    },
+    {
+      "id": "1995100506054860903",
+      "url": "https://x.com/official_aimai/status/1995100506054860903",
+      "posted_at": "2025-11-30T12:00:02Z",
+      "duration_sec": 24,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n　　鴉羽りょう\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/25zNWGdd3A",
+      "tags": []
+    },
+    {
+      "id": "1994738115269816439",
+      "url": "https://x.com/official_aimai/status/1994738115269816439",
+      "posted_at": "2025-11-29T12:00:01Z",
+      "duration_sec": 18,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n        蘭赦染みるも\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/wgOqtVwbB1",
+      "tags": []
+    },
+    {
+      "id": "1994375729933328525",
+      "url": "https://x.com/official_aimai/status/1994375729933328525",
+      "posted_at": "2025-11-28T12:00:02Z",
+      "duration_sec": 19,
+      "text": "✝︎┈┈┈┈┈┈┈┈┈┈\n\n        宵闇ねむり\n\n┈┈┈┈┈┈┈┈┈┈✝︎ https://t.co/thrSRitUFl",
+      "tags": []
+    },
+    {
+      "id": "1993681241632370742",
+      "url": "https://x.com/official_aimai/status/1993681241632370742",
+      "posted_at": "2025-11-26T14:00:23Z",
+      "duration_sec": 13,
+      "text": "𝐜𝐨𝐦𝐢𝐧𝐠 𝐬𝐨𝐨𝐧… https://t.co/U7HBJxI6G9",
+      "tags": []
+    },
+    {
+      "id": "1969733817994014902",
+      "url": "https://x.com/official_aimai/status/1969733817994014902",
+      "posted_at": "2025-09-21T12:01:52Z",
+      "duration_sec": 12,
+      "text": "✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ \n\n　「贖いの聖歌、赦しを舞う」\n\n　　2025年12月8日(月)\n                 正式始動\n\n✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ ✞ ✟ https://t.co/VeO1Aq8usu",
+      "tags": []
+    }
+  ]
 }
