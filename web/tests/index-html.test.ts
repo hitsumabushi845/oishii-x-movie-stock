@@ -11,11 +11,12 @@ const html = readFileSync(
 );
 
 const SITE_URL = "https://hitsumabushi845.github.io/aimai-x-movie-stock/";
-const IMAGE_URL = `${SITE_URL}aimai_movie_stock.png`;
+const IMAGE_URL = `${SITE_URL}oishii_movie_stock.png`;
 const DESCRIPTION =
-  "@official_aimai のライブダイジェスト等の動画一覧。X 投稿動画を一覧 / 検索 / 並び替えできる非公式ファンサイト。";
+  "OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の動画アーカイブ。X 投稿動画を一覧 / 検索 / 並び替えできる非公式ファンサイト。";
 const IMAGE_ALT =
-  "aimai movie stock — Archive of videos from Oishii Aimai's Official X (Unofficial)";
+  "OISHII Movie Stock — Archive of videos from OISHII.inc groups (Unofficial)";
+const SITE_TITLE = "OISHII Movie Stock";
 
 function parseHead(): Document {
   const window = new Window();
@@ -38,6 +39,11 @@ describe("index.html metadata", () => {
     doc = parseHead();
   });
 
+  it("has the OISHII Movie Stock title", () => {
+    const t = doc.querySelector("title");
+    expect(t?.textContent).toBe(SITE_TITLE);
+  });
+
   it("has a non-empty meta description", () => {
     expect(metaContent(doc, "name", "description")).toBe(DESCRIPTION);
   });
@@ -47,13 +53,11 @@ describe("index.html metadata", () => {
   });
 
   it("has og:site_name", () => {
-    expect(metaContent(doc, "property", "og:site_name")).toBe(
-      "aimai movie stock",
-    );
+    expect(metaContent(doc, "property", "og:site_name")).toBe(SITE_TITLE);
   });
 
   it("has og:title matching the page title", () => {
-    expect(metaContent(doc, "property", "og:title")).toBe("aimai movie stock");
+    expect(metaContent(doc, "property", "og:title")).toBe(SITE_TITLE);
   });
 
   it("has og:description", () => {
@@ -85,5 +89,19 @@ describe("index.html metadata", () => {
     expect(metaContent(doc, "name", "twitter:card")).toBe(
       "summary_large_image",
     );
+  });
+});
+
+describe("index.html structure", () => {
+  let doc: Document;
+  beforeAll(() => {
+    doc = parseHead();
+  });
+
+  it("includes an empty tabs nav placeholder for JS-driven tab rendering", () => {
+    const tabs = doc.getElementById("tabs");
+    expect(tabs).not.toBeNull();
+    expect(tabs?.getAttribute("role")).toBe("tablist");
+    expect(tabs?.children.length).toBe(0);
   });
 });
