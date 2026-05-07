@@ -15,3 +15,16 @@ export type VideosFile = {
 };
 
 export type SortOrder = "asc" | "desc";
+
+export type GroupDef = {
+  slug: string;
+  displayName: string;
+  xHandle: string;
+  dataFile: string;
+  color: string;
+  colorDark?: string;
+};
+
+export type GroupsManifest = {
+  groups: GroupDef[];
+};

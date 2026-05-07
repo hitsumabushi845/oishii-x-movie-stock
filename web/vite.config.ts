@@ -5,7 +5,7 @@ export default defineConfig({
   base: "./",
   plugins: [
     viteStaticCopy({
-      targets: [{ src: "../data/videos.json", dest: "data" }],
+      targets: [{ src: "../data/*.json", dest: "data" }],
     }),
   ],
   server: {

@@ -1,19 +1,21 @@
 # aimai-x-movie-stock
 
-`@official_aimai`（X / 旧 Twitter）が投稿した動画（特にライブダイジェスト）を一覧表示する静的サイト。GitHub Pages でホスティングし、データは GitHub Actions の週次 cron で更新される。
+OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の公式 X が投稿した動画（特にライブダイジェスト）を、グループ別タブで一覧表示する静的サイト。GitHub Pages でホスティングし、データは GitHub Actions の週次 cron で更新される。
 
 > This site is an unofficial fan-made index. All content belongs to its respective owners.
 
 ## Stack
 
-- **scraper/**: Python 3.12 + uv + httpx → X API v2 `search/all` (`from:official_aimai has:videos -is:retweet`) を呼んで `data/videos.json` を更新
-- **web/**: Vite + TypeScript + Fuse.js — `data/videos.json` を fetch してコンパクトリストで表示、X 埋め込みでクリック再生
+- **scraper/**: Python 3.12 + uv + httpx → X API v2 `search/all` を呼び、`data/groups.json` を駆動して各グループの `data/<slug>.json` を更新
+- **web/**: Vite + TypeScript + Fuse.js — `data/groups.json` を fetch、active グループの `data/<slug>.json` を遅延 fetch して描画。タブで切り替え。
 - **.github/workflows/**: `ci.yml` (PR テスト) / `deploy.yml` (Pages デプロイ) / `update-data.yml` (週次データ更新 PR)
 
 詳細な設計: [`docs/superpowers/specs/2026-05-01-aimai-movie-stock-design.md`](docs/superpowers/specs/2026-05-01-aimai-movie-stock-design.md)
 
 ## 機能
 
+- ✅ 3 グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）のタブ切り替え（`?g=<slug>`）
+- ✅ グループごとのテーマカラー（タブ・再生ボタン・外部リンク）
 - ✅ 投稿日時 / 動画長 / 本文の一覧表示（コンパクトリスト）
 - ✅ クリックで X 埋め込みを inline 展開（複数同時可、widgets.js は遅延ロード）
 - ✅ フリーワード検索（本文 + tags、Fuse.js でファジー）
@@ -21,7 +23,7 @@
 - ✅ 動画長 1 分以上のみフィルタ
 - ✅ 無限スクロール
 - ✅ システムテーマ追従（`prefers-color-scheme`）
-- ✅ 検索 / フィルタ状態を URL に同期（`?q=foo&min1m=1`）
+- ✅ 検索 / フィルタ / タブ状態を URL に同期（`?g=...&q=foo&min1m=1`）
 
 ## Quickstart
 
@@ -46,18 +48,20 @@
 
    ```bash
    set -a; source .env; set +a   # bash; fish の場合は env 読み込みを適宜
-   uv run python -m scraper \
-     --data-file ../data/videos.json \
+   uv run python -m scraper --all \
+     --manifest ../data/groups.json \
+     --manifest-schema ../schema/groups.schema.json \
      --schema ../schema/videos.schema.json \
+     --data-dir ../data \
      --backfill
    ```
 
-   `data/videos.json` が生成されるので commit & push:
+   `data/aimai.json` / `data/shokuzai.json` / `data/mizutama.json` が生成 / 上書きされるので commit & push:
 
    ```bash
    cd ..
-   git add data/videos.json
-   git commit -m "feat(data): initial backfill of videos.json"
+   git add data/*.json
+   git commit -m "feat(data): initial backfill of per-group videos.json"
    git push
    ```
 
@@ -82,8 +86,14 @@ make scrape-dry     # scraper の dry-run（書き込みなし、X API は呼ぶ
 
 ```
 .
-├── data/videos.json          ← single source of truth、scraper が更新
-├── schema/videos.schema.json ← JSON Schema、scraper が書き込み前に検証
+├── data/
+│   ├── groups.json           ← グループ定義（slug / 表示名 / X ハンドル / テーマ色）
+│   ├── aimai.json            ← @official_aimai
+│   ├── shokuzai.json         ← @ofc_shokuzai
+│   └── mizutama.json         ← @oishii_mizutama
+├── schema/
+│   ├── groups.schema.json
+│   └── videos.schema.json
 ├── scraper/                  ← Python パッケージ
 │   ├── src/scraper/...
 │   └── tests/
@@ -105,6 +115,13 @@ make scrape-dry     # scraper の dry-run（書き込みなし、X API は呼ぶ
 
 - 初回バックフィル：動画件数 / 100 リクエスト（参考：231 件で 3 リクエスト）
 - 週次 cron：差分のみ、新規動画 0〜数件なら 1 リクエスト
+
+## グループを追加するには
+
+1. `data/groups.json` の `groups` 配列にエントリを追加（slug / display_name / x_handle / data_file / color、必要なら color_dark）。
+2. ローカルで `--group <slug> --backfill` を実行して per-group ファイルを生成し、コミット。
+3. `.github/workflows/update-data.yml` の matrix `group:` 配列に slug を追加。
+4. CI / Pages デプロイは `data/*.json` を path filter で拾うので追加変更は不要。
 
 ## ライセンス
 

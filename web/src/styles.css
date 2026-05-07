@@ -3,6 +3,8 @@
   --fg: #111111;
   --muted: #888888;
   --accent: #1d9bf0;
+  --group-accent: var(--accent);
+  --group-accent-on-header: var(--accent);
   --border: #eeeeee;
   --row-hover: #f7f7f8;
   --row-open: #fafafa;
@@ -25,7 +27,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 }
 .site-title { font-weight: 700; font-size: 15px; }
 .site-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
-.site-link { color: var(--accent); font-size: 12px; text-decoration: none; }
+.site-link { color: var(--group-accent-on-header); font-size: 12px; text-decoration: none; }
 
 .toolbar {
   position: sticky; top: 0; z-index: 10;
@@ -68,7 +70,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
   background: var(--bg); color: var(--fg);
   border: 1px solid var(--border); border-radius: 4px; cursor: pointer;
 }
-.play-btn.open { background: var(--accent); color: white; border-color: var(--accent); }
+.play-btn.open { background: var(--group-accent); color: white; border-color: var(--group-accent); }
 .embed-host {
   grid-column: 1 / -1; margin-top: 10px; min-height: 40px;
   max-width: 100%; overflow: hidden;
@@ -76,6 +78,32 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
 /* overrides inline width that widgets.js sets on twitter-widget */
 .embed-host > * {
   max-width: 100% !important;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.tabs button {
+  padding: 10px 16px;
+  font-size: 13px;
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tabs button:hover { color: var(--fg); }
+.tabs button[aria-selected="true"] {
+  color: var(--fg);
+  font-weight: 600;
+  border-bottom-color: var(--group-accent);
 }
 
 .site-footer {
@@ -159,5 +187,11 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
   }
   .site-footer {
     padding: 12px 14px;
+  }
+  .tabs { padding: 0 14px; }
+  .tabs button {
+    padding: 12px 14px;
+    font-size: 13px;
+    min-height: 44px;
   }
 }

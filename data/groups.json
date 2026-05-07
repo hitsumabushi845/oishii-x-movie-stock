@@ -1,0 +1,27 @@
+{
+  "$schema": "../schema/groups.schema.json",
+  "groups": [
+    {
+      "slug": "aimai",
+      "display_name": "美味しい曖昧",
+      "x_handle": "official_aimai",
+      "data_file": "aimai.json",
+      "color": "#bc2956"
+    },
+    {
+      "slug": "shokuzai",
+      "display_name": "美味しい贖罪",
+      "x_handle": "ofc_shokuzai",
+      "data_file": "shokuzai.json",
+      "color": "#1A1A1A",
+      "color_dark": "#f7f9f9"
+    },
+    {
+      "slug": "mizutama",
+      "display_name": "美味しい水玉",
+      "x_handle": "oishii_mizutama",
+      "data_file": "mizutama.json",
+      "color": "#6CAAEF"
+    }
+  ]
+}

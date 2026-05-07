@@ -1,0 +1,128 @@
+{
+  "$schema": "../schema/videos.schema.json",
+  "generated_at": "2026-05-07T16:10:25Z",
+  "last_synced_at": "2026-05-05T06:52:28Z",
+  "source_query": "from:oishii_mizutama has:videos -is:retweet",
+  "videos": [
+    {
+      "id": "2051555612908249491",
+      "url": "https://x.com/official_aimai/status/2051555612908249491",
+      "posted_at": "2026-05-05T06:52:28Z",
+      "duration_sec": 213,
+      "text": "2026.05.05(TUE)\nSHIBUYA TAKE OFF 7\n「美味しいイベント」\n-ワンコインランチ 水玉ミニワンマン- より\n「ディスロマ」「パティパティ」そして本日初披露新曲「灰かぶらない姫」の映像を一部公開！\n\n#美味しい水玉 https://t.co/ejlBVuwMXk",
+      "tags": []
+    },
+    {
+      "id": "2049854630025453917",
+      "url": "https://x.com/official_aimai/status/2049854630025453917",
+      "posted_at": "2026-04-30T14:13:22Z",
+      "duration_sec": 181,
+      "text": "【🎥ライブ映像公開】\n2026.04.30(THU) 表参道GROUND\nhttps://t.co/2tCc4OvBWB Presents\n「美味しいイベント」-裏ハロウィン2026-\nより「泥濘(美味しい曖昧カバー)」「ディスロマ」の映像を一部公開！\n\n#美味しい水玉 https://t.co/ElpcB5UxEI",
+      "tags": []
+    },
+    {
+      "id": "2035694171227619627",
+      "url": "https://x.com/official_aimai/status/2035694171227619627",
+      "posted_at": "2026-03-22T12:24:46Z",
+      "duration_sec": 88,
+      "text": "【🎥ライブ映像公開】\n2026.03.22(SUN) GRIT at Shibuya\n美味しい水玉\n「水玉なワンマン2」 -ブルーモーメント- より\n本日初披露した「ディスロマ」の映像を一部公開！\n#美味しい水玉\n#美味しい水玉新始動 https://t.co/TF08iHW3h9",
+      "tags": []
+    },
+    {
+      "id": "1992860629431103680",
+      "url": "https://x.com/official_aimai/status/1992860629431103680",
+      "posted_at": "2025-11-24T07:39:34Z",
+      "duration_sec": 138,
+      "text": "2025.11.24(MON)\n美味しい水玉 主催イベント「水玉模様」\nat Spotify O-Crest https://t.co/VVh2SjNau9",
+      "tags": []
+    },
+    {
+      "id": "1977715187403649491",
+      "url": "https://x.com/official_aimai/status/1977715187403649491",
+      "posted_at": "2025-10-13T12:36:59Z",
+      "duration_sec": 161,
+      "text": "2025.10.13(MON)\n美味しい水玉 1st ANNIVERSARY LIVE \n水玉なワンマン1 -水色で始まる世界-\nat 大塚Hearts＋ https://t.co/rPcxp3YdDj",
+      "tags": []
+    },
+    {
+      "id": "1977703994718830969",
+      "url": "https://x.com/official_aimai/status/1977703994718830969",
+      "posted_at": "2025-10-13T11:52:30Z",
+      "duration_sec": 161,
+      "text": "2025.10.13(MON)\n美味しい水玉 1st ANNIVERSARY LIVE \n水玉なワンマン1 -水色で始まる世界-\nat 大塚Heart＋ https://t.co/P5JnyCQMmo",
+      "tags": []
+    },
+    {
+      "id": "1967577445059690851",
+      "url": "https://x.com/official_aimai/status/1967577445059690851",
+      "posted_at": "2025-09-15T13:13:13Z",
+      "duration_sec": 160,
+      "text": "2025.09.15(MON)\n美味しい水玉 presents\n美味しいイベント「ワンコインディナー」\nat 大塚 Hearts+\n#美味しい水玉 https://t.co/feHS4oQtaX",
+      "tags": []
+    },
+    {
+      "id": "1960326735767200153",
+      "url": "https://x.com/official_aimai/status/1960326735767200153",
+      "posted_at": "2025-08-26T13:01:29Z",
+      "duration_sec": 168,
+      "text": "2025.08.26(火) 大塚Hearts＋\n美味しい水玉 presents\n美味しいイベント「ワンコインディナー」\nat 大塚Hearts＋\n#美味しい水玉 https://t.co/Ck2q59yJpl",
+      "tags": []
+    },
+    {
+      "id": "1947191130698998184",
+      "url": "https://x.com/official_aimai/status/1947191130698998184",
+      "posted_at": "2025-07-21T07:05:17Z",
+      "duration_sec": 95,
+      "text": "2025.07.21(MON)\n美味しい水玉 presents\n美味しいイベント -ワンコインランチ-\nat 大塚Hearts＋\n#美味しい水玉 https://t.co/nXaEzETGbp",
+      "tags": []
+    },
+    {
+      "id": "1924844389748375736",
+      "url": "https://x.com/official_aimai/status/1924844389748375736",
+      "posted_at": "2025-05-20T15:07:19Z",
+      "duration_sec": 275,
+      "text": "2025.05.20 at 新代田FEVER\n美味しい水玉 presents\n「美味しいイベント-ワンコインディナー-」\n#美味しい水玉 #新体制美味しい水玉 https://t.co/TV0eo4WoEe",
+      "tags": []
+    },
+    {
+      "id": "1920489890908709358",
+      "url": "https://x.com/official_aimai/status/1920489890908709358",
+      "posted_at": "2025-05-08T14:44:05Z",
+      "duration_sec": 257,
+      "text": "2025.05.08\n大塚HEARTS plus https://t.co/0E4O7yHANx",
+      "tags": []
+    },
+    {
+      "id": "1915047432381190601",
+      "url": "https://x.com/official_aimai/status/1915047432381190601",
+      "posted_at": "2025-04-23T14:17:42Z",
+      "duration_sec": 367,
+      "text": "2025.04.23 at 新代田FEVER\n美味しい水玉 presents\n「美味しいイベント-ワンコインディナー-」\n#美味しい水玉 https://t.co/TbnQIXE8uw",
+      "tags": []
+    },
+    {
+      "id": "1870046487930958322",
+      "url": "https://x.com/official_aimai/status/1870046487930958322",
+      "posted_at": "2024-12-20T10:00:01Z",
+      "duration_sec": 26,
+      "text": "⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻\n\nこれを見れば\n#美味しい水玉 のライブがもっともーっと楽しくなる！！\n\nプラメタ ／ 美味しい水玉\n\n⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻ https://t.co/wxIlWgVEDd",
+      "tags": []
+    },
+    {
+      "id": "1853723935931535870",
+      "url": "https://x.com/official_aimai/status/1853723935931535870",
+      "posted_at": "2024-11-05T09:00:01Z",
+      "duration_sec": 94,
+      "text": "⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻\n\nこれを見れば\n#美味しい水玉 のライブが10倍楽しくなる！！\n\nMIZUTAMA ／ 美味しい水玉\n\n⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻*⌖.:˚◌˳˚⌖ ⿻ https://t.co/SywqaYINSQ",
+      "tags": []
+    },
+    {
+      "id": "1841074329821618244",
+      "url": "https://x.com/official_aimai/status/1841074329821618244",
+      "posted_at": "2024-10-01T11:15:00Z",
+      "duration_sec": 54,
+      "text": "🫧デビュー公演まであと7日🫧\n\n美味しい水玉からみなさまへご挨拶の動画です🕊️\n\nhttps://t.co/2tCc4OvBWB Presents「美味しいイベント」\n-Family restaurant-\n\n🗓️2024/10/08(火)\n📍Spotify O-Crest\nOP/ST 19:00/19:30\n🎫https://t.co/21nenaZ3zY\n\n#美味しい水玉 https://t.co/4KTWspiA8H",
+      "tags": []
+    }
+  ]
+}

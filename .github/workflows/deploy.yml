@@ -5,7 +5,8 @@ on:
     branches: [main]
     paths:
       - "web/**"
-      - "data/videos.json"
+      - "data/*.json"
+      - "schema/*.json"
       - ".github/workflows/deploy.yml"
   workflow_dispatch: {}
 

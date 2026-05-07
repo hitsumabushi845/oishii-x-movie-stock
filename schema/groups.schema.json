@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hitsumabushi845/aimai-x-movie-stock/schema/groups.schema.json",
+  "title": "GroupsManifest",
+  "type": "object",
+  "required": ["groups"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/group" }
+    }
+  },
+  "$defs": {
+    "group": {
+      "type": "object",
+      "required": ["slug", "display_name", "x_handle", "data_file", "color"],
+      "additionalProperties": false,
+      "properties": {
+        "slug":         { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+        "display_name": { "type": "string", "minLength": 1 },
+        "x_handle":     { "type": "string", "pattern": "^[A-Za-z0-9_]{1,15}$" },
+        "data_file":    { "type": "string", "pattern": "^[A-Za-z0-9_.-]+\\.json$" },
+        "color":        { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "color_dark":   { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+      }
+    }
+  }
+}
