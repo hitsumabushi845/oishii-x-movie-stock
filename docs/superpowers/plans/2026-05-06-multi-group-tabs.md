@@ -40,7 +40,7 @@ Implementation is being executed via `superpowers:subagent-driven-development` (
 
 The whole-branch review verdict was **✅ Ready to merge after Task 16** with no Critical or Important issues. Minor items the per-task reviews missed have now been addressed:
 
-- ✅ **Keyboard arrow nav between tabs** (spec line 298) — `web/src/groups.ts:buildTabs` now registers `keydown` for ArrowLeft / ArrowRight / Home / End, with 7 new vitest cases. Commit `f80c62f`.
+- ⏭ **Keyboard arrow nav between tabs** (spec line 298) — implemented in `f80c62f` and reverted in `409609c`. The handler passed unit tests but didn't fire in the live browser; user opted to drop the feature rather than keep it half-working. The spec line is intentionally left unsatisfied.
 - ✅ **`scraper/README.md` rewritten** for `--group` / `--all` / `--manifest` mode. Commit `9508fb3`.
 - ✅ **`Makefile` `scrape-dry`** switched to manifest mode (`--all --manifest ... --data-dir ../data --dry-run`). Commit `430b353`.
 - ✅ **`groupCache` self-heal** — `pending.catch(() => groupCache.delete(slug))` so a transient fetch failure can be retried on the next click. Commit `99bb6e2`.
