@@ -10,7 +10,7 @@ const html = readFileSync(
   "utf-8",
 );
 
-const SITE_URL = "https://hitsumabushi845.github.io/aimai-x-movie-stock/";
+const SITE_URL = "https://hitsumabushi845.github.io/oishii-x-movie-stock/";
 const IMAGE_URL = `${SITE_URL}oishii_movie_stock.png`;
 const DESCRIPTION =
   "OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の動画アーカイブ。X 投稿動画を一覧 / 検索 / 並び替えできる非公式ファンサイト。";
