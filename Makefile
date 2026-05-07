@@ -19,7 +19,9 @@ web-build:
 	cd web && pnpm build
 
 scrape-dry:
-	cd scraper && uv run python -m scraper \
-		--data-file ../data/videos.json \
+	cd scraper && uv run python -m scraper --all \
+		--manifest ../data/groups.json \
+		--manifest-schema ../schema/groups.schema.json \
 		--schema ../schema/videos.schema.json \
+		--data-dir ../data \
 		--dry-run
