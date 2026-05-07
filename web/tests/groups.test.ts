@@ -106,4 +106,38 @@ describe("buildTabs", () => {
     const selected = nav.querySelector("button[aria-selected='true']");
     expect((selected as HTMLButtonElement).getAttribute("data-group")).toBe("mizutama");
   });
+
+  it.each([
+    ["ArrowRight", "shokuzai", "mizutama"],
+    ["ArrowLeft", "shokuzai", "aimai"],
+    ["ArrowRight", "mizutama", "aimai"],
+    ["ArrowLeft", "aimai", "mizutama"],
+    ["Home", "mizutama", "aimai"],
+    ["End", "aimai", "mizutama"],
+  ])("%s on %s tab selects %s", (key, fromSlug, expectedSlug) => {
+    const nav = doc.createElement("nav");
+    let last: string | null = null;
+    buildTabs(nav as unknown as HTMLElement, GROUPS, fromSlug, (slug) => {
+      last = slug;
+    });
+    const fromIdx = GROUPS.findIndex((g) => g.slug === fromSlug);
+    const fromBtn = nav.querySelectorAll("button[role='tab']")[fromIdx]!;
+    fromBtn.dispatchEvent(
+      new win.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }) as unknown as Event,
+    );
+    expect(last).toBe(expectedSlug);
+  });
+
+  it("ignores non-navigation keydown events", () => {
+    const nav = doc.createElement("nav");
+    let last: string | null = null;
+    buildTabs(nav as unknown as HTMLElement, GROUPS, "aimai", (slug) => {
+      last = slug;
+    });
+    const btn = nav.querySelectorAll("button[role='tab']")[0]!;
+    btn.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Enter" }) as unknown as Event);
+    btn.dispatchEvent(new win.KeyboardEvent("keydown", { key: " " }) as unknown as Event);
+    btn.dispatchEvent(new win.KeyboardEvent("keydown", { key: "a" }) as unknown as Event);
+    expect(last).toBeNull();
+  });
 });
