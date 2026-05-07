@@ -1,4 +1,4 @@
-# aimai-x-movie-stock
+# oishii-x-movie-stock
 
 OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の公式 X が投稿した動画（特にライブダイジェスト）を、グループ別タブで一覧表示する静的サイト。GitHub Pages でホスティングし、データは GitHub Actions の週次 cron で更新される。
 
@@ -30,8 +30,8 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
 1. リポジトリを clone
 
    ```bash
-   git clone https://github.com/hitsumabushi845/aimai-x-movie-stock
-   cd aimai-x-movie-stock
+   git clone https://github.com/hitsumabushi845/oishii-x-movie-stock
+   cd oishii-x-movie-stock
    ```
 
 2. **scraper の依存をインストール + Bearer Token を設定**

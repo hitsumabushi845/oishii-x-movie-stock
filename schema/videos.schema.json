@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/hitsumabushi845/aimai-x-movie-stock/schema/videos.schema.json",
+  "$id": "https://github.com/hitsumabushi845/oishii-x-movie-stock/schema/videos.schema.json",
   "title": "VideosFile",
   "type": "object",
   "required": ["generated_at", "last_synced_at", "source_query", "videos"],
