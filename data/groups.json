@@ -22,6 +22,14 @@
       "x_handle": "oishii_mizutama",
       "data_file": "mizutama.json",
       "color": "#6CAAEF"
+    },
+    {
+      "slug": "oishii_inc",
+      "display_name": "OISHII.inc",
+      "x_handle": "oishii_inc",
+      "data_file": "oishii_inc.json",
+      "color": "#6B7280",
+      "color_dark": "#FFFFFF"
     }
   ]
 }

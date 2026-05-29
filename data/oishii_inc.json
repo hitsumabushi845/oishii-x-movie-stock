@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema/videos.schema.json",
+  "generated_at": "2026-05-29T00:00:00Z",
+  "last_synced_at": "2026-05-29T00:00:00Z",
+  "source_query": "from:oishii_inc has:videos -is:retweet",
+  "videos": []
+}
