@@ -72,6 +72,18 @@ describe("applyGroupTheme", () => {
       /:root\[data-group="aimai"\][^}]*--group-accent-on-header:\s*#bc2956/,
     );
   });
+  it("picks dark accent text on light accents so the close button label stays legible", () => {
+    applyGroupTheme(doc as unknown as Document, GROUPS, "shokuzai");
+    const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
+    // dark accent (#1A1A1A) → white text
+    expect(css).toMatch(
+      /:root\[data-group="shokuzai"\][^}]*--group-accent-fg:\s*white/,
+    );
+    // light dark-mode accent (#f7f9f9) → dark text instead of invisible white
+    expect(css).toMatch(
+      /\[data-theme="dark"\]\[data-group="shokuzai"\][^}]*--group-accent-fg:\s*#111111/,
+    );
+  });
 });
 
 describe("buildTabs", () => {

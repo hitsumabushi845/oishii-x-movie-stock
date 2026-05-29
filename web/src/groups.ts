@@ -39,15 +39,42 @@ function generateGroupCss(groups: GroupDef[]): string {
     // colorDark, swap the two on the header so the accent always reads.
     const onHeaderLight = g.colorDark ?? g.color;
     lines.push(
-      `:root[data-group="${g.slug}"] { --group-accent: ${g.color}; --group-accent-on-header: ${onHeaderLight}; }`,
+      `:root[data-group="${g.slug}"] { --group-accent: ${g.color}; --group-accent-on-header: ${onHeaderLight}; --group-accent-fg: ${contrastColor(g.color)}; }`,
     );
     if (g.colorDark) {
       lines.push(
-        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-on-header: ${g.color}; }`,
+        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-on-header: ${g.color}; --group-accent-fg: ${contrastColor(g.colorDark)}; }`,
       );
     }
   }
   return lines.join("\n");
+}
+
+// Pick black or white text for legibility on top of the given accent background.
+// Light accents (e.g. shokuzai #f7f9f9, oishii_inc #FFFFFF in dark mode) need dark
+// text, otherwise the close-button label disappears.
+function contrastColor(hex: string): string {
+  const rgb = parseHex(hex);
+  if (!rgb) return "white";
+  // WCAG relative luminance.
+  const [r, g, b] = rgb.map((c) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  }) as [number, number, number];
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 0.5 ? "#111111" : "white";
+}
+
+function parseHex(hex: string): [number, number, number] | null {
+  const m = /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.exec(hex.trim());
+  if (!m) return null;
+  let h = m[1]!;
+  if (h.length === 3) h = h[0]! + h[0]! + h[1]! + h[1]! + h[2]! + h[2]!;
+  return [
+    parseInt(h.slice(0, 2), 16),
+    parseInt(h.slice(2, 4), 16),
+    parseInt(h.slice(4, 6), 16),
+  ];
 }
 
 export type TabSelectHandler = (slug: string) => void;
