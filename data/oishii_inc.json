@@ -1,7 +1,56 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-29T00:00:00Z",
-  "last_synced_at": "2026-05-29T00:00:00Z",
+  "generated_at": "2026-05-29T10:11:22Z",
+  "last_synced_at": "2026-05-21T13:48:05Z",
   "source_query": "from:oishii_inc has:videos -is:retweet",
-  "videos": []
+  "videos": [
+    {
+      "id": "2057458410858389676",
+      "url": "https://x.com/official_aimai/status/2057458410858389676",
+      "posted_at": "2026-05-21T13:48:05Z",
+      "duration_sec": 433,
+      "text": "【🎥ライブ映像公開】\n2026.05.21(TUE) Spotify O-Crest\nhttps://t.co/C9xa8zhWxo Presents\n「美味しいイベント」 -Family restaurant- より\nhttps://t.co/C9xa8zhWxo所属全3グループの映像の一部をダイジェストで公開！\n＃美味しいイベント https://t.co/YftcJ7vaue",
+      "tags": []
+    },
+    {
+      "id": "2036070046448148786",
+      "url": "https://x.com/official_aimai/status/2036070046448148786",
+      "posted_at": "2026-03-23T13:18:22Z",
+      "duration_sec": 296,
+      "text": "【🎥ライブ映像公開】\n2026.03.22(SUN) GRIT at Shibuya\nhttps://t.co/C9xa8zhWxo Presents\n「美味しいイベント」 -Family restaurant- より\nhttps://t.co/C9xa8zhWxo所属全3グループの映像の一部をダイジェストで公開！\n＃美味しいイベント https://t.co/YoiucPriEP",
+      "tags": []
+    },
+    {
+      "id": "2011051021615997353",
+      "url": "https://x.com/official_aimai/status/2011051021615997353",
+      "posted_at": "2026-01-13T12:21:41Z",
+      "duration_sec": 187,
+      "text": "2026.01.13(TUE)\nhttps://t.co/C9xa8zhWxo Presents「美味しいイベント」\nat Spotify O-WEST\n＃美味しい曖昧 ＃美味しい贖罪 https://t.co/ezprDOgr96",
+      "tags": []
+    },
+    {
+      "id": "1994360637351407831",
+      "url": "https://x.com/official_aimai/status/1994360637351407831",
+      "posted_at": "2025-11-28T11:00:04Z",
+      "duration_sec": 38,
+      "text": "⋱ アイドルオーディション実施中 ⋰\n\n歌うこと、踊ること、表現することが好きな方を大募集しています！\n応募は専用LINE、またはメールから📞✉️\n\nあなたのご応募を心よりお待ちしております✨\n\nお問い合わせ／ご応募\n▶audition@oishii.love\n▶https://t.co/SiScUn0WNB\n\n#オイシイドットインク https://t.co/CB17Y5FUIY",
+      "tags": []
+    },
+    {
+      "id": "1925203790598398085",
+      "url": "https://x.com/official_aimai/status/1925203790598398085",
+      "posted_at": "2025-05-21T14:55:26Z",
+      "duration_sec": 310,
+      "text": "2025.05.21(WED)\nat SHIBUYA TAKE OFF7\nhttps://t.co/C9xa8zhWxo Presents\n「美味しいイベント」 -Family restaurant-\n#美味しい曖昧 #美味しい水玉 https://t.co/rxzT05EvFY",
+      "tags": []
+    },
+    {
+      "id": "1818972446537527304",
+      "url": "https://x.com/official_aimai/status/1818972446537527304",
+      "posted_at": "2024-08-01T11:30:00Z",
+      "duration_sec": 41,
+      "text": "#期間限定_美味しいまるまる\n\n現体制終了ライブまで⚪️ あと7日 ⚪️\n\n「美味しいイベント」-Family restaurant-\n\n2024/08/08(木) Spotify O-nest\nOP/ST 18:30/19:00\n\n▼チケット\n優先(A) ¥5,000 一般(B) ¥2,500\nhttps://t.co/J6yFbqL5qs\n\n▼出演\n[期間限定]美味しい○○\n美味しい曖昧 https://t.co/XWLRQcWpjf",
+      "tags": []
+    }
+  ]
 }
