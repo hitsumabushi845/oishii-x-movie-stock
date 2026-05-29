@@ -5,6 +5,7 @@
   --accent: #1d9bf0;
   --group-accent: var(--accent);
   --group-accent-on-header: var(--accent);
+  --group-accent-fg: white;
   --border: #eeeeee;
   --row-hover: #f7f7f8;
   --row-open: #fafafa;
@@ -70,7 +71,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); fon
   background: var(--bg); color: var(--fg);
   border: 1px solid var(--border); border-radius: 4px; cursor: pointer;
 }
-.play-btn.open { background: var(--group-accent); color: white; border-color: var(--group-accent); }
+.play-btn.open { background: var(--group-accent); color: var(--group-accent-fg, white); border-color: var(--group-accent); }
 .embed-host {
   grid-column: 1 / -1; margin-top: 10px; min-height: 40px;
   max-width: 100%; overflow: hidden;
