@@ -1,15 +1,23 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-29T10:07:23Z",
-  "last_synced_at": "2026-05-25T11:13:35Z",
+  "generated_at": "2026-06-06T11:20:06Z",
+  "last_synced_at": "2026-06-06T11:07:07Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2063216109504102543",
+      "url": "https://x.com/official_aimai/status/2063216109504102543",
+      "posted_at": "2026-06-06T11:07:07Z",
+      "duration_sec": 210,
+      "text": "【🎥ライブ映像公開】\n2026.06.06(SAT) 高田馬場CLUB PHASE 「曖昧なワンマン」-“双詩科なのは” 加入5周年ワンマン-\nより「サプリメ」「でしょ？！」「ユーグレナはわかんない」の映像を一部公開！\n\n#美味しい曖昧 https://t.co/hLp27DkfRv",
+      "tags": []
+    },
     {
       "id": "2058869079331700791",
       "url": "https://x.com/official_aimai/status/2058869079331700791",
       "posted_at": "2026-05-25T11:13:35Z",
       "duration_sec": 174,
-      "text": "【🎥ライブ映像公開】\n2026.05.25(MON) 青山RizM\nhakanai × 美味しい曖昧『曖昧ごっこ』より\nhakanaiさんの楽曲「白と透明」をカバーさせていただきました！\n#美味しい曖昧 #hakanai https://t.co/AnoFIY5eYZ",
+      "text": "【🎥ライブ映像公開】\n2026.05.25(MON) 青山RizM hakanai × 美味しい曖昧『曖昧ごっこ』より\nhakanaiさんの楽曲「白と透明」をカバーさせていただきました！\n#美味しい曖昧 #hakanai https://t.co/AnoFIY5eYZ",
       "tags": []
     },
     {
