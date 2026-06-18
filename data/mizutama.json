@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-07T16:10:25Z",
-  "last_synced_at": "2026-05-05T06:52:28Z",
+  "generated_at": "2026-06-15T20:47:53Z",
+  "last_synced_at": "2026-06-08T12:32:52Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2063962463427756059",
+      "url": "https://x.com/official_aimai/status/2063962463427756059",
+      "posted_at": "2026-06-08T12:32:52Z",
+      "duration_sec": 199,
+      "text": "2026.06.08(MON) Shibuya Milkyway\n「美味しいイベント」-美味しい水玉・定期主催-\nの映像を一部公開！\n#美味しい水玉 https://t.co/VZAmTem41C",
+      "tags": []
+    },
     {
       "id": "2051555612908249491",
       "url": "https://x.com/official_aimai/status/2051555612908249491",
