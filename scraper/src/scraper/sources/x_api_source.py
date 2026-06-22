@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import time
 from datetime import datetime, timezone
 from typing import Any, Iterator
 
@@ -13,6 +14,10 @@ from .base import FetchedVideo
 SEARCH_ALL_URL = "https://api.twitter.com/2/tweets/search/all"
 DEFAULT_USERNAME = "official_aimai"
 DEFAULT_PAGE_DELAY_SEC = 2.0
+DEFAULT_MAX_RETRIES = 5
+DEFAULT_RETRY_BASE_DELAY_SEC = 5.0
+# Cap any single backoff wait so a bogus reset header can't stall the job.
+MAX_RETRY_DELAY_SEC = 120.0
 
 
 class XApiSource:
@@ -31,12 +36,16 @@ class XApiSource:
         client: httpx.AsyncClient | None = None,
         page_size: int = 100,
         page_delay_sec: float = DEFAULT_PAGE_DELAY_SEC,
+        max_retries: int = DEFAULT_MAX_RETRIES,
+        retry_base_delay_sec: float = DEFAULT_RETRY_BASE_DELAY_SEC,
     ) -> None:
         self._bearer = bearer_token
         self._username = username
         self._client = client
         self._page_size = page_size
         self._page_delay_sec = page_delay_sec
+        self._max_retries = max_retries
+        self._retry_base_delay_sec = retry_base_delay_sec
 
     async def fetch(
         self, query: str, *, since: datetime | None = None
@@ -75,8 +84,7 @@ class XApiSource:
             page_params = dict(params)
             if next_token:
                 page_params["pagination_token"] = next_token
-            r = await client.get(SEARCH_ALL_URL, params=page_params, headers=self._auth_headers())
-            r.raise_for_status()
+            r = await self._get_with_retry(client, page_params)
             payload = r.json()
             out.extend(_extract_videos(payload, self._username))
             next_token = payload.get("meta", {}).get("next_token")
@@ -85,6 +93,35 @@ class XApiSource:
             # Sleep between pages to stay under the search/all rate limit.
             await asyncio.sleep(self._page_delay_sec)
         return out
+
+    async def _get_with_retry(
+        self, client: httpx.AsyncClient, page_params: dict[str, Any]
+    ) -> httpx.Response:
+        """GET a page, backing off and retrying on 429 (rate limited).
+
+        Honors the server's ``Retry-After`` / ``x-rate-limit-reset`` hint when
+        present, otherwise falls back to exponential backoff. Other HTTP errors
+        raise immediately.
+        """
+        attempt = 0
+        while True:
+            r = await client.get(
+                SEARCH_ALL_URL, params=page_params, headers=self._auth_headers()
+            )
+            if r.status_code != 429 or attempt >= self._max_retries:
+                r.raise_for_status()
+                return r
+            await asyncio.sleep(self._retry_delay(r, attempt))
+            attempt += 1
+
+    def _retry_delay(self, response: httpx.Response, attempt: int) -> float:
+        """Seconds to wait before retrying a 429, from headers or backoff."""
+        hinted = _parse_rate_limit_headers(response)
+        if hinted is not None:
+            delay = hinted
+        else:
+            delay = self._retry_base_delay_sec * (2**attempt)
+        return min(max(delay, 0.0), MAX_RETRY_DELAY_SEC)
 
     def _auth_headers(self) -> dict[str, str]:
         return {"Authorization": f"Bearer {self._bearer}"}
@@ -122,6 +159,27 @@ def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedV
             duration_sec=round(duration_ms / 1000),
             text=tweet.get("text", ""),
         )
+
+
+def _parse_rate_limit_headers(response: httpx.Response) -> float | None:
+    """Extract a wait, in seconds, from rate-limit headers (None if absent).
+
+    ``Retry-After`` is a delta in seconds; ``x-rate-limit-reset`` is an epoch
+    timestamp from which we derive the remaining wait.
+    """
+    retry_after = response.headers.get("retry-after")
+    if retry_after:
+        try:
+            return float(retry_after)
+        except ValueError:
+            pass
+    reset = response.headers.get("x-rate-limit-reset")
+    if reset:
+        try:
+            return float(reset) - time.time()
+        except ValueError:
+            pass
+    return None
 
 
 def _parse_created_at(value: str) -> datetime:
