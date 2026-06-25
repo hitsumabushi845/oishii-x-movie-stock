@@ -113,3 +113,68 @@ def test_parse_created_at_handles_milliseconds():
     assert dt.tzinfo is not None
     # Compare against an explicit UTC datetime to confirm timezone handling.
     assert dt == datetime(2026, 4, 30, 14, 12, 9, tzinfo=timezone.utc)
+
+
+# --- 429 retry / backoff ---
+
+import httpx
+
+from scraper.sources.x_api_source import _parse_rate_limit_headers
+
+
+@pytest.mark.asyncio
+async def test_search_retries_after_429_then_succeeds(monkeypatch):
+    slept: list[float] = []
+
+    async def fake_sleep(delay):
+        slept.append(delay)
+
+    monkeypatch.setattr("scraper.sources.x_api_source.asyncio.sleep", fake_sleep)
+
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if calls["n"] <= 2:
+            return httpx.Response(429, json={})
+        return httpx.Response(200, json=SAMPLE_PAGE)
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    src = XApiSource(
+        "token", username="official_aimai", client=client, retry_base_delay_sec=1.0
+    )
+
+    result = await src.fetch("q")
+
+    assert calls["n"] == 3  # two 429s, then a 200
+    assert [v.id for v in result] == ["100"]
+    # Exponential backoff: base * 2**0, base * 2**1.
+    assert slept == [1.0, 2.0]
+    await client.aclose()
+
+
+@pytest.mark.asyncio
+async def test_search_gives_up_after_max_retries(monkeypatch):
+    async def fake_sleep(delay):
+        pass
+
+    monkeypatch.setattr("scraper.sources.x_api_source.asyncio.sleep", fake_sleep)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(429, json={})
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    src = XApiSource("token", client=client, max_retries=2, retry_base_delay_sec=0.1)
+
+    with pytest.raises(httpx.HTTPStatusError):
+        await src.fetch("q")
+    await client.aclose()
+
+
+def test_parse_rate_limit_headers_prefers_retry_after():
+    resp = httpx.Response(429, headers={"retry-after": "7"})
+    assert _parse_rate_limit_headers(resp) == 7.0
+
+
+def test_parse_rate_limit_headers_returns_none_when_absent():
+    assert _parse_rate_limit_headers(httpx.Response(429)) is None

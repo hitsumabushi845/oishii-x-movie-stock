@@ -19,6 +19,9 @@ jobs:
     timeout-minutes: 15
     strategy:
       fail-fast: false
+      # Run groups one at a time so we never fire several search/all requests
+      # at the same instant — the endpoint rate-limits aggressively (429).
+      max-parallel: 1
       matrix:
         group: [aimai, shokuzai, mizutama, oishii_inc]
     steps:
@@ -88,6 +91,7 @@ jobs:
           branch: bot/update-data
           delete-branch: true
           add-paths: data/*.json
+          reviewers: hitsumabushi845
       - name: Notify Slack on failure
         if: ${{ failure() || needs.scrape.result == 'failure' }}
         uses: slackapi/slack-github-action@fcfb566f8b0aab22203f066d80ca1d7e4b5d05b3 # v1.27.1
