@@ -1,9 +1,41 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-07T16:10:16Z",
-  "last_synced_at": "2026-05-05T12:05:00Z",
+  "generated_at": "2026-06-25T15:36:25Z",
+  "last_synced_at": "2026-06-23T11:33:39Z",
   "source_query": "from:ofc_shokuzai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2069383378907066826",
+      "url": "https://x.com/official_aimai/status/2069383378907066826",
+      "posted_at": "2026-06-23T11:33:39Z",
+      "duration_sec": 21,
+      "text": "✝️ 2026/06/23(火)\n\nQUEEN LAND VOL.6\n下北沢シャングリラ\n\nご来場いただきありがとうございました🕯\n\n⏬次回のライブ\n\n2026/06/26(金)\n\n「贖罪なワンマン1」\n-黒衣の深淵、終末の聖歌-\n\n渋谷音楽堂\n\n🎫 https://t.co/IrsHMap5O3 https://t.co/PYhHT3qquA",
+      "tags": []
+    },
+    {
+      "id": "2067948191132340601",
+      "url": "https://x.com/official_aimai/status/2067948191132340601",
+      "posted_at": "2026-06-19T12:30:44Z",
+      "duration_sec": 55,
+      "text": "「贖罪なワンマン1」-黒衣の深淵、終末の聖歌-まであと1週間✝️\nメンバーからのメッセージ動画をお届けします🕯 https://t.co/55CsBJvc9m",
+      "tags": []
+    },
+    {
+      "id": "2064997414361288769",
+      "url": "https://x.com/official_aimai/status/2064997414361288769",
+      "posted_at": "2026-06-11T09:05:24Z",
+      "duration_sec": 80,
+      "text": "2026.06.10 (WED) SHIBUYA CYCLONE\n#ﾆｷﾌﾟﾚ『カンシャサイ。-夏-』 SHIBUYA CYCLONE\nより新曲「L'Oiel」の映像を一部公開！\n＃美味しい贖罪 https://t.co/yJaQauARKe",
+      "tags": []
+    },
+    {
+      "id": "2064996065900650869",
+      "url": "https://x.com/official_aimai/status/2064996065900650869",
+      "posted_at": "2026-06-11T09:00:02Z",
+      "duration_sec": 80,
+      "text": "2026.06.10 (WED) SHIBUYA CYCLONE\n#ﾆｷﾌﾟﾚ『カンシャサイ。-夏-』 SHIBUYA CYCLONE\nより新曲「L'Oiel」の映像を一部公開！ https://t.co/cAlnYtbESf",
+      "tags": []
+    },
     {
       "id": "2051634264542970105",
       "url": "https://x.com/official_aimai/status/2051634264542970105",
