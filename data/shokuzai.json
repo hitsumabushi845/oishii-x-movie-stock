@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-06-25T15:36:25Z",
-  "last_synced_at": "2026-06-23T11:33:39Z",
+  "generated_at": "2026-07-01T03:02:55Z",
+  "last_synced_at": "2026-06-26T12:29:06Z",
   "source_query": "from:ofc_shokuzai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2070484495447568453",
+      "url": "https://x.com/official_aimai/status/2070484495447568453",
+      "posted_at": "2026-06-26T12:29:06Z",
+      "duration_sec": 267,
+      "text": "2026.06.26(FRI)渋谷音楽堂\n「贖罪なワンマン1」\n-黒衣の深淵、終末の聖歌- の映像を一部公開！\n#美味しい贖罪 https://t.co/WVonetsLPw",
+      "tags": []
+    },
     {
       "id": "2069383378907066826",
       "url": "https://x.com/official_aimai/status/2069383378907066826",
