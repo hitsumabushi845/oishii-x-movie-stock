@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-05-29T10:11:22Z",
-  "last_synced_at": "2026-05-21T13:48:05Z",
+  "generated_at": "2026-07-01T03:03:16Z",
+  "last_synced_at": "2026-06-30T13:48:04Z",
   "source_query": "from:oishii_inc has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2071953921120284822",
+      "url": "https://x.com/official_aimai/status/2071953921120284822",
+      "posted_at": "2026-06-30T13:48:04Z",
+      "duration_sec": 385,
+      "text": "2026.06.30(TUE) Spotify O-Crest https://t.co/C9xa8zhWxo Presents\n「美味しいイベント」-Family restaurant-の映像を一部公開！\n初のバトルスタイルでのファミレスでした！\n#オイシイファミレス https://t.co/xdd712LcBL",
+      "tags": []
+    },
     {
       "id": "2057458410858389676",
       "url": "https://x.com/official_aimai/status/2057458410858389676",
