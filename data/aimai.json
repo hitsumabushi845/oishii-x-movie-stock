@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-06-25T15:36:15Z",
-  "last_synced_at": "2026-06-06T11:07:07Z",
+  "generated_at": "2026-07-23T05:33:44Z",
+  "last_synced_at": "2026-07-07T13:25:01Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2074484837428367505",
+      "url": "https://x.com/official_aimai/status/2074484837428367505",
+      "posted_at": "2026-07-07T13:25:01Z",
+      "duration_sec": 204,
+      "text": "2026.07.07(TUE) 六本木unravel tokyo Finally presents 10days Live Show “GACHINKO 2026”の映像を一部公開！\nFinallyさんの「彼女になりたかった。」「Danger」をコラボさせていただきました！\n#Finally  #美味しい曖昧 https://t.co/60K2mvpMES",
+      "tags": []
+    },
     {
       "id": "2063216109504102543",
       "url": "https://x.com/official_aimai/status/2063216109504102543",
