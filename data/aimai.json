@@ -1,9 +1,41 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-07-23T05:33:44Z",
-  "last_synced_at": "2026-07-07T13:25:01Z",
+  "generated_at": "2026-07-28T13:41:36Z",
+  "last_synced_at": "2026-07-28T12:00:01Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2082073591445614621",
+      "url": "https://x.com/official_aimai/status/2082073591445614621",
+      "posted_at": "2026-07-28T12:00:01Z",
+      "duration_sec": 86,
+      "text": "#美味しい曖昧 コラボ香水を\n💜切兎うずめ💜が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSO35R\n\n#美味しい曖昧です香ります https://t.co/T2DABRNlo8",
+      "tags": []
+    },
+    {
+      "id": "2081711197422760218",
+      "url": "https://x.com/official_aimai/status/2081711197422760218",
+      "posted_at": "2026-07-27T12:00:00Z",
+      "duration_sec": 73,
+      "text": "#美味しい曖昧 コラボ香水を\n🩵時織せいな🩵が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSO35R\n\n#美味しい曖昧です香ります https://t.co/HvEBJE7OJ5",
+      "tags": []
+    },
+    {
+      "id": "2081348814242468158",
+      "url": "https://x.com/official_aimai/status/2081348814242468158",
+      "posted_at": "2026-07-26T12:00:01Z",
+      "duration_sec": 86,
+      "text": "#美味しい曖昧 コラボ香水を\n🧡双詩科なのは🧡が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSOAVp\n\n#美味しい曖昧です香ります https://t.co/rsokN53uFH",
+      "tags": []
+    },
+    {
+      "id": "2080986429329703384",
+      "url": "https://x.com/official_aimai/status/2080986429329703384",
+      "posted_at": "2026-07-25T12:00:02Z",
+      "duration_sec": 77,
+      "text": "#美味しい曖昧 コラボ香水を\n💙穂乃歌みくる💙が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSOAVp\n\n#美味しい曖昧です香ります https://t.co/1WTTIwdRGU",
+      "tags": []
+    },
     {
       "id": "2074484837428367505",
       "url": "https://x.com/official_aimai/status/2074484837428367505",
