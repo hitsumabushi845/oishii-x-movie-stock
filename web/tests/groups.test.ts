@@ -87,16 +87,16 @@ describe("applyGroupTheme", () => {
 });
 
 describe("buildTabs", () => {
-  it("renders one button per group with aria-selected reflecting active", () => {
+  it("renders one normal button per group with the active group pressed", () => {
     const nav = doc.createElement("nav");
     buildTabs(nav as unknown as HTMLElement, GROUPS, "shokuzai", () => {});
-    const buttons = nav.querySelectorAll("button[role='tab']");
+    const buttons = nav.querySelectorAll("button");
     expect(buttons.length).toBe(3);
-    expect((buttons[0]! as HTMLButtonElement).getAttribute("aria-selected")).toBe("false");
-    expect((buttons[1]! as HTMLButtonElement).getAttribute("aria-selected")).toBe("true");
+    expect((buttons[0]! as HTMLButtonElement).getAttribute("aria-pressed")).toBe("false");
+    expect((buttons[1]! as HTMLButtonElement).getAttribute("aria-pressed")).toBe("true");
     expect((buttons[1]! as HTMLButtonElement).getAttribute("data-group")).toBe("shokuzai");
-    expect((buttons[2]! as HTMLButtonElement).getAttribute("tabindex")).toBe("-1");
-    expect((buttons[1]! as HTMLButtonElement).getAttribute("tabindex")).toBe("0");
+    expect((buttons[0]! as HTMLButtonElement).classList.contains("active")).toBe(false);
+    expect((buttons[1]! as HTMLButtonElement).classList.contains("active")).toBe(true);
   });
 
   it("invokes onSelect with the slug when a tab is clicked", () => {
@@ -105,17 +105,17 @@ describe("buildTabs", () => {
     buildTabs(nav as unknown as HTMLElement, GROUPS, "aimai", (slug) => {
       last = slug;
     });
-    const target = nav.querySelectorAll("button[role='tab']")[2]! as HTMLButtonElement;
+    const target = nav.querySelectorAll("button")[2]! as HTMLButtonElement;
     target.click();
     expect(last).toBe("mizutama");
   });
 
-  it("re-render updates aria-selected and replaces previous buttons", () => {
+  it("re-render updates the pressed button and replaces previous buttons", () => {
     const nav = doc.createElement("nav");
     buildTabs(nav as unknown as HTMLElement, GROUPS, "aimai", () => {});
     buildTabs(nav as unknown as HTMLElement, GROUPS, "mizutama", () => {});
-    expect(nav.querySelectorAll("button[role='tab']").length).toBe(3);
-    const selected = nav.querySelector("button[aria-selected='true']");
+    expect(nav.querySelectorAll("button").length).toBe(3);
+    const selected = nav.querySelector("button[aria-pressed='true']");
     expect((selected as HTMLButtonElement).getAttribute("data-group")).toBe("mizutama");
   });
 });

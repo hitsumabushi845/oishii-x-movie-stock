@@ -172,7 +172,11 @@ async function bootstrap(): Promise<void> {
       void selectGroup(s, true);
     });
     syncUrl(state, push);
-    await recompute();
+    try {
+      await recompute();
+    } catch (error) {
+      showReloadError(error);
+    }
   }
 
   // Initial chrome and tab render
@@ -184,7 +188,7 @@ async function bootstrap(): Promise<void> {
   search.addEventListener("input", () => {
     state.query = search.value;
     syncUrl(state, false);
-    void recompute();
+    void recompute().catch(showReloadError);
   });
 
   for (const btn of sortBtns) {
@@ -192,14 +196,14 @@ async function bootstrap(): Promise<void> {
       const order = btn.dataset.sort as SortOrder;
       state.order = order;
       sortBtns.forEach((b) => b.classList.toggle("active", b === btn));
-      void recompute();
+      void recompute().catch(showReloadError);
     });
   }
 
   min1m.addEventListener("change", () => {
     state.minDurationSec = min1m.checked ? MIN_1M : 0;
     syncUrl(state, false);
-    void recompute();
+    void recompute().catch(showReloadError);
   });
 
   window.addEventListener("popstate", () => {
@@ -218,7 +222,7 @@ async function bootstrap(): Promise<void> {
         void selectGroup(s, true);
       });
     }
-    void recompute();
+    void recompute().catch(showReloadError);
   });
 
   const io = new IntersectionObserver((entries) => {
@@ -246,9 +250,21 @@ function syncUrl(state: State, push: boolean): void {
 }
 
 bootstrap().catch((e) => {
-  console.error(e);
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    `<pre style="color:red;padding:16px">${String(e)}</pre>`,
-  );
+  showReloadError(e);
 });
+
+function showReloadError(error: unknown): void {
+  console.error(error);
+  const main = document.createElement("main");
+  main.className = "fatal-error";
+  const heading = document.createElement("h1");
+  heading.textContent = "データを読み込めませんでした";
+  const message = document.createElement("p");
+  message.textContent = "ページを再読み込みして、もう一度お試しください。";
+  const reload = document.createElement("button");
+  reload.type = "button";
+  reload.textContent = "再読み込み";
+  reload.addEventListener("click", () => window.location.reload());
+  main.append(heading, message, reload);
+  document.body.replaceChildren(main);
+}

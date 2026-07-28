@@ -98,10 +98,10 @@ describe("index.html structure", () => {
     doc = parseHead();
   });
 
-  it("includes an empty tabs nav placeholder for JS-driven tab rendering", () => {
+  it("includes an empty groups nav placeholder for JS-driven rendering", () => {
     const tabs = doc.getElementById("tabs");
     expect(tabs).not.toBeNull();
-    expect(tabs?.getAttribute("role")).toBe("tablist");
+    expect(tabs?.getAttribute("role")).toBeNull();
     expect(tabs?.children.length).toBe(0);
   });
 });

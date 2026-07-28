@@ -97,12 +97,11 @@ export function buildTabs(
   for (const g of groups) {
     const btn = container.ownerDocument.createElement("button");
     btn.type = "button";
-    btn.setAttribute("role", "tab");
     btn.dataset.group = g.slug;
     btn.textContent = g.displayName;
     const active = g.slug === activeSlug;
-    btn.setAttribute("aria-selected", active ? "true" : "false");
-    btn.setAttribute("tabindex", active ? "0" : "-1");
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
     btn.addEventListener("click", () => onSelect(g.slug));
     container.appendChild(btn);
   }
