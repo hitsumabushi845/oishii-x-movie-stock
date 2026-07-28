@@ -20,36 +20,106 @@
 
     <meta name="twitter:card" content="summary_large_image" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..700&family=Zen+Kaku+Gothic+New:wght@400;500&family=Zen+Old+Mincho:wght@700&display=swap"
+    />
     <link rel="stylesheet" href="/src/styles.css" />
+
+    <!-- Resolve the theme before first paint so a stored choice never flashes.
+         Storage key mirrors THEME_STORAGE_KEY in src/theme.ts. -->
+    <script>
+      (function () {
+        var mode;
+        try {
+          mode = localStorage.getItem("oms:theme");
+        } catch (e) {}
+        if (mode !== "light" && mode !== "dark") {
+          mode = "auto";
+        }
+        var root = document.documentElement;
+        root.dataset.themeMode = mode;
+        root.dataset.theme =
+          mode === "auto"
+            ? window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : mode;
+      })();
+    </script>
   </head>
   <body>
-    <header class="site-header">
-      <div>
-        <div class="site-title">OISHII Movie Stock</div>
-        <div class="site-sub" id="site-sub"></div>
+    <header class="masthead">
+      <div class="masthead__bar">
+        <span class="wordmark">OISHII MOVIE STOCK</span>
+        <div class="masthead__meta">
+          <span class="masthead__note">非公式アーカイブ</span>
+          <button class="theme-toggle" id="theme-toggle" type="button">
+            <span class="theme-toggle__disc" aria-hidden="true"></span>
+            <span class="theme-toggle__label" id="theme-toggle-label">自動</span>
+          </button>
+        </div>
       </div>
-      <a class="site-link" id="site-link" href="https://x.com/official_aimai" target="_blank" rel="noopener">X で見る →</a>
+      <nav class="tabs" id="tabs" aria-label="グループ"></nav>
     </header>
-    <nav class="tabs" id="tabs" role="tablist" aria-label="グループ"></nav>
+
+    <section class="thesis">
+      <h1 class="thesis__line">
+        <span class="thesis__group" id="site-sub"></span>
+        <span class="thesis__rule" aria-hidden="true"></span>
+        <span class="thesis__runtime" id="stat-runtime"></span>
+      </h1>
+      <p class="colophon">
+        <span class="colophon__item" id="stat-count"></span>
+        <span class="colophon__item" id="stat-span"></span>
+        <a
+          class="colophon__item colophon__link"
+          id="site-link"
+          href="https://x.com/official_aimai"
+          target="_blank"
+          rel="noopener"
+          >@official_aimai</a
+        >
+      </p>
+    </section>
+
     <div class="toolbar">
-      <input id="q" type="search" placeholder="🔍 動画を検索（本文）" />
+      <label class="field">
+        <span class="field__label">検索</span>
+        <input id="q" type="search" placeholder="ライブ名・会場・曲名で絞り込む" />
+      </label>
       <div class="sort" role="group" aria-label="並び順">
         <button data-sort="desc" class="active">新しい順</button>
         <button data-sort="asc">古い順</button>
       </div>
       <label class="filter">
-        <input id="min-1m" type="checkbox" /> 1分以上のみ
+        <input id="min-1m" type="checkbox" />
+        <span>1分以上のみ</span>
       </label>
       <div id="count" class="count"></div>
     </div>
+
     <main id="list" class="list"></main>
     <div id="sentinel" data-sentinel></div>
+
     <footer class="site-footer">
       <span id="updated"></span>
-      ·
-      制作: <a href="https://x.com/p2o_whisper" target="_blank" rel="noopener">@p2o_whisper</a>
-      ·
-      <a href="https://github.com/hitsumabushi845/oishii-x-movie-stock" target="_blank" rel="noopener">GitHub</a>
+      <span class="site-footer__sep" aria-hidden="true"></span>
+      <span
+        >制作:
+        <a href="https://x.com/p2o_whisper" target="_blank" rel="noopener"
+          >@p2o_whisper</a
+        ></span
+      >
+      <span class="site-footer__sep" aria-hidden="true"></span>
+      <a
+        href="https://github.com/hitsumabushi845/oishii-x-movie-stock"
+        target="_blank"
+        rel="noopener"
+        >GitHub</a
+      >
     </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
