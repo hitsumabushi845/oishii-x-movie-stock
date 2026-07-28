@@ -46,6 +46,14 @@ function generateGroupCss(groups: GroupDef[]): string {
         `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-on-header: ${g.color}; --group-accent-fg: ${contrastColor(g.colorDark)}; }`,
       );
     }
+    // Every tab wears its own group's colour, not just the active one, so the
+    // strip shows the whole roster's palette at a glance.
+    lines.push(`.tabs button[data-group="${g.slug}"] { --tab-accent: ${g.color}; }`);
+    if (g.colorDark) {
+      lines.push(
+        `[data-theme="dark"] .tabs button[data-group="${g.slug}"] { --tab-accent: ${g.colorDark}; }`,
+      );
+    }
   }
   return lines.join("\n");
 }
@@ -105,7 +113,10 @@ export function updateHeaderForGroup(
   group: GroupDef,
 ): void {
   const sub = doc.getElementById("site-sub");
-  if (sub) sub.textContent = `@${group.xHandle} の動画アーカイブ`;
+  if (sub) sub.textContent = group.displayName;
   const link = doc.getElementById("site-link");
-  if (link) link.setAttribute("href", `https://x.com/${group.xHandle}`);
+  if (link) {
+    link.setAttribute("href", `https://x.com/${group.xHandle}`);
+    link.textContent = `@${group.xHandle}`;
+  }
 }

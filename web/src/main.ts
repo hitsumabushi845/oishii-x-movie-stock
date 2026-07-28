@@ -10,6 +10,7 @@ import {
   resolveActiveGroup,
   updateHeaderForGroup,
 } from "./groups.js";
+import { archiveStats, MIN_1M_RATIO, type ArchiveStats } from "./stats.js";
 import type { GroupDef, GroupsManifest, SortOrder, Video, VideosFile } from "./types.js";
 
 const BATCH = 20;
@@ -44,6 +45,15 @@ async function bootstrap(): Promise<void> {
   const sortBtns = document.querySelectorAll<HTMLButtonElement>(".sort button");
   const min1m = document.getElementById("min-1m") as HTMLInputElement;
   const tabsHost = document.getElementById("tabs") as HTMLElement;
+  const runtimeEl = document.getElementById("stat-runtime") as HTMLElement;
+  const statCountEl = document.getElementById("stat-count") as HTMLElement;
+  const statSpanEl = document.getElementById("stat-span") as HTMLElement;
+
+  // Anchor the duration meter's 1-minute tick to the same scale render.ts uses.
+  document.documentElement.style.setProperty(
+    "--meter-tick",
+    `${(MIN_1M_RATIO * 100).toFixed(2)}%`,
+  );
 
   const manifest = await loadGroupsManifest(MANIFEST_URL);
 
@@ -98,13 +108,40 @@ async function bootstrap(): Promise<void> {
     updateHeaderForGroup(document, findGroup(slug));
   }
 
+  function paintArchiveStats(stats: ArchiveStats | null): void {
+    runtimeEl.replaceChildren();
+    if (!stats) {
+      statCountEl.textContent = "";
+      statSpanEl.textContent = "";
+      return;
+    }
+    // 6時間15分 — digits in condensed mono, units in the display face.
+    const parts: Array<[number, string]> = stats.hours
+      ? [
+          [stats.hours, "時間"],
+          [stats.minutes, "分"],
+        ]
+      : [[stats.minutes, "分"]];
+    for (const [value, unit] of parts) {
+      const num = document.createElement("b");
+      num.textContent = String(value);
+      const label = document.createElement("span");
+      label.textContent = unit;
+      runtimeEl.append(num, label);
+    }
+    statCountEl.textContent = `${stats.count} CLIPS`;
+    statSpanEl.textContent = `${stats.firstDate} → ${stats.lastDate}`;
+  }
+
   async function recompute(): Promise<void> {
     const slug = state.activeGroup;
     const groupState = await loadGroup(slug);
     if (slug !== state.activeGroup) return;
-    updatedEl.textContent = `最終更新: ${groupState.generatedAt
+    updatedEl.textContent = `最終更新 ${groupState.generatedAt
       .replace("T", " ")
       .replace("Z", " UTC")}`;
+    // The masthead states the whole archive, not the current query.
+    paintArchiveStats(archiveStats(groupState.videos));
     const searched = state.query
       ? groupState.searcher.search(state.query)
       : groupState.videos;
@@ -114,7 +151,7 @@ async function bootstrap(): Promise<void> {
         : searched;
     state.view = sortVideos(filtered, state.order);
     state.visible = Math.min(BATCH, state.view.length);
-    countEl.textContent = `全 ${state.view.length} 件`;
+    countEl.textContent = `${state.view.length} 件`;
     replaceList(list, state.view.slice(0, state.visible), { embed: embedTweet });
     sentinel.style.display = state.visible < state.view.length ? "" : "none";
   }
