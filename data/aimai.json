@@ -1,9 +1,49 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-07-28T13:41:36Z",
-  "last_synced_at": "2026-07-28T12:00:01Z",
+  "generated_at": "2026-08-10T18:44:32Z",
+  "last_synced_at": "2026-08-03T13:55:39Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2084277015272964292",
+      "url": "https://x.com/official_aimai/status/2084277015272964292",
+      "posted_at": "2026-08-03T13:55:39Z",
+      "duration_sec": 28,
+      "text": "2026/08/03(月)Spotify O-Crest\n\nhttps://t.co/9hz0QeBOiK × SOVA Presents「美味しいソバ」\n\n#美味しい曖昧 #airattic https://t.co/JBuhJQsfFk",
+      "tags": []
+    },
+    {
+      "id": "2084256936724496533",
+      "url": "https://x.com/official_aimai/status/2084256936724496533",
+      "posted_at": "2026-08-03T12:35:51Z",
+      "duration_sec": 257,
+      "text": "【🎥ライブ映像公開】\n2026.08.03(MON) Spotify O-Crest https://t.co/9hz0QeBOiK × SOVA Presents「美味しいソバ」の映像を一部公開！衣装交換での特別なライブでした！\n\n#美味しい曖昧 https://t.co/3GU5HZZSZw",
+      "tags": []
+    },
+    {
+      "id": "2084210169945489831",
+      "url": "https://x.com/official_aimai/status/2084210169945489831",
+      "posted_at": "2026-08-03T09:30:01Z",
+      "duration_sec": 60,
+      "text": "🌟出順決めジャンケン🌟\n\n①airatticさん @airattic \n②美味しい曖昧 \n\nお楽しみに❣️❣️ https://t.co/rmgyUzVIA8 https://t.co/pO4jqDmVrt",
+      "tags": []
+    },
+    {
+      "id": "2082798374386848080",
+      "url": "https://x.com/official_aimai/status/2082798374386848080",
+      "posted_at": "2026-07-30T12:00:03Z",
+      "duration_sec": 76,
+      "text": "#美味しい曖昧 コラボ香水を\n❤️幽花はるか❤️が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSO35R\n\n#美味しい曖昧です香ります https://t.co/UIOaOdPNA6",
+      "tags": []
+    },
+    {
+      "id": "2082435975083360768",
+      "url": "https://x.com/official_aimai/status/2082435975083360768",
+      "posted_at": "2026-07-29T12:00:00Z",
+      "duration_sec": 86,
+      "text": "#美味しい曖昧 コラボ香水を\n💛雨已耶いちか💛が開封レポート🎬\n\nメンバーが調香した特別な香りをお迎えできるのは今だけ！この機会をお見逃しなく✨\n\n⏰販売期間：7/31(金) 23:59まで⏰\nhttps://t.co/L74BeSO35R\n\n#美味しい曖昧です香ります https://t.co/DEKsyW4kRt",
+      "tags": []
+    },
     {
       "id": "2082073591445614621",
       "url": "https://x.com/official_aimai/status/2082073591445614621",
