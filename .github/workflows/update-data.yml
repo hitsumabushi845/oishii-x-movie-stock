@@ -19,8 +19,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       fail-fast: false
-      # Run groups one at a time so we never fire several search/all requests
-      # at the same instant — the endpoint rate-limits aggressively (429).
+      # Run groups one at a time so we never fire several SocialData search
+      # requests at the same instant — the endpoint rate-limits (429).
       max-parallel: 1
       matrix:
         group: [aimai, shokuzai, mizutama, oishii_inc]
@@ -35,7 +35,7 @@ jobs:
       - name: Run scraper for ${{ matrix.group }}
         working-directory: scraper
         env:
-          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          SOCIALDATA_API_KEY: ${{ secrets.SOCIALDATA_API_KEY }}
         run: |
           uv run python -m scraper \
             --group ${{ matrix.group }} \

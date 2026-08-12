@@ -30,15 +30,16 @@ from .sources import FetchedVideo, Source
 DEFAULT_QUERY = "from:official_aimai has:videos -is:retweet"
 SCHEMA_POINTER = "../schema/videos.schema.json"
 
-# search/all defaults to roughly the last 30 days when start_time is unset.
-# For backfill we want the full archive, so we send an explicit early date.
+# Latest search returns only recent tweets when no cutoff is given. For backfill
+# we want the full archive, so we send an explicit early date that becomes a
+# `since_time:` operator on the query.
 BACKFILL_EPOCH = datetime(2010, 1, 1, tzinfo=timezone.utc)
 
 
-def _default_source_factory(bearer: str) -> Source:
-    from .sources.x_api_source import XApiSource
+def _default_source_factory(api_key: str) -> Source:
+    from .sources.socialdata_source import SocialDataSource
 
-    return XApiSource(bearer_token=bearer)
+    return SocialDataSource(api_key=api_key)
 
 
 async def run(
@@ -235,11 +236,11 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 3
 
-    bearer = os.environ.get("X_BEARER_TOKEN")
-    if not bearer:
-        print("error: X_BEARER_TOKEN environment variable is required", file=sys.stderr)
+    api_key = os.environ.get("SOCIALDATA_API_KEY")
+    if not api_key:
+        print("error: SOCIALDATA_API_KEY environment variable is required", file=sys.stderr)
         return 1
-    source = _default_source_factory(bearer)
+    source = _default_source_factory(api_key)
 
     try:
         if using_legacy:

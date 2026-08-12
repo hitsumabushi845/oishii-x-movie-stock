@@ -1,6 +1,6 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-07-28T13:42:12Z",
+  "generated_at": "2026-08-12T16:25:25Z",
   "last_synced_at": "2026-07-26T11:41:12Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
@@ -9,7 +9,7 @@
       "url": "https://x.com/official_aimai/status/2081344078139347112",
       "posted_at": "2026-07-26T11:41:12Z",
       "duration_sec": 106,
-      "text": "／\n#美味しい水玉 は\n2周年ワンマンの開催、\n初アルバムのリリースをします🕊️\n＼\n\n「水玉なワンマン3 - Sing to Cyan -」\n2026/10/08(木) Veats Shibuya\n🎫https://t.co/45Sdv1YSv1\n\n「水玉なアルバム1」\n2026/08/26(水)リリース\n▶️https://t.co/ACn0npn5Pa\n\n気になった方はぜひチェックしてください🫧 https://t.co/wY318c3Nmb https://t.co/Z0cot7i5Gs",
+      "text": "／\n#美味しい水玉 は\n2周年ワンマンの開催、\n初アルバムのリリースをします🕊️\n＼\n\n「水玉なワンマン3 - Sing to Cyan -」\n2026/10/08(木) Veats Shibuya\n🎫https://t.co/45Sdv1YSv1\n\n「水玉なアルバム1」\n2026/08/26(水)リリース\n▶️https://t.co/ACn0npn5Pa\n\n気になった方はぜひチェックしてください🫧 https://t.co/wY318c3Nmb",
       "tags": []
     },
     {

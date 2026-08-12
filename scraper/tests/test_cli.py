@@ -163,7 +163,7 @@ def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
         return CapturingSource()
 
     monkeypatch.setattr(cli_module, "_default_source_factory", fake_factory)
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
 
     manifest = _write_groups_manifest(tmp_path)
     data_dir = tmp_path
@@ -181,7 +181,7 @@ def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
 
 
 def test_run_with_group_and_legacy_query_is_rejected(tmp_path, monkeypatch):
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     err = io.StringIO()
     with redirect_stderr(err):
@@ -213,7 +213,7 @@ def test_run_with_all_iterates_all_groups(tmp_path, monkeypatch):
             ]
 
     monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: TrackingSource())
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     code = cli_main([
         "--all",
@@ -250,7 +250,7 @@ def test_run_with_all_continues_after_one_group_fails(tmp_path, monkeypatch):
             ]
 
     monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: FlakySource())
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     code = cli_main([
         "--all",

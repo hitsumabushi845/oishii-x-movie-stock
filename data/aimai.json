@@ -1,6 +1,6 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-10T18:44:32Z",
+  "generated_at": "2026-08-12T16:24:57Z",
   "last_synced_at": "2026-08-03T13:55:39Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
@@ -25,7 +25,7 @@
       "url": "https://x.com/official_aimai/status/2084210169945489831",
       "posted_at": "2026-08-03T09:30:01Z",
       "duration_sec": 60,
-      "text": "🌟出順決めジャンケン🌟\n\n①airatticさん @airattic \n②美味しい曖昧 \n\nお楽しみに❣️❣️ https://t.co/rmgyUzVIA8 https://t.co/pO4jqDmVrt",
+      "text": "🌟出順決めジャンケン🌟\n\n①airatticさん @airattic \n②美味しい曖昧 \n\nお楽しみに❣️❣️ https://t.co/rmgyUzVIA8",
       "tags": []
     },
     {
