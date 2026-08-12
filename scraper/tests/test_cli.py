@@ -37,7 +37,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     ])
     code = await run(
         source=src,
-        query="from:official_aimai filter:native_video -filter:retweets",
+        query="from:official_aimai has:videos -is:retweet",
         data_file=data_file,
         schema_file=_schema_path(),
         backfill=True,
@@ -176,7 +176,7 @@ def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
         "--backfill",
     ])
     assert code == 0
-    assert captured["query"] == "from:ofc_shokuzai filter:native_video -filter:retweets"
+    assert captured["query"] == "from:ofc_shokuzai has:videos -is:retweet"
     assert (data_dir / "shokuzai.json").exists()
 
 
@@ -225,8 +225,8 @@ def test_run_with_all_iterates_all_groups(tmp_path, monkeypatch):
     ])
     assert code == 0
     assert seen == [
-        "from:official_aimai filter:native_video -filter:retweets",
-        "from:ofc_shokuzai filter:native_video -filter:retweets",
+        "from:official_aimai has:videos -is:retweet",
+        "from:ofc_shokuzai has:videos -is:retweet",
     ]
     assert (tmp_path / "aimai.json").exists()
     assert (tmp_path / "shokuzai.json").exists()

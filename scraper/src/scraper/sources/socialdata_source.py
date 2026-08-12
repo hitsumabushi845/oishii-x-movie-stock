@@ -1,8 +1,8 @@
 """SocialData API backed implementation of Source (twitter/search).
 
-SocialData (https://socialdata.tools) proxies the Twitter/X website search, so
-queries use the same operators as the twitter.com search box (``filter:native_video``,
-``-filter:retweets``, ``since_time:<unix>``) rather than the X API v2 operators.
+SocialData (https://socialdata.tools) proxies the Twitter/X search and accepts
+the X API v2 search operators (``has:videos``, ``-is:retweet``) plus the
+twitter.com date operators such as ``since_time:<unix>``.
 """
 
 from __future__ import annotations
@@ -28,11 +28,11 @@ MAX_RETRY_DELAY_SEC = 120.0
 class SocialDataSource:
     """Fetch native videos via the SocialData ``twitter/search`` endpoint.
 
-    The search query (typically ``from:{username} filter:native_video
-    -filter:retweets``) is passed in by the caller. The username is kept here
-    only to construct canonical tweet URLs in the result; no user lookup is
-    performed. When ``since`` is given, a ``since_time:<unix>`` operator is
-    appended to the query — SocialData has no dedicated start-time parameter.
+    The search query (typically ``from:{username} has:videos -is:retweet``) is
+    passed in by the caller. The username is kept here only to construct
+    canonical tweet URLs in the result; no user lookup is performed. When
+    ``since`` is given, a ``since_time:<unix>`` operator is appended to the
+    query — SocialData has no dedicated start-time parameter.
     """
 
     def __init__(
@@ -144,10 +144,10 @@ def _apply_since(query: str, since: datetime | None) -> str:
 def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedVideo]:
     """Yield FetchedVideo for each tweet in the page that has a native video.
 
-    Server-side ``filter:native_video`` should already restrict results to
-    video tweets, but the type check is kept defensively — a query can still
-    surface photos or animated GIFs, and only ``type == "video"`` carries a
-    real ``duration_millis``.
+    Server-side ``has:videos`` should already restrict results to video
+    tweets, but the type check is kept defensively — a query can still surface
+    photos or animated GIFs, and only ``type == "video"`` carries a real
+    ``duration_millis``.
     """
     tweets = payload.get("tweets") or []
     for tweet in tweets:

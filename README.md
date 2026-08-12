@@ -107,10 +107,10 @@ make scrape-dry     # scraper の dry-run（書き込みなし、SocialData API 
 
 - 使用 endpoint: `GET https://api.socialdata.tools/twitter/search`
 - 認証: `Authorization: Bearer {SOCIALDATA_API_KEY}`
-- クエリ: `from:official_aimai filter:native_video -filter:retweets`
-  - SocialData は twitter.com 検索をプロキシするので Web 検索演算子を使う
-  - `filter:native_video` で X ホストの動画ツイートに限定
-  - `-filter:retweets` で RT を除外
+- クエリ: `from:official_aimai has:videos -is:retweet`
+  - SocialData は X の検索をプロキシしており、X API v2 の演算子がそのまま使える
+  - `has:videos` で動画を含むツイートに限定
+  - `-is:retweet` で RT/引用 RT を除外
 - 差分取得はクエリに `since_time:{last_synced_at}` 演算子を付与
 - バックフィル時は `since_time:2010-01-01`（= `BACKFILL_EPOCH`）を付けて全期間を取得（無指定だと直近ツイートのみに縛られる）
 - pagination は `next_cursor` を `cursor` として辿り、ページ間に 2 秒スリープを挟んで rate limit を回避

@@ -94,4 +94,4 @@ def test_build_query_uses_template():
         data_file="aimai.json",
         color="#bc2956",
     )
-    assert build_query(g) == "from:official_aimai filter:native_video -filter:retweets"
+    assert build_query(g) == "from:official_aimai has:videos -is:retweet"

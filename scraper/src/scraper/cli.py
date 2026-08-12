@@ -27,7 +27,7 @@ from .merge import merge_videos
 from .models import Video, VideosFile
 from .sources import FetchedVideo, Source
 
-DEFAULT_QUERY = "from:official_aimai filter:native_video -filter:retweets"
+DEFAULT_QUERY = "from:official_aimai has:videos -is:retweet"
 SCHEMA_POINTER = "../schema/videos.schema.json"
 
 # Latest search returns only recent tweets when no cutoff is given. For backfill

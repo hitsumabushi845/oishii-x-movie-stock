@@ -45,7 +45,7 @@ def test_videos_file_minimal_valid():
     f = VideosFile(
         generated_at=datetime(2026, 5, 1, tzinfo=timezone.utc),
         last_synced_at=datetime(2026, 4, 30, tzinfo=timezone.utc),
-        source_query="from:official_aimai filter:native_video",
+        source_query="from:official_aimai has:videos -is:retweet",
         videos=[],
     )
     assert f.videos == []

@@ -4,7 +4,7 @@ Collects videos for the OISHII.inc groups defined in `data/groups.json` and writ
 
 ## Backend
 
-[SocialData](https://docs.socialdata.tools) — `GET https://api.socialdata.tools/twitter/search` with `query=from:<x_handle> filter:native_video -filter:retweets`. SocialData proxies the twitter.com search, so the query uses website-search operators: `filter:native_video` restricts to X-hosted videos and `-filter:retweets` drops retweets. We still inspect `extended_entities.media[].type` defensively before extracting `video_info.duration_millis`.
+[SocialData](https://docs.socialdata.tools) — `GET https://api.socialdata.tools/twitter/search` with `query=from:<x_handle> has:videos -is:retweet`. SocialData proxies the Twitter/X search and accepts the X API v2 operators: `has:videos` restricts to tweets containing video and `-is:retweet` drops retweets. We still inspect `extended_entities.media[].type` defensively before extracting `video_info.duration_millis`.
 
 Pagination follows `next_cursor` (passed back as `cursor`). Incremental runs append a `since_time:{last_synced_at}` operator to the query; backfill appends `since_time:2010-01-01` (via `BACKFILL_EPOCH`) to reach past the default recent-tweets window and get the full archive.
 

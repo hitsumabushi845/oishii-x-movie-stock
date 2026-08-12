@@ -137,10 +137,10 @@ def test_extract_videos_empty_payload():
 
 def test_apply_since_appends_since_time_operator():
     q = _apply_since(
-        "from:official_aimai filter:native_video",
+        "from:official_aimai has:videos -is:retweet",
         datetime(2026, 4, 28, 11, 23, 45, tzinfo=timezone.utc),
     )
-    assert q == "from:official_aimai filter:native_video since_time:1777375425"
+    assert q == "from:official_aimai has:videos -is:retweet since_time:1777375425"
 
 
 def test_apply_since_is_noop_when_none():
