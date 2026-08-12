@@ -1,4 +1,9 @@
-"""X API v2 backed implementation of Source (search/all)."""
+"""SocialData API backed implementation of Source (twitter/search).
+
+SocialData (https://socialdata.tools) proxies the Twitter/X website search, so
+queries use the same operators as the twitter.com search box (``filter:native_video``,
+``-filter:retweets``, ``since_time:<unix>``) rather than the X API v2 operators.
+"""
 
 from __future__ import annotations
 
@@ -11,7 +16,7 @@ import httpx
 
 from .base import FetchedVideo
 
-SEARCH_ALL_URL = "https://api.twitter.com/2/tweets/search/all"
+SEARCH_URL = "https://api.socialdata.tools/twitter/search"
 DEFAULT_USERNAME = "official_aimai"
 DEFAULT_PAGE_DELAY_SEC = 2.0
 DEFAULT_MAX_RETRIES = 5
@@ -20,29 +25,29 @@ DEFAULT_RETRY_BASE_DELAY_SEC = 5.0
 MAX_RETRY_DELAY_SEC = 120.0
 
 
-class XApiSource:
-    """Fetch native videos via X API v2 search/all.
+class SocialDataSource:
+    """Fetch native videos via the SocialData ``twitter/search`` endpoint.
 
-    The search query (typically `from:{username} filter:native_video`) is
-    passed in by the caller. The username is kept here only to construct
-    canonical tweet URLs in the result; no user lookup is performed.
+    The search query (typically ``from:{username} filter:native_video
+    -filter:retweets``) is passed in by the caller. The username is kept here
+    only to construct canonical tweet URLs in the result; no user lookup is
+    performed. When ``since`` is given, a ``since_time:<unix>`` operator is
+    appended to the query — SocialData has no dedicated start-time parameter.
     """
 
     def __init__(
         self,
-        bearer_token: str,
+        api_key: str,
         *,
         username: str = DEFAULT_USERNAME,
         client: httpx.AsyncClient | None = None,
-        page_size: int = 100,
         page_delay_sec: float = DEFAULT_PAGE_DELAY_SEC,
         max_retries: int = DEFAULT_MAX_RETRIES,
         retry_base_delay_sec: float = DEFAULT_RETRY_BASE_DELAY_SEC,
     ) -> None:
-        self._bearer = bearer_token
+        self._api_key = api_key
         self._username = username
         self._client = client
-        self._page_size = page_size
         self._page_delay_sec = page_delay_sec
         self._max_retries = max_retries
         self._retry_base_delay_sec = retry_base_delay_sec
@@ -57,7 +62,7 @@ class XApiSource:
         if self._client is not None:
             return _ClientCtx.shared(self._client)
         owned = httpx.AsyncClient(
-            headers={"Authorization": f"Bearer {self._bearer}"},
+            headers=self._auth_headers(),
             timeout=30.0,
         )
         return _ClientCtx.owned(owned)
@@ -68,29 +73,27 @@ class XApiSource:
         query: str,
         since: datetime | None,
     ) -> list[FetchedVideo]:
-        params: dict[str, Any] = {
-            "query": query,
-            "max_results": self._page_size,
-            "tweet.fields": "created_at,text,attachments",
-            "expansions": "attachments.media_keys",
-            "media.fields": "type,duration_ms",
+        base_params: dict[str, Any] = {
+            "query": _apply_since(query, since),
+            "type": "Latest",
         }
-        if since is not None:
-            params["start_time"] = self._format_start_time(since)
 
         out: list[FetchedVideo] = []
-        next_token: str | None = None
+        cursor: str | None = None
         while True:
-            page_params = dict(params)
-            if next_token:
-                page_params["pagination_token"] = next_token
+            page_params = dict(base_params)
+            if cursor:
+                page_params["cursor"] = cursor
             r = await self._get_with_retry(client, page_params)
             payload = r.json()
             out.extend(_extract_videos(payload, self._username))
-            next_token = payload.get("meta", {}).get("next_token")
-            if not next_token:
+            cursor = payload.get("next_cursor")
+            tweets = payload.get("tweets") or []
+            # Stop when the API stops handing back a cursor, or when a page comes
+            # back empty (a lingering cursor would otherwise loop forever).
+            if not cursor or not tweets:
                 break
-            # Sleep between pages to stay under the search/all rate limit.
+            # Sleep between pages to stay under the search rate limit.
             await asyncio.sleep(self._page_delay_sec)
         return out
 
@@ -101,12 +104,12 @@ class XApiSource:
 
         Honors the server's ``Retry-After`` / ``x-rate-limit-reset`` hint when
         present, otherwise falls back to exponential backoff. Other HTTP errors
-        raise immediately.
+        (402 insufficient credits, 422 validation, 5xx, ...) raise immediately.
         """
         attempt = 0
         while True:
             r = await client.get(
-                SEARCH_ALL_URL, params=page_params, headers=self._auth_headers()
+                SEARCH_URL, params=page_params, headers=self._auth_headers()
             )
             if r.status_code != 429 or attempt >= self._max_retries:
                 r.raise_for_status()
@@ -124,41 +127,51 @@ class XApiSource:
         return min(max(delay, 0.0), MAX_RETRY_DELAY_SEC)
 
     def _auth_headers(self) -> dict[str, str]:
-        return {"Authorization": f"Bearer {self._bearer}"}
+        return {
+            "Authorization": f"Bearer {self._api_key}",
+            "Accept": "application/json",
+        }
 
-    @staticmethod
-    def _format_start_time(dt: datetime) -> str:
-        return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+def _apply_since(query: str, since: datetime | None) -> str:
+    """Append a ``since_time:<unix>`` operator when an incremental cutoff is set."""
+    if since is None:
+        return query
+    epoch = int(since.astimezone(timezone.utc).timestamp())
+    return f"{query} since_time:{epoch}"
 
 
 def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedVideo]:
-    """Yield FetchedVideo for each tweet in the page that has a video media.
+    """Yield FetchedVideo for each tweet in the page that has a native video.
 
-    Server-side `filter:native_video` should already restrict results to
-    video tweets, but the type check is kept defensively.
+    Server-side ``filter:native_video`` should already restrict results to
+    video tweets, but the type check is kept defensively — a query can still
+    surface photos or animated GIFs, and only ``type == "video"`` carries a
+    real ``duration_millis``.
     """
-    tweets = payload.get("data") or []
-    media_by_key: dict[str, dict[str, Any]] = {
-        m["media_key"]: m for m in payload.get("includes", {}).get("media", [])
-    }
+    tweets = payload.get("tweets") or []
     for tweet in tweets:
-        media_keys = (tweet.get("attachments") or {}).get("media_keys") or []
-        videos = [
-            media_by_key[k]
-            for k in media_keys
-            if k in media_by_key and media_by_key[k].get("type") == "video"
-        ]
+        videos = [m for m in _media_list(tweet) if m.get("type") == "video"]
         if not videos:
             continue
         first = videos[0]
-        duration_ms = int(first.get("duration_ms") or 0)
+        duration_ms = int((first.get("video_info") or {}).get("duration_millis") or 0)
+        tweet_id = str(tweet["id_str"])
         yield FetchedVideo(
-            id=str(tweet["id"]),
-            url=f"https://x.com/{username}/status/{tweet['id']}",
-            posted_at=_parse_created_at(tweet["created_at"]),
+            id=tweet_id,
+            url=f"https://x.com/{username}/status/{tweet_id}",
+            posted_at=_parse_created_at(tweet["tweet_created_at"]),
             duration_sec=round(duration_ms / 1000),
-            text=tweet.get("text", ""),
+            text=tweet.get("full_text") or tweet.get("text") or "",
         )
+
+
+def _media_list(tweet: dict[str, Any]) -> list[dict[str, Any]]:
+    """Media for a tweet, preferring ``extended_entities`` (holds video info)."""
+    extended = (tweet.get("extended_entities") or {}).get("media")
+    if extended:
+        return extended
+    return (tweet.get("entities") or {}).get("media") or []
 
 
 def _parse_rate_limit_headers(response: httpx.Response) -> float | None:

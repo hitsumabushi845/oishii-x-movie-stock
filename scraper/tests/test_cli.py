@@ -37,7 +37,7 @@ async def test_run_writes_new_file_in_backfill_mode(tmp_path):
     ])
     code = await run(
         source=src,
-        query="from:official_aimai has:videos -is:retweet",
+        query="from:official_aimai filter:native_video -filter:retweets",
         data_file=data_file,
         schema_file=_schema_path(),
         backfill=True,
@@ -163,7 +163,7 @@ def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
         return CapturingSource()
 
     monkeypatch.setattr(cli_module, "_default_source_factory", fake_factory)
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
 
     manifest = _write_groups_manifest(tmp_path)
     data_dir = tmp_path
@@ -176,12 +176,12 @@ def test_run_with_group_resolves_handle_into_query(tmp_path, monkeypatch):
         "--backfill",
     ])
     assert code == 0
-    assert captured["query"] == "from:ofc_shokuzai has:videos -is:retweet"
+    assert captured["query"] == "from:ofc_shokuzai filter:native_video -filter:retweets"
     assert (data_dir / "shokuzai.json").exists()
 
 
 def test_run_with_group_and_legacy_query_is_rejected(tmp_path, monkeypatch):
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     err = io.StringIO()
     with redirect_stderr(err):
@@ -213,7 +213,7 @@ def test_run_with_all_iterates_all_groups(tmp_path, monkeypatch):
             ]
 
     monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: TrackingSource())
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     code = cli_main([
         "--all",
@@ -225,8 +225,8 @@ def test_run_with_all_iterates_all_groups(tmp_path, monkeypatch):
     ])
     assert code == 0
     assert seen == [
-        "from:official_aimai has:videos -is:retweet",
-        "from:ofc_shokuzai has:videos -is:retweet",
+        "from:official_aimai filter:native_video -filter:retweets",
+        "from:ofc_shokuzai filter:native_video -filter:retweets",
     ]
     assert (tmp_path / "aimai.json").exists()
     assert (tmp_path / "shokuzai.json").exists()
@@ -250,7 +250,7 @@ def test_run_with_all_continues_after_one_group_fails(tmp_path, monkeypatch):
             ]
 
     monkeypatch.setattr(cli_module, "_default_source_factory", lambda _t: FlakySource())
-    monkeypatch.setenv("X_BEARER_TOKEN", "dummy")
+    monkeypatch.setenv("SOCIALDATA_API_KEY", "dummy")
     manifest = _write_groups_manifest(tmp_path)
     code = cli_main([
         "--all",

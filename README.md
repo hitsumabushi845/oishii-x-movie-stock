@@ -6,7 +6,7 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
 
 ## Stack
 
-- **scraper/**: Python 3.12 + uv + httpx → X API v2 `search/all` を呼び、`data/groups.json` を駆動して各グループの `data/<slug>.json` を更新
+- **scraper/**: Python 3.12 + uv + httpx → SocialData API `twitter/search` を呼び、`data/groups.json` を駆動して各グループの `data/<slug>.json` を更新
 - **web/**: Vite + TypeScript + Fuse.js — `data/groups.json` を fetch、active グループの `data/<slug>.json` を遅延 fetch して描画。タブで切り替え。
 - **.github/workflows/**: `ci.yml` (PR テスト) / `deploy.yml` (Pages デプロイ) / `update-data.yml` (週次データ更新 PR)
 
@@ -35,13 +35,13 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
    cd oishii-x-movie-stock
    ```
 
-2. **scraper の依存をインストール + Bearer Token を設定**
+2. **scraper の依存をインストール + SocialData API key を設定**
 
    ```bash
    cd scraper
    uv sync
    # .env を作る（チャットに貼らないこと）
-   echo 'X_BEARER_TOKEN=YOUR_BEARER_TOKEN' > .env
+   echo 'SOCIALDATA_API_KEY=YOUR_SOCIALDATA_API_KEY' > .env
    chmod 600 .env
    ```
 
@@ -69,7 +69,7 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
 4. **GitHub の設定**
    - Settings → Pages → Source を **GitHub Actions** に
    - Settings → Secrets and variables → Actions に登録：
-     - `X_BEARER_TOKEN` — scraper 用 Bearer Token
+     - `SOCIALDATA_API_KEY` — scraper 用 SocialData API key
      - `SLACK_WEBHOOK_URL` — 失敗通知用 Incoming Webhook URL
 
 5. 以降は毎週月曜 18:00 UTC（火曜 03:00 JST）に `update-data.yml` が走り、差分があれば `bot/update-data` ブランチに PR が立つ
@@ -80,7 +80,7 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
 make install        # scraper と web の依存をまとめてインストール
 make test           # scraper の pytest と web の vitest を実行
 make web-dev        # フロントエンドの開発サーバ（http://localhost:5173）
-make scrape-dry     # scraper の dry-run（書き込みなし、X API は呼ぶ）
+make scrape-dry     # scraper の dry-run（書き込みなし、SocialData API は呼ぶ）
 ```
 
 ファイル単位でいうと：
@@ -103,18 +103,22 @@ make scrape-dry     # scraper の dry-run（書き込みなし、X API は呼ぶ
     └── tests/
 ```
 
-## X API について
+## SocialData API について
 
-- 使用 endpoint: `GET /2/tweets/search/all`
-- クエリ: `from:official_aimai has:videos -is:retweet`
-  - `filter:native_video` は dev tier 利用不可だったので `has:videos` に
-  - `-is:retweet` で RT/引用 RT を除外
-- バックフィル時は `start_time=2010-01-01T00:00:00Z` を付けて全期間を取得（無指定だと約 30 日のデフォルト窓に縛られる）
-- pagination 間に 2 秒スリープを挟んで rate limit を回避
+- 使用 endpoint: `GET https://api.socialdata.tools/twitter/search`
+- 認証: `Authorization: Bearer {SOCIALDATA_API_KEY}`
+- クエリ: `from:official_aimai filter:native_video -filter:retweets`
+  - SocialData は twitter.com 検索をプロキシするので Web 検索演算子を使う
+  - `filter:native_video` で X ホストの動画ツイートに限定
+  - `-filter:retweets` で RT を除外
+- 差分取得はクエリに `since_time:{last_synced_at}` 演算子を付与
+- バックフィル時は `since_time:2010-01-01`（= `BACKFILL_EPOCH`）を付けて全期間を取得（無指定だと直近ツイートのみに縛られる）
+- pagination は `next_cursor` を `cursor` として辿り、ページ間に 2 秒スリープを挟んで rate limit を回避
 
 クレジット消費見積もり：
 
-- 初回バックフィル：動画件数 / 100 リクエスト（参考：231 件で 3 リクエスト）
+- SocialData は成功リクエストごとに従量課金。1 リクエスト ≒ 検索 1 ページ
+- 初回バックフィル：動画件数に応じて数リクエスト
 - 週次 cron：差分のみ、新規動画 0〜数件なら 1 リクエスト
 
 ## グループを追加するには

@@ -1,18 +1,18 @@
 # scraper
 
-Collects videos for the OISHII.inc groups defined in `data/groups.json` and writes one `data/<slug>.json` per group via the X API v2.
+Collects videos for the OISHII.inc groups defined in `data/groups.json` and writes one `data/<slug>.json` per group via the SocialData API.
 
 ## Backend
 
-X API v2 — `GET /2/tweets/search/all` with `query=from:<x_handle> has:videos -is:retweet`. The `has:videos` predicate restricts results to tweets containing X-hosted videos (the `filter:native_video` predicate is not available on the dev tier). We still inspect `includes.media[].type` defensively before extracting `duration_ms`.
+[SocialData](https://docs.socialdata.tools) — `GET https://api.socialdata.tools/twitter/search` with `query=from:<x_handle> filter:native_video -filter:retweets`. SocialData proxies the twitter.com search, so the query uses website-search operators: `filter:native_video` restricts to X-hosted videos and `-filter:retweets` drops retweets. We still inspect `extended_entities.media[].type` defensively before extracting `video_info.duration_millis`.
 
-Pagination uses `next_token`. Incremental runs add `start_time={last_synced_at}`. Backfill runs send `start_time=2010-01-01T00:00:00Z` to override search/all's default ~30-day window and get the full archive.
+Pagination follows `next_cursor` (passed back as `cursor`). Incremental runs append a `since_time:{last_synced_at}` operator to the query; backfill appends `since_time:2010-01-01` (via `BACKFILL_EPOCH`) to reach past the default recent-tweets window and get the full archive.
 
-A 2-second sleep is inserted between paginated requests to stay under the search/all rate limit on the dev tier.
+A 2-second sleep is inserted between paginated requests to stay under the search rate limit.
 
 ## Required environment
 
-- `X_BEARER_TOKEN` — App-only Bearer Token. In CI: GitHub Secrets. Locally: `scraper/.env`.
+- `SOCIALDATA_API_KEY` — SocialData API key, sent as `Authorization: Bearer`. In CI: GitHub Secrets. Locally: `scraper/.env`.
 
 ## Local usage (manifest mode)
 
@@ -55,4 +55,4 @@ uv run python -m scraper --group aimai \
 uv run pytest
 ```
 
-Tests do not call the live X API. The XApiSource's helper functions are exercised against fixture payloads, and the manifest loader / CLI flags are covered by `tests/test_groups.py` and `tests/test_cli.py`.
+Tests do not call the live SocialData API. `SocialDataSource`'s helper functions (extraction, pagination, retry, `since_time`) are exercised against fixture payloads and a mock transport, and the manifest loader / CLI flags are covered by `tests/test_groups.py` and `tests/test_cli.py`.

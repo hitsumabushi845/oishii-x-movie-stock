@@ -70,5 +70,10 @@ def load_manifest(manifest_path: Path, schema_path: Path) -> GroupsManifest:
 
 
 def build_query(group: Group) -> str:
-    """Build the X API query string for a group."""
-    return f"from:{group.x_handle} has:videos -is:retweet"
+    """Build the Twitter search query string for a group.
+
+    SocialData proxies the twitter.com search box, so this uses website-search
+    operators: ``filter:native_video`` restricts to X-hosted videos and
+    ``-filter:retweets`` drops retweets.
+    """
+    return f"from:{group.x_handle} filter:native_video -filter:retweets"
