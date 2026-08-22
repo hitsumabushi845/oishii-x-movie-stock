@@ -1,9 +1,25 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-12T16:24:57Z",
-  "last_synced_at": "2026-08-03T13:55:39Z",
+  "generated_at": "2026-08-22T02:43:16Z",
+  "last_synced_at": "2026-08-21T03:02:34Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2090635645857497474",
+      "url": "https://x.com/official_aimai/status/2090635645857497474",
+      "posted_at": "2026-08-21T03:02:34Z",
+      "duration_sec": 30,
+      "text": "❤️‍🔥IDOL BATTLE ALIVE 2026❤️‍🔥\n#美味しい曖昧 の出場が決定しました！！\n\n美味しい曖昧をもっとたくさんの方に知ってもらえるように。\nそして、最高のステージを届けられるように。\n全力で戦います🔥\n\nメンバーからのコメント動画もぜひご覧ください🎥✨\n応援よろしくお願いします！ https://t.co/VrT6jAbWq2",
+      "tags": []
+    },
+    {
+      "id": "2090635408224964917",
+      "url": "https://x.com/official_aimai/status/2090635408224964917",
+      "posted_at": "2026-08-21T03:01:38Z",
+      "duration_sec": 30,
+      "text": "💫LIVE INFO💫 #美味しい曖昧\n\n🆕\nIDOL BATTLE ALIVE 2026\n\n2026/11/02(月)\n✨✨豊洲PIT✨✨\n\nOP/ST 17:00/17:45\n前方優先 ¥10,000 ADV ¥6,000 +1D\n\n▼チケット\nhttps://t.co/uf7wEZwzUT\nプレリクエスト抽選先行：～9/6(日)23:59\n\n密着番組は9月からLemino/Youtubeにて配信！\n\n#IDOLBATTLEALIVE #アイバト",
+      "tags": []
+    },
     {
       "id": "2084277015272964292",
       "url": "https://x.com/official_aimai/status/2084277015272964292",

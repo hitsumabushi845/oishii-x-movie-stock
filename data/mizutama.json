@@ -1,9 +1,73 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-12T16:25:25Z",
-  "last_synced_at": "2026-07-26T11:41:12Z",
+  "generated_at": "2026-08-22T02:43:44Z",
+  "last_synced_at": "2026-08-21T09:00:03Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2090725607675953626",
+      "url": "https://x.com/official_aimai/status/2090725607675953626",
+      "posted_at": "2026-08-21T09:00:03Z",
+      "duration_sec": 26,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「ペトリコール」 https://t.co/JovOPEU0mm",
+      "tags": []
+    },
+    {
+      "id": "2090363210679370056",
+      "url": "https://x.com/official_aimai/status/2090363210679370056",
+      "posted_at": "2026-08-20T09:00:01Z",
+      "duration_sec": 20,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「she side」 https://t.co/nyeVedoVh5",
+      "tags": []
+    },
+    {
+      "id": "2090000829709226360",
+      "url": "https://x.com/official_aimai/status/2090000829709226360",
+      "posted_at": "2026-08-19T09:00:02Z",
+      "duration_sec": 21,
+      "text": "#美味しい水玉\n2026.08.26(水)発売   \nFirst Album   \n「水玉なアルバム1」     \n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「パティパティ」 https://t.co/OCkOpfwn5j",
+      "tags": []
+    },
+    {
+      "id": "2089638433253638371",
+      "url": "https://x.com/official_aimai/status/2089638433253638371",
+      "posted_at": "2026-08-18T09:00:00Z",
+      "duration_sec": 22,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「Follow Bitter」 https://t.co/kdukxihmiv",
+      "tags": []
+    },
+    {
+      "id": "2089276049339121960",
+      "url": "https://x.com/official_aimai/status/2089276049339121960",
+      "posted_at": "2026-08-17T09:00:01Z",
+      "duration_sec": 20,
+      "text": "#美味しい水玉\n2026.08.26(水)発売  \nFirst Album  \n「水玉なアルバム1」    \n🫧 ALBUM TRACK SPOILER VIDEO🫧  \n\n「ヒロインブルー」 https://t.co/bsTat5nmCe",
+      "tags": []
+    },
+    {
+      "id": "2088913669811802285",
+      "url": "https://x.com/official_aimai/status/2088913669811802285",
+      "posted_at": "2026-08-16T09:00:03Z",
+      "duration_sec": 17,
+      "text": "#美味しい水玉\n2026.08.26(水)発売 \nFirst Album \n「水玉なアルバム1」  \n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n 「踊って？」 https://t.co/AjnxhAfy2R",
+      "tags": []
+    },
+    {
+      "id": "2088566372897050760",
+      "url": "https://x.com/official_aimai/status/2088566372897050760",
+      "posted_at": "2026-08-15T10:00:01Z",
+      "duration_sec": 19,
+      "text": "#美味しい水玉\n2026.08.26(水)発売 \nFirst Album \n「水玉なアルバム1」  \n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n 「MIZUTAMA」 https://t.co/Lqxh4JEHjA",
+      "tags": []
+    },
+    {
+      "id": "2088189907315630390",
+      "url": "https://x.com/official_aimai/status/2088189907315630390",
+      "posted_at": "2026-08-14T09:04:05Z",
+      "duration_sec": 17,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO️🫧\n\n「H₆O」 https://t.co/FeuWUR9lTj",
+      "tags": []
+    },
     {
       "id": "2081344078139347112",
       "url": "https://x.com/official_aimai/status/2081344078139347112",
