@@ -31,7 +31,7 @@
 - グループ色に重ねる文字は黒・白のコントラストを比較して選択。
 - X埋め込みの最大幅を保持し、iframeの`color-scheme`を調整。ダークテーマで余白が白く描画される問題を修正。
 - 比較ページで選定したB3ロゴをSVGで組み込み。小サイズ用のシンボルから明暗対応SVG faviconと互換用PNGを作成。
-- ロゴの比較ページは`web/design/logo/`に保存。開発サーバーの`/design/logo/`で確認でき、productionビルドには含めない。
+- 採用したB3の元SVGのみ`web/design/logo/assets/b3-solid.svg`に保存。没案と比較ページは含めない。
 
 ### Python
 
