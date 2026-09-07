@@ -133,8 +133,7 @@ def _to_video(v: FetchedVideo) -> Video:
 
 
 def _to_payload(f: VideosFile) -> dict:
-    import json
-    return json.loads(f.model_dump_json())
+    return f.model_dump(mode="json")
 
 
 def _emit_summary(

@@ -80,3 +80,14 @@ def test_validate_against_schema_rejects_bad_id(schema_path):
     }
     with pytest.raises(SchemaValidationError):
         validate_against_schema(payload, schema_path)
+
+
+def test_write_preserves_timezone_like_text(tmp_path, fixtures_dir):
+    src = load_videos_file(fixtures_dir / "sample_videos.json")
+    src.videos[0].text = "UTC+00:00 の投稿です"
+    src.videos[0].tags = ["+00:00"]
+    out = tmp_path / "out.json"
+    write_videos_file(out, src)
+    reloaded = load_videos_file(out)
+    assert reloaded.videos[0].text == "UTC+00:00 の投稿です"
+    assert reloaded.videos[0].tags == ["+00:00"]

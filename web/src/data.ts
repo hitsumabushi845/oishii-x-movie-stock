@@ -15,10 +15,13 @@ export function parseVideosFile(raw: unknown): VideosFile {
   }
   if (!Array.isArray(r.videos)) throw new Error("videos must be array");
   const videos = r.videos.map((v) => parseVideo(v));
+  if (new Set(videos.map(video => video.id)).size !== videos.length) {
+    throw new Error("duplicate video id");
+  }
   return {
-    generated_at: String(r.generated_at),
-    last_synced_at: String(r.last_synced_at),
-    source_query: String(r.source_query),
+    generated_at: timestamp(r.generated_at, "generated_at"),
+    last_synced_at: timestamp(r.last_synced_at, "last_synced_at"),
+    source_query: stringField(r.source_query, "source_query"),
     videos,
   };
 }
@@ -30,14 +33,36 @@ function parseVideo(raw: unknown): Video {
   for (const k of required) {
     if (!(k in r)) throw new Error(`video missing field: ${k}`);
   }
+  if (typeof r.duration_sec !== "number" || !Number.isInteger(r.duration_sec) || r.duration_sec < 0) {
+    throw new Error("invalid duration_sec");
+  }
+  if (!Array.isArray(r.tags) || !r.tags.every(tag => typeof tag === "string")) {
+    throw new Error("invalid tags");
+  }
+  const id = stringField(r.id, "id");
+  if (!/^\d+$/.test(id)) throw new Error("invalid video id");
   return {
-    id: String(r.id),
-    url: String(r.url),
-    posted_at: String(r.posted_at),
-    duration_sec: Number(r.duration_sec),
-    text: String(r.text),
-    tags: (r.tags as unknown[]).map((t) => String(t)),
+    id,
+    url: stringField(r.url, "url"),
+    posted_at: timestamp(r.posted_at, "posted_at"),
+    duration_sec: r.duration_sec,
+    text: stringField(r.text, "text"),
+    tags: r.tags,
   };
+}
+
+function stringField(value: unknown, name: string): string {
+  if (typeof value !== "string") throw new Error(`invalid ${name}`);
+  return value;
+}
+
+function timestamp(value: unknown, name: string): string {
+  const text = stringField(value, name);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(text) || !Number.isFinite(Date.parse(text))) {
+    throw new Error(`invalid ${name}`);
+  }
+  // One timezone and precision make chronological string sorting reliable.
+  return new Date(text).toISOString();
 }
 
 export function sortVideos(videos: Video[], order: SortOrder): Video[] {
@@ -78,6 +103,17 @@ function parseGroupDef(raw: unknown): GroupDef {
     if (typeof r[k] !== "string" || (r[k] as string).length === 0) {
       throw new Error(`group missing required field: ${k}`);
     }
+  }
+  const patterns = {
+    slug: /^[a-z][a-z0-9_-]*$/,
+    x_handle: /^[A-Za-z0-9_]{1,15}$/,
+    data_file: /^[A-Za-z0-9_.-]+\.json$/,
+    color: /^#[0-9a-f]{6}$/i,
+    color_dark: /^#[0-9a-f]{6}$/i,
+  };
+  for (const [key, pattern] of Object.entries(patterns)) {
+    if (key === "color_dark" && r[key] === undefined) continue;
+    if (typeof r[key] !== "string" || !pattern.test(r[key])) throw new Error(`invalid group ${key}`);
   }
   const def: GroupDef = {
     slug: String(r.slug),

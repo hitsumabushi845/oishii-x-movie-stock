@@ -30,7 +30,7 @@ def merge_videos(existing: list[Video], fetched: list[Video]) -> MergeResult:
         if incoming.id in by_id:
             existing_v = by_id[incoming.id]
             merged = incoming.model_copy(update={"tags": existing_v.tags})
-            if merged.model_dump() != existing_v.model_dump():
+            if merged != existing_v:
                 updated += 1
             by_id[incoming.id] = merged
         else:

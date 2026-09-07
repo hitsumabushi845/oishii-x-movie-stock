@@ -39,9 +39,8 @@ def write_videos_file(
     data: dict[str, Any] = {}
     if schema_pointer:
         data["$schema"] = schema_pointer
-    data.update(json.loads(payload.model_dump_json()))
+    data.update(payload.model_dump(mode="json"))
     text = json.dumps(data, ensure_ascii=False, indent=2, sort_keys=False)
-    text = _normalize_iso_z(text)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text + "\n", encoding="utf-8")
 
@@ -53,11 +52,6 @@ def validate_against_schema(payload: dict[str, Any], schema_path: Path) -> None:
         jsonschema.validate(payload_to_check, schema)
     except jsonschema.ValidationError as e:
         raise SchemaValidationError(e.message) from e
-
-
-def _normalize_iso_z(text: str) -> str:
-    """Pydantic emits +00:00 for UTC; we want trailing Z to match the schema."""
-    return text.replace("+00:00", "Z")
 
 
 def utc_now() -> datetime:

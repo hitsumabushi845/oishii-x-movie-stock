@@ -1,30 +1,38 @@
 # oishii-x-movie-stock
 
-OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の公式 X が投稿した動画（特にライブダイジェスト）を、グループ別タブで一覧表示する静的サイト。GitHub Pages でホスティングし、データは GitHub Actions の週次 cron で更新される。
+OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）の公式 X が投稿した動画（特にライブダイジェスト）を、グループ別に一覧表示する静的サイト。GitHub Pages でホスティングし、データは GitHub Actions の週次 cron で更新される。
 
 > This site is an unofficial fan-made index. All content belongs to its respective owners.
 
 ## Stack
 
 - **scraper/**: Python 3.12 + uv + httpx → SocialData API `twitter/search` を呼び、`data/groups.json` を駆動して各グループの `data/<slug>.json` を更新
-- **web/**: Vite + TypeScript + Fuse.js — `data/groups.json` を fetch、active グループの `data/<slug>.json` を遅延 fetch して描画。タブで切り替え。
+- **web/**: Vite + TypeScript + Fuse.js — `data/groups.json` を fetch、active グループの `data/<slug>.json` を遅延 fetch して描画。グループナビゲーションで切り替え。検索インデックスは初回検索時に遅延ロード。
 - **.github/workflows/**: `ci.yml` (PR テスト) / `deploy.yml` (Pages デプロイ) / `update-data.yml` (週次データ更新 PR)
 
 詳細な設計: [`docs/superpowers/specs/2026-05-01-aimai-movie-stock-design.md`](docs/superpowers/specs/2026-05-01-aimai-movie-stock-design.md)
 
 ## 機能
 
-- ✅ 3 グループ（美味しい曖昧 / 美味しい贖罪 / 美味しい水玉）のタブ切り替え（`?g=<slug>`）
-- ✅ グループごとのテーマカラー（タブ・再生ボタン・外部リンク）
-- ✅ 投稿日時 / 動画長 / 本文の一覧表示（コンパクトリスト）
-- ✅ クリックで X 埋め込みを inline 展開（複数同時可、widgets.js は遅延ロード）
-- ✅ フリーワード検索（本文 + tags、Fuse.js でファジー）
-- ✅ 並び順切り替え（新しい順 / 古い順）
-- ✅ 動画長 1 分以上のみフィルタ
-- ✅ 無限スクロール
-- ✅ テーマ切り替えボタン（自動 / ライト / ダークを循環、選択は localStorage に保存）
-- ✅ 自動テーマはシステム設定に追従（`prefers-color-scheme`）
-- ✅ 検索 / フィルタ / タブ状態を URL に同期（`?g=...&q=foo&min1m=1`）
+- 美味しい曖昧 / 美味しい贖罪 / 美味しい水玉 / OISHII.inc の4アカウント切り替え
+- PCはサイドバー、スマートフォンは横スクロールのグループ選択
+- 投稿日・動画長・2行の投稿本文を表示。選ぶと全文とX埋め込みを展開
+- 本文・tagsのファジー検索。日本語変換中の検索を待ち、入力は150msでまとめて処理
+- 新しい順 / 古い順、1分以上のフィルタ
+- 20件ずつ追加表示（自動読み込みと「さらに表示」ボタン）
+- 自動 / ライト / ダークの表示テーマ。選択はlocalStorageに保存
+- グループ・検索・長さ・並び順をURLに保存（`?g=aimai&q=ライブ&min1m=1&sort=asc`）
+- 読み込み失敗時の再試行、該当なしの案内、Xで直接開くリンク
+
+## 実装上の工夫
+
+- グループの取得Promiseを共有し、読み込んだデータ・日付順・統計を再利用。
+- Fuse.jsは検索するときだけダウンロード。同じ検索語では結果を再利用し、フィルタと並び順を反映。
+- 一覧の同じ位置に残る投稿DOMを維持し、絞り込みのたびに開いた動画を作り直す処理を削減。
+- Xのスクリプトは動画を開くまで読み込まず、ロード失敗・タイムアウトから再試行可能。
+- 外部Webフォントと行ごとの登場アニメーションを使用しない。
+
+調査内容・実測値・検証範囲: [2026-09-07 改善記録](docs/2026-09-07-refactor-review.md)
 
 ## Quickstart
 
@@ -57,7 +65,7 @@ OISHII.inc 各グループ（美味しい曖昧 / 美味しい贖罪 / 美味し
      --backfill
    ```
 
-   `data/aimai.json` / `data/shokuzai.json` / `data/mizutama.json` が生成 / 上書きされるので commit & push:
+   `data/aimai.json` / `data/shokuzai.json` / `data/mizutama.json` / `data/oishii_inc.json` が生成 / 上書きされるので commit & push:
 
    ```bash
    cd ..
@@ -91,7 +99,8 @@ make scrape-dry     # scraper の dry-run（書き込みなし、SocialData API 
 │   ├── groups.json           ← グループ定義（slug / 表示名 / X ハンドル / テーマ色）
 │   ├── aimai.json            ← @official_aimai
 │   ├── shokuzai.json         ← @ofc_shokuzai
-│   └── mizutama.json         ← @oishii_mizutama
+│   ├── mizutama.json         ← @oishii_mizutama
+│   └── oishii_inc.json       ← @oishii_inc
 ├── schema/
 │   ├── groups.schema.json
 │   └── videos.schema.json
@@ -112,7 +121,7 @@ make scrape-dry     # scraper の dry-run（書き込みなし、SocialData API 
   - `has:videos` で動画を含むツイートに限定
   - `-is:retweet` で RT/引用 RT を除外
 - 差分取得はクエリに `since_time:{last_synced_at}` 演算子を付与
-- バックフィル時は `since_time:2010-01-01`（= `BACKFILL_EPOCH`）を付けて全期間を取得（無指定だと直近ツイートのみに縛られる）
+- バックフィル時は `BACKFILL_EPOCH`（2010-01-01）に相当するUnix時刻を `since_time:` に付けて全期間を取得（無指定だと直近ツイートのみに縛られる）
 - pagination は `next_cursor` を `cursor` として辿り、ページ間に 2 秒スリープを挟んで rate limit を回避
 
 クレジット消費見積もり：

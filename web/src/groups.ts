@@ -27,23 +27,19 @@ function ensureStyleTag(doc: Document, groups: GroupDef[]): void {
     el.dataset.managed = "groups";
     doc.head.appendChild(el);
   }
-  el.textContent = generateGroupCss(groups);
+  const css = generateGroupCss(groups);
+  if (el.textContent !== css) el.textContent = css;
 }
 
 function generateGroupCss(groups: GroupDef[]): string {
   const lines: string[] = [];
   for (const g of groups) {
-    // The site header inverts the palette (background: var(--fg); color: var(--bg)),
-    // so a brand color calibrated for the page bg can match the header bg and become
-    // invisible (e.g. shokuzai #1A1A1A on the dark header). For groups that opted into
-    // colorDark, swap the two on the header so the accent always reads.
-    const onHeaderLight = g.colorDark ?? g.color;
     lines.push(
-      `:root[data-group="${g.slug}"] { --group-accent: ${g.color}; --group-accent-on-header: ${onHeaderLight}; --group-accent-fg: ${contrastColor(g.color)}; }`,
+      `:root[data-group="${g.slug}"] { --group-accent: ${g.color}; --group-accent-fg: ${contrastColor(g.color)}; }`,
     );
     if (g.colorDark) {
       lines.push(
-        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-on-header: ${g.color}; --group-accent-fg: ${contrastColor(g.colorDark)}; }`,
+        `[data-theme="dark"][data-group="${g.slug}"] { --group-accent: ${g.colorDark}; --group-accent-fg: ${contrastColor(g.colorDark)}; }`,
       );
     }
     // Every tab wears its own group's colour, not just the active one, so the
@@ -70,7 +66,9 @@ function contrastColor(hex: string): string {
     return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
   }) as [number, number, number];
   const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return luminance > 0.5 ? "#111111" : "white";
+  const onDark = (luminance + 0.05) / (0.005605 + 0.05); // #111111
+  const onWhite = 1.05 / (luminance + 0.05);
+  return onDark > onWhite ? "#111111" : "white";
 }
 
 function parseHex(hex: string): [number, number, number] | null {
@@ -117,5 +115,14 @@ export function updateHeaderForGroup(
   if (link) {
     link.setAttribute("href", `https://x.com/${group.xHandle}`);
     link.textContent = `@${group.xHandle}`;
+  }
+}
+
+/** Update selection without throwing away the keyboard's focused button. */
+export function updateTabs(container: HTMLElement, activeSlug: string): void {
+  for (const button of container.querySelectorAll<HTMLButtonElement>("button[data-group]")) {
+    const active = button.dataset.group === activeSlug;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
   }
 }
