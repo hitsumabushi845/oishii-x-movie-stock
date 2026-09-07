@@ -1,9 +1,57 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-22T02:43:44Z",
-  "last_synced_at": "2026-08-21T09:00:03Z",
+  "generated_at": "2026-08-31T22:14:58Z",
+  "last_synced_at": "2026-08-31T13:09:10Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2094412179424661610",
+      "url": "https://x.com/official_aimai/status/2094412179424661610",
+      "posted_at": "2026-08-31T13:09:10Z",
+      "duration_sec": 292,
+      "text": "【🎥ライブ映像公開】\n2026.08.31(MON) Shibuya Milkyway\n「美味しいイベント」-美味しい水玉・定期主催-の映像を一部公開！\n＃美味しい水玉 https://t.co/WOzwroCDAT",
+      "tags": []
+    },
+    {
+      "id": "2092537533947355260",
+      "url": "https://x.com/official_aimai/status/2092537533947355260",
+      "posted_at": "2026-08-26T09:00:00Z",
+      "duration_sec": 22,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「Cyan.」 https://t.co/hwRGnRc79a",
+      "tags": []
+    },
+    {
+      "id": "2092175153014997173",
+      "url": "https://x.com/official_aimai/status/2092175153014997173",
+      "posted_at": "2026-08-25T09:00:01Z",
+      "duration_sec": 18,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「徒然」 https://t.co/BUIcatj2Wl",
+      "tags": []
+    },
+    {
+      "id": "2091812759272902770",
+      "url": "https://x.com/official_aimai/status/2091812759272902770",
+      "posted_at": "2026-08-24T09:00:00Z",
+      "duration_sec": 20,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「プラメタ」 https://t.co/i185H57BkH",
+      "tags": []
+    },
+    {
+      "id": "2091450373231784345",
+      "url": "https://x.com/official_aimai/status/2091450373231784345",
+      "posted_at": "2026-08-23T09:00:00Z",
+      "duration_sec": 20,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「灰かぶらない姫」 https://t.co/rrDQriDzoa",
+      "tags": []
+    },
+    {
+      "id": "2091087989745012931",
+      "url": "https://x.com/official_aimai/status/2091087989745012931",
+      "posted_at": "2026-08-22T09:00:01Z",
+      "duration_sec": 20,
+      "text": "#美味しい水玉\n2026.08.26(水)発売\nFirst Album\n「水玉なアルバム1」\n\n🫧 ALBUM TRACK SPOILER VIDEO🫧\n\n「ディスロマ」 https://t.co/iHsEKCyfYp",
+      "tags": []
+    },
     {
       "id": "2090725607675953626",
       "url": "https://x.com/official_aimai/status/2090725607675953626",
