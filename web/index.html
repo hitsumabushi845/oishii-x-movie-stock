@@ -20,12 +20,8 @@
 
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..700&family=Zen+Kaku+Gothic+New:wght@400;500&family=Zen+Old+Mincho:wght@700&display=swap"
-    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
     <link rel="stylesheet" href="/src/styles.css" />
 
     <!-- Resolve the theme before first paint so a stored choice never flashes.
@@ -51,76 +47,78 @@
     </script>
   </head>
   <body>
-    <header class="masthead">
-      <div class="masthead__bar">
-        <span class="wordmark">OISHII MOVIE STOCK</span>
-        <div class="masthead__meta">
-          <span class="masthead__note">非公式アーカイブ</span>
+    <a class="skip-link" href="#archive">動画一覧へ</a>
+    <div class="shell">
+      <aside class="sidebar">
+        <header class="brand">
+          <svg class="brand__logo" width="262" height="82" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 262 82" role="img" aria-labelledby="brand-title">
+            <title id="brand-title">OISHII Movie Stock</title>
+            <g fill="currentColor"><rect x="22" y="6" width="28" height="4.5" rx="1"/><rect x="14" y="16" width="44" height="4.5" rx="1"/><path fill-rule="evenodd" d="M11 26h50a4 4 0 0 1 4 4v37a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4V30a4 4 0 0 1 4-4Zm17 10v25l21-12.5Z"/></g>
+            <g fill="currentColor"><g transform="translate(86 14) scale(.75)"><path fill-rule="evenodd" d="M23 2C8 2 0 11 0 27s8 25 23 25 23-9 23-25S38 2 23 2Zm0 10c8 0 12 5 12 15s-4 15-12 15-12-5-12-15 4-15 12-15Z"/><path d="M55 3h11v48H55zM108 16c-4-3-9-5-14-5-5 0-8 2-8 5 0 4 5 5 11 7 10 3 17 6 17 15 0 10-8 15-21 15-8 0-15-3-21-7l6-9c5 4 10 6 16 6 6 0 9-2 9-5 0-4-5-5-12-7-10-3-16-7-16-15C75 7 83 1 95 1c7 0 13 2 19 6ZM123 3h11v18h20V3h11v48h-11V31h-20v20h-11zM178 3h11v48h-11zM202 3h11v48h-11z"/></g><text x="86" y="70" font-family="Arial, sans-serif" font-size="16" letter-spacing=".7">Movie Stock</text></g>
+          </svg>
+        </header>
+        <p class="sidebar__intro">OISHII.inc の公式X動画を<br />グループごとにまとめています。</p>
+        <nav class="tabs" id="tabs" aria-label="グループ"></nav>
+        <div class="sidebar__bottom">
           <button class="theme-toggle" id="theme-toggle" type="button">
             <span class="theme-toggle__disc" aria-hidden="true"></span>
-            <span class="theme-toggle__label" id="theme-toggle-label">自動</span>
+            <span>表示テーマ</span>
+            <span id="theme-toggle-label">自動</span>
           </button>
+          <p>非公式ファンアーカイブ<br />動画・投稿の権利は各権利者に帰属します。</p>
+          <a href="https://github.com/hitsumabushi845/oishii-x-movie-stock" target="_blank" rel="noopener">GitHub</a>
         </div>
-      </div>
-      <nav class="tabs" id="tabs" aria-label="グループ"></nav>
-    </header>
+      </aside>
 
-    <section class="thesis">
-      <h1 class="thesis__line">
-        <span class="thesis__group" id="site-sub"></span>
-        <span class="thesis__rule" aria-hidden="true"></span>
-        <span class="thesis__runtime" id="stat-runtime"></span>
-      </h1>
-      <p class="colophon">
-        <span class="colophon__item" id="stat-count"></span>
-        <span class="colophon__item" id="stat-span"></span>
-        <a
-          class="colophon__item colophon__link"
-          id="site-link"
-          href="https://x.com/official_aimai"
-          target="_blank"
-          rel="noopener"
-          >@official_aimai</a
-        >
-      </p>
-    </section>
+      <main class="archive" id="archive" tabindex="-1">
+        <header class="archive-header">
+          <div class="archive-header__title">
+            <h1 id="site-sub">動画アーカイブ</h1>
+            <a id="site-link" href="https://x.com/official_aimai" target="_blank" rel="noopener">@official_aimai</a>
+          </div>
+          <p class="archive-header__description">公式Xに投稿されたライブ映像やメッセージを探す。</p>
+          <div class="archive-stats" aria-label="アーカイブ情報">
+            <span id="stat-count"></span>
+            <span id="stat-runtime"></span>
+            <span id="stat-span"></span>
+          </div>
+        </header>
 
-    <div class="toolbar">
-      <label class="field">
-        <span class="field__label">検索</span>
-        <input id="q" type="search" placeholder="ライブ名・会場・曲名で絞り込む" />
-      </label>
-      <div class="sort" role="group" aria-label="並び順">
-        <button data-sort="desc" class="active">新しい順</button>
-        <button data-sort="asc">古い順</button>
-      </div>
-      <label class="filter">
-        <input id="min-1m" type="checkbox" />
-        <span>1分以上のみ</span>
-      </label>
-      <div id="count" class="count"></div>
+        <section class="browse" aria-label="動画を探す">
+          <div class="toolbar">
+            <label class="field">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+              <span class="visually-hidden">動画を検索</span>
+              <input id="q" type="search" placeholder="ライブ名・会場・曲名で検索" autocomplete="off" />
+            </label>
+            <div class="toolbar__options">
+              <div class="sort" role="group" aria-label="並び順">
+                <button type="button" data-sort="desc" class="active" aria-pressed="true">新しい順</button>
+                <button type="button" data-sort="asc" aria-pressed="false">古い順</button>
+              </div>
+              <label class="filter">
+                <input id="min-1m" type="checkbox" />
+                <span>1分以上のみ</span>
+              </label>
+              <span id="count" class="count" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="results">
+            <div class="result-heading"><h2>投稿動画</h2><span>選ぶとXの動画が開きます</span></div>
+            <div id="status" class="status" role="status"><p>動画を読み込んでいます…</p></div>
+            <div id="list" class="list" aria-label="投稿動画一覧"></div>
+            <div id="sentinel" data-sentinel hidden><button id="load-more" type="button">さらに表示</button></div>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <span id="updated"></span>
+          <span class="site-footer__note">非公式ファンアーカイブ</span>
+          <span>制作: <a href="https://x.com/p2o_whisper" target="_blank" rel="noopener">@p2o_whisper</a></span>
+        </footer>
+        <noscript>動画の一覧と検索を利用するにはJavaScriptを有効にしてください。</noscript>
+      </main>
     </div>
-
-    <main id="list" class="list"></main>
-    <div id="sentinel" data-sentinel></div>
-
-    <footer class="site-footer">
-      <span id="updated"></span>
-      <span class="site-footer__sep" aria-hidden="true"></span>
-      <span
-        >制作:
-        <a href="https://x.com/p2o_whisper" target="_blank" rel="noopener"
-          >@p2o_whisper</a
-        ></span
-      >
-      <span class="site-footer__sep" aria-hidden="true"></span>
-      <a
-        href="https://github.com/hitsumabushi845/oishii-x-movie-stock"
-        target="_blank"
-        rel="noopener"
-        >GitHub</a
-      >
-    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

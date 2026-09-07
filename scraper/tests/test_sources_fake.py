@@ -296,3 +296,31 @@ def test_parse_rate_limit_headers_prefers_retry_after():
 
 def test_parse_rate_limit_headers_returns_none_when_absent():
     assert _parse_rate_limit_headers(httpx.Response(429)) is None
+
+
+@pytest.mark.asyncio
+async def test_search_uses_query_account_for_video_urls():
+    async with httpx.AsyncClient(transport=httpx.MockTransport(
+        lambda request: httpx.Response(200, json=SAMPLE_PAGE)
+    )) as client:
+        src = SocialDataSource("key", client=client)
+        result = await src.fetch("from:ofc_shokuzai has:videos -is:retweet")
+    assert result[0].url == "https://x.com/ofc_shokuzai/status/100"
+
+
+@pytest.mark.asyncio
+async def test_repeating_cursor_fails_without_returning_partial_archive():
+    calls = []
+
+    def handler(request):
+        calls.append(request.url.params.get("cursor"))
+        # The third response keeps a broken implementation from hanging the test.
+        if len(calls) > 2:
+            return httpx.Response(200, json={"tweets": []})
+        return httpx.Response(200, json={**SAMPLE_PAGE, "next_cursor": "repeated"})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        src = SocialDataSource("key", client=client, page_delay_sec=0)
+        with pytest.raises(RuntimeError, match="cursor"):
+            await src.fetch("q")
+    assert calls == [None, "repeated"]

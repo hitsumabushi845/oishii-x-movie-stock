@@ -1,22 +1,5 @@
 import type { Video } from "./types.js";
 
-/**
- * Longest runtime the duration meter can express. Clips run 8s–833s but the
- * median is under a minute, so a linear scale would leave almost every bar
- * empty. METER_GAMMA compresses the long tail and gives short clips a readable
- * length.
- */
-export const METER_CAP_SEC = 300;
-const METER_GAMMA = 0.6;
-
-/** The 1-minute mark, in meter-space — where the 「1分以上のみ」 filter cuts. */
-export const MIN_1M_RATIO = meterRatio(60);
-
-export function meterRatio(sec: number): number {
-  const clamped = Math.min(Math.max(sec, 0), METER_CAP_SEC);
-  return (clamped / METER_CAP_SEC) ** METER_GAMMA;
-}
-
 export type ArchiveStats = {
   count: number;
   hours: number;

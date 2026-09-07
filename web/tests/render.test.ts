@@ -26,31 +26,12 @@ describe("renderList", () => {
     expect(summary?.getAttribute("aria-expanded")).toBe("false");
   });
 
-  it("splits the date into a muted year and a prominent month.day", () => {
-    const list = document.getElementById("list") as HTMLElement;
-    renderList(list, [v("1", "2020-10-31T09:00:00Z")], { embed: vi.fn() });
-    expect(list.querySelector(".entry__year")?.textContent).toBe("2020");
-    expect(list.querySelector(".entry__day")?.textContent).toBe("10.31");
-  });
-
-  it("sizes the duration meter so a longer clip fills more of the track", () => {
-    const list = document.getElementById("list") as HTMLElement;
-    renderList(list, [v("short", "2026-04-01T00:00:00Z", 30), v("long", "2026-04-01T00:00:00Z", 240)], {
-      embed: vi.fn(),
-    });
-    const fills = Array.from(list.querySelectorAll<HTMLElement>(".meter__fill")).map((el) =>
-      parseFloat(el.style.getPropertyValue("--fill")),
-    );
-    expect(fills[0]).toBeGreaterThan(0);
-    expect(fills[1]).toBeGreaterThan(fills[0]!);
-    expect(fills[1]).toBeLessThanOrEqual(100);
-  });
-
-  it("caps the meter at the longest expressible runtime", () => {
-    const list = document.getElementById("list") as HTMLElement;
-    renderList(list, [v("1", "2026-04-01T00:00:00Z", 5000)], { embed: vi.fn() });
-    const fill = list.querySelector<HTMLElement>(".meter__fill")!;
-    expect(parseFloat(fill.style.getPropertyValue("--fill"))).toBe(100);
+  it("displays the post date and duration", () => {
+    const list = document.getElementById("list")!;
+    renderList(list, [v("1", "2020-10-31T09:00:00Z", 65)], { embed: vi.fn() });
+    expect(list.querySelector("time")?.dateTime).toBe("2020-10-31T09:00:00Z");
+    expect(list.querySelector("time")?.textContent).toBe("2020.10.31");
+    expect(list.querySelector(".entry__time")?.textContent).toBe("1:05");
   });
 
   it("expanding calls embed and marks the entry open", () => {
@@ -84,5 +65,30 @@ describe("replaceList", () => {
     replaceList(list, [v("2"), v("3")], { embed: vi.fn() });
     const ids = Array.from(list.querySelectorAll(".entry")).map((r) => r.getAttribute("data-id"));
     expect(ids).toEqual(["2", "3"]);
+  });
+});
+
+describe("list updates", () => {
+  it("keeps an open embed when the same video remains in the results", () => {
+    const list = document.getElementById("list")!;
+    renderList(list, [v("1"), v("2")], { embed: vi.fn() });
+    list.querySelector<HTMLButtonElement>(".entry__summary")!.click();
+    const entry = list.firstElementChild;
+    const host = entry!.querySelector(".embed-host");
+    replaceList(list, [v("1")], { embed: vi.fn() });
+    expect(list.firstElementChild).toBe(entry);
+    expect(list.querySelector(".embed-host")).toBe(host);
+  });
+  it("shows an X link when embedding fails and permits retry by reopening", async () => {
+    const list = document.getElementById("list")!;
+    const embed = vi.fn().mockRejectedValueOnce(new Error("offline")).mockResolvedValue(undefined);
+    renderList(list, [v("1")], { embed });
+    const button = list.querySelector<HTMLButtonElement>(".entry__summary")!;
+    button.click();
+    await vi.waitFor(() => expect(list.querySelector('[role="status"]')?.textContent).toContain("読み込めません"));
+    expect(list.querySelector("a")?.href).toBe("https://x.com/official_aimai/status/1");
+    button.click();
+    button.click();
+    expect(embed).toHaveBeenCalledTimes(2);
   });
 });

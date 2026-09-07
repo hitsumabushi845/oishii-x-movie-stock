@@ -102,3 +102,15 @@ describe("parseGroupsManifest", () => {
     expect(() => parseGroupsManifest(bad)).toThrow();
   });
 });
+
+describe("video field validation", () => {
+  const video = { id: "1", url: "https://x.com/a/status/1", posted_at: "2026-01-01T00:00:00Z", duration_sec: 30, text: "投稿", tags: [] };
+  const parse = (patch: Record<string, unknown>) => parseVideosFile({ generated_at: "2026-01-01T00:00:00Z", last_synced_at: "2026-01-01T00:00:00Z", source_query: "q", videos: [{ ...video, ...patch }] });
+  it.each([-1, NaN, Infinity, "30", 1.5])("rejects invalid duration %s before it enters filters and statistics", duration_sec => {
+    expect(() => parse({ duration_sec })).toThrow(/duration_sec/);
+  });
+  it("rejects non-array tags and invalid timestamps", () => {
+    expect(() => parse({ tags: "live" })).toThrow(/tags/);
+    expect(() => parse({ posted_at: "yesterday" })).toThrow(/posted_at/);
+  });
+});

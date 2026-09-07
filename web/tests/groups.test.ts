@@ -55,23 +55,6 @@ describe("applyGroupTheme", () => {
     expect(css).toContain('[data-theme="dark"][data-group="shokuzai"]');
     expect(css).toContain("#f7f9f9");
   });
-  it("inverts on-header accent for groups with colorDark so it reads on the inverted header", () => {
-    applyGroupTheme(doc as unknown as Document, GROUPS, "shokuzai");
-    const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
-    expect(css).toMatch(
-      /:root\[data-group="shokuzai"\][^}]*--group-accent-on-header:\s*#f7f9f9/,
-    );
-    expect(css).toMatch(
-      /\[data-theme="dark"\]\[data-group="shokuzai"\][^}]*--group-accent-on-header:\s*#1A1A1A/,
-    );
-  });
-  it("uses plain color for on-header accent when no colorDark is provided", () => {
-    applyGroupTheme(doc as unknown as Document, GROUPS, "aimai");
-    const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
-    expect(css).toMatch(
-      /:root\[data-group="aimai"\][^}]*--group-accent-on-header:\s*#bc2956/,
-    );
-  });
   it("picks dark accent text on light accents so the close button label stays legible", () => {
     applyGroupTheme(doc as unknown as Document, GROUPS, "shokuzai");
     const css = doc.querySelector('style[data-managed="groups"]')!.textContent ?? "";
@@ -118,4 +101,11 @@ describe("buildTabs", () => {
     const selected = nav.querySelector("button[aria-pressed='true']");
     expect((selected as HTMLButtonElement).getAttribute("data-group")).toBe("mizutama");
   });
+});
+
+it("uses dark text over the light blue group accent for legibility", () => {
+  applyGroupTheme(doc, GROUPS, "mizutama");
+  expect(doc.querySelector('style[data-managed="groups"]')!.textContent).toMatch(
+    /:root\[data-group="mizutama"\][^}]*--group-accent-fg:\s*#111111/,
+  );
 });

@@ -8,6 +8,7 @@ twitter.com date operators such as ``since_time:<unix>``.
 from __future__ import annotations
 
 import asyncio
+import re
 import time
 from datetime import datetime, timezone
 from typing import Any, Iterator
@@ -29,8 +30,8 @@ class SocialDataSource:
     """Fetch native videos via the SocialData ``twitter/search`` endpoint.
 
     The search query (typically ``from:{username} has:videos -is:retweet``) is
-    passed in by the caller. The username is kept here only to construct
-    canonical tweet URLs in the result; no user lookup is performed. When
+    passed in by the caller. Its from: account determines canonical tweet URLs;
+    the configured username is a fallback. No user lookup is performed. When
     ``since`` is given, a ``since_time:<unix>`` operator is appended to the
     query — SocialData has no dedicated start-time parameter.
     """
@@ -80,19 +81,25 @@ class SocialDataSource:
 
         out: list[FetchedVideo] = []
         cursor: str | None = None
+        seen_cursors: set[str] = set()
+        account = re.search(r"(?:^|\s)from:([A-Za-z0-9_]{1,15})(?=\s|$)", query)
+        username = account.group(1) if account else self._username
         while True:
             page_params = dict(base_params)
             if cursor:
                 page_params["cursor"] = cursor
             r = await self._get_with_retry(client, page_params)
             payload = r.json()
-            out.extend(_extract_videos(payload, self._username))
+            out.extend(_extract_videos(payload, username))
             cursor = payload.get("next_cursor")
             tweets = payload.get("tweets") or []
             # Stop when the API stops handing back a cursor, or when a page comes
             # back empty (a lingering cursor would otherwise loop forever).
             if not cursor or not tweets:
                 break
+            if cursor in seen_cursors:
+                raise RuntimeError("SocialData returned a repeated pagination cursor")
+            seen_cursors.add(cursor)
             # Sleep between pages to stay under the search rate limit.
             await asyncio.sleep(self._page_delay_sec)
         return out
@@ -151,10 +158,9 @@ def _extract_videos(payload: dict[str, Any], username: str) -> Iterator[FetchedV
     """
     tweets = payload.get("tweets") or []
     for tweet in tweets:
-        videos = [m for m in _media_list(tweet) if m.get("type") == "video"]
-        if not videos:
+        first = next((m for m in _media_list(tweet) if m.get("type") == "video"), None)
+        if first is None:
             continue
-        first = videos[0]
         duration_ms = int((first.get("video_info") or {}).get("duration_millis") or 0)
         tweet_id = str(tweet["id_str"])
         yield FetchedVideo(

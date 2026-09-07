@@ -6,9 +6,9 @@ Collects videos for the OISHII.inc groups defined in `data/groups.json` and writ
 
 [SocialData](https://docs.socialdata.tools) — `GET https://api.socialdata.tools/twitter/search` with `query=from:<x_handle> has:videos -is:retweet`. SocialData proxies the Twitter/X search and accepts the X API v2 operators: `has:videos` restricts to tweets containing video and `-is:retweet` drops retweets. We still inspect `extended_entities.media[].type` defensively before extracting `video_info.duration_millis`.
 
-Pagination follows `next_cursor` (passed back as `cursor`). Incremental runs append a `since_time:{last_synced_at}` operator to the query; backfill appends `since_time:2010-01-01` (via `BACKFILL_EPOCH`) to reach past the default recent-tweets window and get the full archive.
+Pagination follows `next_cursor` (passed back as `cursor`). Incremental runs append a `since_time:` operator with the Unix timestamp of `last_synced_at`; backfill uses the Unix timestamp of `BACKFILL_EPOCH` (2010-01-01) to reach past the default recent-tweets window and get the full archive.
 
-A 2-second sleep is inserted between paginated requests to stay under the search rate limit.
+A 2-second sleep is inserted between paginated requests to stay under the search rate limit. Repeated cursors raise an error so a looping response cannot consume credits indefinitely or be saved as a complete archive. Tweet URLs use the `from:` account in each query.
 
 ## Required environment
 
@@ -47,7 +47,7 @@ uv run python -m scraper --group aimai \
   --require-existing
 ```
 
-`--data-dir` resolves each group's `data_file` from the manifest entry, so output paths follow whatever the manifest says (currently `data/aimai.json` / `data/shokuzai.json` / `data/mizutama.json`).
+`--data-dir` resolves each group's `data_file` from the manifest entry, so output paths follow whatever the manifest says (currently `data/aimai.json` / `data/shokuzai.json` / `data/mizutama.json` / `data/oishii_inc.json`).
 
 ## Tests
 
