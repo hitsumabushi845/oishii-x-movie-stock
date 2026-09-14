@@ -1,12 +1,20 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-31T22:14:42Z",
-  "last_synced_at": "2026-08-27T12:01:24Z",
+  "generated_at": "2026-09-14T21:14:30Z",
+  "last_synced_at": "2026-09-09T12:58:49Z",
   "source_query": "from:ofc_shokuzai has:videos -is:retweet",
   "videos": [
     {
+      "id": "2097671065883603444",
+      "url": "https://x.com/ofc_shokuzai/status/2097671065883603444",
+      "posted_at": "2026-09-09T12:58:49Z",
+      "duration_sec": 299,
+      "text": "【🎥ライブ映像公開】\n2026.09.09(WED) Shibuya Milkyway\n「美味しいイベント」-美味しい贖罪・定期主催-の映像を一部公開！\n＃美味しい贖罪 https://t.co/pD3aqaDlYB",
+      "tags": []
+    },
+    {
       "id": "2092945571854389595",
-      "url": "https://x.com/official_aimai/status/2092945571854389595",
+      "url": "https://x.com/ofc_shokuzai/status/2092945571854389595",
       "posted_at": "2026-08-27T12:01:24Z",
       "duration_sec": 48,
       "text": "#美味しい贖罪\n2026/12/08(火)BLAZE GOTANDA\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\n\nオフィシャル抽選先行\n2026/08/30(日) 23:59まで🕯 https://t.co/ujgu3VBWB4",
