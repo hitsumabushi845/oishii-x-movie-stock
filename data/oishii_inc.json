@@ -1,9 +1,33 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-09-21T21:30:46Z",
-  "last_synced_at": "2026-08-21T13:14:53Z",
+  "generated_at": "2026-09-28T22:49:50Z",
+  "last_synced_at": "2026-09-27T13:53:15Z",
   "source_query": "from:oishii_inc has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2104207745872445560",
+      "url": "https://x.com/oishii_inc/status/2104207745872445560",
+      "posted_at": "2026-09-27T13:53:15Z",
+      "duration_sec": 310,
+      "text": "【🎥ライブ映像公開】\n2026.09.27(SUN)新宿MARZ\n「夢刊やよい」\n#およそやよい https://t.co/UHLK7HPq0g",
+      "tags": []
+    },
+    {
+      "id": "2103110250950009047",
+      "url": "https://x.com/oishii_inc/status/2103110250950009047",
+      "posted_at": "2026-09-24T13:12:12Z",
+      "duration_sec": 362,
+      "text": "【🎥ライブ映像公開】\n2026.09.24 (THU) Spotify O-Crest\nhttps://t.co/jlGY80u5XV Presents\n「美味しいイベント」-Family restaurant-\n#オイシイファミレス https://t.co/VOW9CLV9tH",
+      "tags": []
+    },
+    {
+      "id": "2102397184679530839",
+      "url": "https://x.com/oishii_inc/status/2102397184679530839",
+      "posted_at": "2026-09-22T13:58:44Z",
+      "duration_sec": 225,
+      "text": "【🎥ライブ映像公開】 2026.09.22(TUE) 新横浜Strage\n#およそやよい\nカイロプラクティック院ダイキチ Pre.\n『新横浜においでませ！SP！』より映像の一部をダイジェストで公開！ https://t.co/6WeThYZZqJ",
+      "tags": []
+    },
     {
       "id": "2090789737367998822",
       "url": "https://x.com/oishii_inc/status/2090789737367998822",
