@@ -1,12 +1,28 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-31T22:14:58Z",
-  "last_synced_at": "2026-08-31T13:09:10Z",
+  "generated_at": "2026-09-21T21:30:30Z",
+  "last_synced_at": "2026-09-20T11:00:40Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
     {
+      "id": "2101627599743250594",
+      "url": "https://x.com/oishii_mizutama/status/2101627599743250594",
+      "posted_at": "2026-09-20T11:00:40Z",
+      "duration_sec": 49,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track01「H6O」\nhttps://t.co/jQX4Kp50hs\n\n10/8のワンマンでも、\nもっともっと一緒に盛り上がりましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvRsf\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：詩雫らん",
+      "tags": []
+    },
+    {
+      "id": "2099124481726013811",
+      "url": "https://x.com/oishii_mizutama/status/2099124481726013811",
+      "posted_at": "2026-09-13T13:14:10Z",
+      "duration_sec": 177,
+      "text": "【🎥ライブ映像公開】\n2026.09.13(SUN) タワーレコード新宿店\n#美味しい水玉 「水玉なアルバム1」リリースイベントの映像を一部公開！\n\n💿次回のリリースイベントは9/17(木) 19:00〜\nanimate hall BLACK(アニメイト池袋本店 北館9F)\nhttps://t.co/sdqv8xnopd\n\nぜひご参加ください🫧 https://t.co/KFKlpbn4Vt",
+      "tags": []
+    },
+    {
       "id": "2094412179424661610",
-      "url": "https://x.com/official_aimai/status/2094412179424661610",
+      "url": "https://x.com/oishii_mizutama/status/2094412179424661610",
       "posted_at": "2026-08-31T13:09:10Z",
       "duration_sec": 292,
       "text": "【🎥ライブ映像公開】\n2026.08.31(MON) Shibuya Milkyway\n「美味しいイベント」-美味しい水玉・定期主催-の映像を一部公開！\n＃美味しい水玉 https://t.co/WOzwroCDAT",
