@@ -1,9 +1,25 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-09-21T21:30:30Z",
-  "last_synced_at": "2026-09-20T11:00:40Z",
+  "generated_at": "2026-09-28T22:49:34Z",
+  "last_synced_at": "2026-09-28T03:00:02Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2104405747073441902",
+      "url": "https://x.com/oishii_mizutama/status/2104405747073441902",
+      "posted_at": "2026-09-28T03:00:02Z",
+      "duration_sec": 43,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track05「Follow Bitter」\nhttps://t.co/02LuuacQcn\n\n10/8のワンマンで、一緒に声出しましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvRsf\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：癸音つきね",
+      "tags": []
+    },
+    {
+      "id": "2102956293430673509",
+      "url": "https://x.com/oishii_mizutama/status/2102956293430673509",
+      "posted_at": "2026-09-24T03:00:26Z",
+      "duration_sec": 62,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track06「パティパティ」\nhttps://t.co/jQX4Kp50hs\n\n10/8のワンマンで、一緒に踊りましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvRsf\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：湊ききょう",
+      "tags": []
+    },
     {
       "id": "2101627599743250594",
       "url": "https://x.com/oishii_mizutama/status/2101627599743250594",
