@@ -1,9 +1,89 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-09-21T21:30:30Z",
-  "last_synced_at": "2026-09-20T11:00:40Z",
+  "generated_at": "2026-10-05T23:32:30Z",
+  "last_synced_at": "2026-10-05T10:01:41Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2107048573078761917",
+      "url": "https://x.com/oishii_mizutama/status/2107048573078761917",
+      "posted_at": "2026-10-05T10:01:41Z",
+      "duration_sec": 125,
+      "text": "🎬 ワンマンまであと3日 🫧\n\n2026.10.08(木)\n美味しい水玉 ONEMAN LIVE\n📍Veats Shibuya\n\n🎧「ペトリコール」\n\n🎫 チケット発売中！\nhttps://t.co/45Sdv1YSv1\n\n#美味しい水玉 https://t.co/12vunqG2SC",
+      "tags": []
+    },
+    {
+      "id": "2106715972144971788",
+      "url": "https://x.com/oishii_mizutama/status/2106715972144971788",
+      "posted_at": "2026-10-04T12:00:03Z",
+      "duration_sec": 79,
+      "text": "🎬 ワンマンまであと4日🫧\n\n2026.10.08(木)\n美味しい水玉 ONEMAN LIVE\n📍Veats Shibuya\n\n🎧「灰かぶらない姫」\n\n🎫 チケット好評発売中！\nソールドアウト目指してます🔥\nhttps://t.co/45Sdv1YkFt\n\n#美味しい水玉 https://t.co/ptHwJ0nfU7",
+      "tags": []
+    },
+    {
+      "id": "2106701235919245657",
+      "url": "https://x.com/oishii_mizutama/status/2106701235919245657",
+      "posted_at": "2026-10-04T11:01:29Z",
+      "duration_sec": 74,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track07「she side」\nhttps://t.co/02LuuacimP\n\n10/8のワンマンで、一緒に叫びましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvjCH\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：渚咲そあ",
+      "tags": []
+    },
+    {
+      "id": "2106347845980991926",
+      "url": "https://x.com/oishii_mizutama/status/2106347845980991926",
+      "posted_at": "2026-10-03T11:37:15Z",
+      "duration_sec": 78,
+      "text": "🎬 ワンマンまであと5日🫧\n\n2026.10.08(木)\n美味しい水玉 ONEMAN LIVE\n📍Veats Shibuya\n\n🎧「徒然」\n\n🎫 チケット発売中！\nhttps://t.co/45Sdv1YSv1\n\n#美味しい水玉 https://t.co/eskCfLdbxD",
+      "tags": []
+    },
+    {
+      "id": "2106006294561784115",
+      "url": "https://x.com/oishii_mizutama/status/2106006294561784115",
+      "posted_at": "2026-10-02T13:00:02Z",
+      "duration_sec": 64,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track10「灰かぶらない姫」\nhttps://t.co/02LuuacimP\n\n10/8のワンマンで、一緒にクラップしましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvjCH\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：沙々那みお",
+      "tags": []
+    },
+    {
+      "id": "2105991875576713249",
+      "url": "https://x.com/oishii_mizutama/status/2105991875576713249",
+      "posted_at": "2026-10-02T12:02:45Z",
+      "duration_sec": 68,
+      "text": "🎬 ワンマンまであと6日 🫧\n\n2026.10.08(木)\n美味しい水玉 ONEMAN LIVE\n📍Veats Shibuya\n\n🎧「踊って？」\n\n🎫 チケット発売中！\nhttps://t.co/45Sdv1YSv1\n\n#美味しい水玉 https://t.co/G4yww6YC9Q",
+      "tags": []
+    },
+    {
+      "id": "2105598608573886487",
+      "url": "https://x.com/oishii_mizutama/status/2105598608573886487",
+      "posted_at": "2026-10-01T10:00:03Z",
+      "duration_sec": 89,
+      "text": "🎬 ワンマンまであと7日 🫧\n\n2026.10.08(木)\n美味しい水玉 ONEMAN LIVE\n📍Veats Shibuya\n\n今日からワンマン当日まで、\n毎日カウントダウン動画をお届けします❕\n\n一緒に10/8を楽しみにしていてください🫧\n\n🎫 チケット発売中！\nhttps://t.co/45Sdv1YSv1\n\n#美味しい水玉 https://t.co/2gZ7lLVfI9",
+      "tags": []
+    },
+    {
+      "id": "2104921015306580477",
+      "url": "https://x.com/oishii_mizutama/status/2104921015306580477",
+      "posted_at": "2026-09-29T13:07:32Z",
+      "duration_sec": 200,
+      "text": "【🎥ライブ映像公開】\n2026.09.29 (TUE) 新宿MARZ\n美味しいイベント -美味しい水玉 定期主催-\n#美味しい水玉 https://t.co/9MFoXrqRbS",
+      "tags": []
+    },
+    {
+      "id": "2104405747073441902",
+      "url": "https://x.com/oishii_mizutama/status/2104405747073441902",
+      "posted_at": "2026-09-28T03:00:02Z",
+      "duration_sec": 43,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track05「Follow Bitter」\nhttps://t.co/02LuuacQcn\n\n10/8のワンマンで、一緒に声出しましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvRsf\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：癸音つきね",
+      "tags": []
+    },
+    {
+      "id": "2102956293430673509",
+      "url": "https://x.com/oishii_mizutama/status/2102956293430673509",
+      "posted_at": "2026-09-24T03:00:26Z",
+      "duration_sec": 62,
+      "text": "【ライブを、メンバーが好きに盛り上がってみた🫧🎶】\n\n🎧Track06「パティパティ」\nhttps://t.co/jQX4Kp50hs\n\n10/8のワンマンで、一緒に踊りましょう❕🫧\n\n◤￣￣￣￣￣￣￣￣￣￣\n　2026.10.08(木)\n　Veats Shibuya\n＿＿＿＿＿＿＿＿＿＿◢\n\n🎫 チケット\nhttps://t.co/ZUIqdcvRsf\n\n手売りチケット ¥1,500も\nライブ物販にて販売中です！\n\n動画制作者：湊ききょう",
+      "tags": []
+    },
     {
       "id": "2101627599743250594",
       "url": "https://x.com/oishii_mizutama/status/2101627599743250594",
