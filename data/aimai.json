@@ -1,9 +1,41 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-08-22T02:43:16Z",
-  "last_synced_at": "2026-08-21T03:02:34Z",
+  "generated_at": "2026-10-26T22:07:57Z",
+  "last_synced_at": "2026-10-26T12:06:38Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2114690162433364169",
+      "url": "https://x.com/official_aimai/status/2114690162433364169",
+      "posted_at": "2026-10-26T12:06:38Z",
+      "duration_sec": 145,
+      "text": "「パレパレ」\n#美味しい曖昧ってなぁに https://t.co/Y6m2zGsYJv",
+      "tags": []
+    },
+    {
+      "id": "2114673555136979324",
+      "url": "https://x.com/official_aimai/status/2114673555136979324",
+      "posted_at": "2026-10-26T11:00:38Z",
+      "duration_sec": 39,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 7️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGaNSb\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/L0SpCJsC9l",
+      "tags": []
+    },
+    {
+      "id": "2114246981669490842",
+      "url": "https://x.com/official_aimai/status/2114246981669490842",
+      "posted_at": "2026-10-25T06:45:35Z",
+      "duration_sec": 104,
+      "text": "「幽体whisper」\n#美味しい曖昧ってなぁに https://t.co/XfrLKupKx4",
+      "tags": []
+    },
+    {
+      "id": "2113922464178978840",
+      "url": "https://x.com/official_aimai/status/2113922464178978840",
+      "posted_at": "2026-10-24T09:16:04Z",
+      "duration_sec": 78,
+      "text": "「毒針」\n#美味しい曖昧ってなぁに https://t.co/Wx3FPBsvZQ",
+      "tags": []
+    },
     {
       "id": "2090635645857497474",
       "url": "https://x.com/official_aimai/status/2090635645857497474",
