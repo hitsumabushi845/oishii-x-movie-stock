@@ -1,9 +1,65 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-10-26T22:07:57Z",
-  "last_synced_at": "2026-10-26T12:06:38Z",
+  "generated_at": "2026-11-03T00:14:39Z",
+  "last_synced_at": "2026-11-01T11:00:02Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2116847731440316462",
+      "url": "https://x.com/official_aimai/status/2116847731440316462",
+      "posted_at": "2026-11-01T11:00:02Z",
+      "duration_sec": 34,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 1️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\n全力で楽しみ、全力で魅せます。\nぜひ豊洲PITで見届けてください！！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGag2D\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/B1TMx9Y6aB",
+      "tags": []
+    },
+    {
+      "id": "2116779807669375054",
+      "url": "https://x.com/official_aimai/status/2116779807669375054",
+      "posted_at": "2026-11-01T06:30:08Z",
+      "duration_sec": 172,
+      "text": "「メアリ」\n#美味しい曖昧ってなぁに https://t.co/OOvhOo5tbc",
+      "tags": []
+    },
+    {
+      "id": "2116485333160538585",
+      "url": "https://x.com/official_aimai/status/2116485333160538585",
+      "posted_at": "2026-10-31T11:00:00Z",
+      "duration_sec": 24,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 2️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGaNSb\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/TmZI3nNX53",
+      "tags": []
+    },
+    {
+      "id": "2116122953356394678",
+      "url": "https://x.com/official_aimai/status/2116122953356394678",
+      "posted_at": "2026-10-30T11:00:02Z",
+      "duration_sec": 38,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 3️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGaNSb\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/QJmMWNGGL1",
+      "tags": []
+    },
+    {
+      "id": "2115760557487690019",
+      "url": "https://x.com/official_aimai/status/2115760557487690019",
+      "posted_at": "2026-10-29T11:00:00Z",
+      "duration_sec": 28,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 4️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGag2D\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/NCPgVYaV1s",
+      "tags": []
+    },
+    {
+      "id": "2115398181806600606",
+      "url": "https://x.com/official_aimai/status/2115398181806600606",
+      "posted_at": "2026-10-28T11:00:03Z",
+      "duration_sec": 37,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 5⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGag2D\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/xtuO2wGUPh",
+      "tags": []
+    },
+    {
+      "id": "2115035796847865964",
+      "url": "https://x.com/official_aimai/status/2115035796847865964",
+      "posted_at": "2026-10-27T11:00:04Z",
+      "duration_sec": 26,
+      "text": "· ───── ·✧· ───── · \n\n 𝑰𝑫𝑶𝑳 𝑩𝑨𝑻𝑻𝑳𝑬 𝑨𝑳𝑰𝑽𝑬 まで\n         🔥あと 6️⃣ 日🔥\n\n· ───── ·✧· ───── ·\n\nぜひ会場で、温かい応援を届けていただけたら嬉しいです！\n\n▼ 2026/11/02(月)豊洲PIT\nhttps://t.co/BzPKQGaNSb\n\n#美味しい曖昧\n#IDOLBATTLEALIVE https://t.co/msf6fSVLuz",
+      "tags": []
+    },
     {
       "id": "2114690162433364169",
       "url": "https://x.com/official_aimai/status/2114690162433364169",
