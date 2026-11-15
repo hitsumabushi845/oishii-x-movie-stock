@@ -1,9 +1,41 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-11-03T00:14:39Z",
-  "last_synced_at": "2026-11-01T11:00:02Z",
+  "generated_at": "2026-11-10T01:01:04Z",
+  "last_synced_at": "2026-11-09T11:00:04Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2119746842032226511",
+      "url": "https://x.com/official_aimai/status/2119746842032226511",
+      "posted_at": "2026-11-09T11:00:04Z",
+      "duration_sec": 75,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟕日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1guMH\n\n#美味しい曖昧 https://t.co/HaI1OURNjM",
+      "tags": []
+    },
+    {
+      "id": "2119405468473078261",
+      "url": "https://x.com/official_aimai/status/2119405468473078261",
+      "posted_at": "2026-11-08T12:23:34Z",
+      "duration_sec": 175,
+      "text": "「パフェクト」\n#美味しい曖昧ってなぁに https://t.co/R8nItaBtFj",
+      "tags": []
+    },
+    {
+      "id": "2118984894395359515",
+      "url": "https://x.com/official_aimai/status/2118984894395359515",
+      "posted_at": "2026-11-07T08:32:22Z",
+      "duration_sec": 197,
+      "text": "「綺麗事スコープ」\n#美味しい曖昧ってなぁに https://t.co/C6lBFf7zlm",
+      "tags": []
+    },
+    {
+      "id": "2118292941412409629",
+      "url": "https://x.com/official_aimai/status/2118292941412409629",
+      "posted_at": "2026-11-05T10:42:47Z",
+      "duration_sec": 219,
+      "text": "「メがンでドがクで」\n#美味しい曖昧ってなぁに https://t.co/CSuI82un2v",
+      "tags": []
+    },
     {
       "id": "2116847731440316462",
       "url": "https://x.com/official_aimai/status/2116847731440316462",

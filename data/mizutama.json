@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-10-13T00:00:19Z",
-  "last_synced_at": "2026-10-10T11:00:01Z",
+  "generated_at": "2026-11-10T01:01:34Z",
+  "last_synced_at": "2026-11-09T13:44:55Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2119788326861586831",
+      "url": "https://x.com/oishii_mizutama/status/2119788326861586831",
+      "posted_at": "2026-11-09T13:44:55Z",
+      "duration_sec": 125,
+      "text": "◤ 明日は、主催ライブ◢\n\n本日のライブ映像をお届け🫧\n是非お待ちしております！\n\n🎧ペトリコール\n\n🎟️ https://t.co/c7JBHzG4q5\nまだ間に合います！是非お待ちしております✨ https://t.co/nh1fmUNHMx",
+      "tags": []
+    },
     {
       "id": "2108875191426461859",
       "url": "https://x.com/oishii_mizutama/status/2108875191426461859",
