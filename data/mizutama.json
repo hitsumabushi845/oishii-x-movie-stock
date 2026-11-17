@@ -1,9 +1,17 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-11-10T01:01:34Z",
-  "last_synced_at": "2026-11-09T13:44:55Z",
+  "generated_at": "2026-11-17T01:22:32Z",
+  "last_synced_at": "2026-11-10T12:45:22Z",
   "source_query": "from:oishii_mizutama has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2120135729267544111",
+      "url": "https://x.com/oishii_mizutama/status/2120135729267544111",
+      "posted_at": "2026-11-10T12:45:22Z",
+      "duration_sec": 213,
+      "text": "◤ 新曲初披露から約1ヶ月◢\n\nちょっと成長した姿をお届けします！\n\n🎧ちょっとほっといて。 https://t.co/JAxYgGeEv6",
+      "tags": []
+    },
     {
       "id": "2119788326861586831",
       "url": "https://x.com/oishii_mizutama/status/2119788326861586831",
