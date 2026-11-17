@@ -1,9 +1,65 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-11-10T01:01:04Z",
-  "last_synced_at": "2026-11-09T11:00:04Z",
+  "generated_at": "2026-11-17T01:21:59Z",
+  "last_synced_at": "2026-11-16T12:31:16Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2122306508155482395",
+      "url": "https://x.com/official_aimai/status/2122306508155482395",
+      "posted_at": "2026-11-16T12:31:16Z",
+      "duration_sec": 200,
+      "text": "【🎥ライブ映像公開】\n2026.11.16(MON) Spotify O-WESTより ついに全貌が明らかになった「ジェネリ」、そして！本日初披露の「EXP」の映像をフルで公開！\n#美味しい曖昧ってなぁに https://t.co/cVNEBILL60",
+      "tags": []
+    },
+    {
+      "id": "2121921166356947085",
+      "url": "https://x.com/official_aimai/status/2121921166356947085",
+      "posted_at": "2026-11-15T11:00:04Z",
+      "duration_sec": 169,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟏日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1guMH\n\n#美味しい曖昧 https://t.co/K2WeMSn6mA",
+      "tags": []
+    },
+    {
+      "id": "2121573864715010343",
+      "url": "https://x.com/official_aimai/status/2121573864715010343",
+      "posted_at": "2026-11-14T12:00:00Z",
+      "duration_sec": 91,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟐日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1guMH\n\n#美味しい曖昧 https://t.co/yUOSh4o8b1",
+      "tags": []
+    },
+    {
+      "id": "2121196388835033434",
+      "url": "https://x.com/official_aimai/status/2121196388835033434",
+      "posted_at": "2026-11-13T11:00:03Z",
+      "duration_sec": 63,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟑日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1h2Cf\n\n#美味しい曖昧 https://t.co/xlkg2ItWYW",
+      "tags": []
+    },
+    {
+      "id": "2120864186544631918",
+      "url": "https://x.com/official_aimai/status/2120864186544631918",
+      "posted_at": "2026-11-12T13:00:00Z",
+      "duration_sec": 56,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟒日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1guMH\n\n#美味しい曖昧 https://t.co/AytV26tGti",
+      "tags": []
+    },
+    {
+      "id": "2120471601166622767",
+      "url": "https://x.com/official_aimai/status/2120471601166622767",
+      "posted_at": "2026-11-11T11:00:00Z",
+      "duration_sec": 63,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟓日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1guMH\n\n#美味しい曖昧 https://t.co/LfTUhuZbLj",
+      "tags": []
+    },
+    {
+      "id": "2120109217717916041",
+      "url": "https://x.com/official_aimai/status/2120109217717916041",
+      "posted_at": "2026-11-10T11:00:01Z",
+      "duration_sec": 87,
+      "text": "⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n　　　　 𝟐𝟎𝟐𝟔.𝟏𝟏.𝟏𝟔(𝐦𝐨𝐧)\n               𝐒𝐩𝐨𝐭𝐢𝐟𝐲 𝐎-𝐖𝐄𝐒𝐓\n          「曖昧なワンマン9」まで\n　　　　　  ✦ あと𝟔日 ✦\n\n⋆｡˚ ✧ ˚｡⋆ ━━━━━━━ ⋆｡˚ ✧ ˚｡⋆\n\n🎫 https://t.co/biNss1h2Cf\n\n#美味しい曖昧 https://t.co/ClGPbWNOjl",
+      "tags": []
+    },
     {
       "id": "2119746842032226511",
       "url": "https://x.com/official_aimai/status/2119746842032226511",
