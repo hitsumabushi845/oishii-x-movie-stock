@@ -1,6 +1,6 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-11-22T05:10:06Z",
+  "generated_at": "2026-11-24T03:41:08Z",
   "last_synced_at": "2026-10-21T13:29:58Z",
   "source_query": "from:oishii_inc has:videos -is:retweet",
   "videos": [
@@ -8,8 +8,8 @@
       "id": "2112899195690696943",
       "url": "https://x.com/oishii_inc/status/2112899195690696943",
       "posted_at": "2026-10-21T13:29:58Z",
-      "duration_sec": 0,
-      "text": "【🎥ライブ映像公開】\n2026.10.21 (WED) Spotify O-Crest\nhttps://OISHII.inc Presents\n「美味しいイベント」-Family restaurant-\n#オイシイファミレス https://t.co/UsZ6Xlsm3V",
+      "duration_sec": 325,
+      "text": "【🎥ライブ映像公開】\n2026.10.21 (WED) Spotify O-Crest\nhttps://t.co/jlGY80u5XV Presents\n「美味しいイベント」-Family restaurant-\n#オイシイファミレス https://t.co/UsZ6Xlsm3V",
       "tags": []
     },
     {

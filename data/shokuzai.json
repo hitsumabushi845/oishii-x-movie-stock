@@ -1,9 +1,57 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-10-19T21:53:59Z",
-  "last_synced_at": "2026-10-13T13:05:05Z",
+  "generated_at": "2026-11-24T03:40:33Z",
+  "last_synced_at": "2026-11-23T11:00:02Z",
   "source_query": "from:ofc_shokuzai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2124820262403367092",
+      "url": "https://x.com/ofc_shokuzai/status/2124820262403367092",
+      "posted_at": "2026-11-23T11:00:02Z",
+      "duration_sec": 92,
+      "text": "༺†━━━━━━━━━†༻\n              「L'Oeil」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと15日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/P24waO2P2X",
+      "tags": []
+    },
+    {
+      "id": "2124457866153402626",
+      "url": "https://x.com/ofc_shokuzai/status/2124457866153402626",
+      "posted_at": "2026-11-22T11:00:00Z",
+      "duration_sec": 106,
+      "text": "༺†━━━━━━━━━†༻\n              「MOSAIQ」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと16日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/tgviSkdeL1",
+      "tags": []
+    },
+    {
+      "id": "2124095478426189842",
+      "url": "https://x.com/ofc_shokuzai/status/2124095478426189842",
+      "posted_at": "2026-11-21T11:00:00Z",
+      "duration_sec": 66,
+      "text": "༺†━━━━━━━━━†༻\n                 「罰罰」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと17日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/2UAQZa2GEZ",
+      "tags": []
+    },
+    {
+      "id": "2123733095920845026",
+      "url": "https://x.com/ofc_shokuzai/status/2123733095920845026",
+      "posted_at": "2026-11-20T11:00:01Z",
+      "duration_sec": 83,
+      "text": "༺†━━━━━━━━━†༻\n          「ネロルロロル」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと18日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/6FMEv8NUXo",
+      "tags": []
+    },
+    {
+      "id": "2123370717873901844",
+      "url": "https://x.com/ofc_shokuzai/status/2123370717873901844",
+      "posted_at": "2026-11-19T11:00:04Z",
+      "duration_sec": 95,
+      "text": "༺†━━━━━━━━━†༻\n             「赦してよ。」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと19日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/E9OUCjrrvb",
+      "tags": []
+    },
+    {
+      "id": "2123008329027059843",
+      "url": "https://x.com/ofc_shokuzai/status/2123008329027059843",
+      "posted_at": "2026-11-18T11:00:03Z",
+      "duration_sec": 75,
+      "text": "༺†━━━━━━━━━†༻\n            「シカクと詭弁」\n༺†━━━━━━━━━†༻\n\n🕯1周年ワンマンまであと20日🕯\n\n𝟐𝟎𝟐𝟔.𝟏𝟐.𝟎𝟖 𝐓𝐔𝐄\n𝐚𝐭 𝐁𝐋𝐀𝐙𝐄 𝐆𝐎𝐓𝐀𝐍𝐃𝐀\n贖罪なワンマン2 -新約と洗礼、祝祭の黙示録-\nhttps://l-tike.com/artist/000000001036930/\n\n#美味しい贖罪\n#美味しい贖罪のすすめ https://t.co/Yo0k9ABg9F",
+      "tags": []
+    },
     {
       "id": "2109993830561071514",
       "url": "https://x.com/ofc_shokuzai/status/2109993830561071514",
