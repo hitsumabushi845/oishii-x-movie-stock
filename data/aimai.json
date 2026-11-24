@@ -1,9 +1,41 @@
 {
   "$schema": "../schema/videos.schema.json",
-  "generated_at": "2026-11-17T01:21:59Z",
-  "last_synced_at": "2026-11-16T12:31:16Z",
+  "generated_at": "2026-11-24T03:40:22Z",
+  "last_synced_at": "2026-11-23T14:48:03Z",
   "source_query": "from:official_aimai has:videos -is:retweet",
   "videos": [
+    {
+      "id": "2124877643841704114",
+      "url": "https://x.com/official_aimai/status/2124877643841704114",
+      "posted_at": "2026-11-23T14:48:03Z",
+      "duration_sec": 161,
+      "text": "「メアリ」\n#美味しい曖昧ってなぁに https://t.co/XDY4DUEWqU",
+      "tags": []
+    },
+    {
+      "id": "2124120080179229071",
+      "url": "https://x.com/official_aimai/status/2124120080179229071",
+      "posted_at": "2026-11-21T12:37:46Z",
+      "duration_sec": 161,
+      "text": "「ナチュラルアレルギー」\n#美味しい曖昧ってなぁに https://t.co/KIpeXzePnT",
+      "tags": []
+    },
+    {
+      "id": "2123718003539751029",
+      "url": "https://x.com/official_aimai/status/2123718003539751029",
+      "posted_at": "2026-11-20T10:00:03Z",
+      "duration_sec": 36,
+      "text": "#美味しい曖昧ってなぁに https://t.co/1AlxHP8C2D",
+      "tags": []
+    },
+    {
+      "id": "2122661042153255011",
+      "url": "https://x.com/official_aimai/status/2122661042153255011",
+      "posted_at": "2026-11-17T12:00:04Z",
+      "duration_sec": 28,
+      "text": "#美味しい曖昧ってなぁに https://t.co/NbLW96BQKZ",
+      "tags": []
+    },
     {
       "id": "2122306508155482395",
       "url": "https://x.com/official_aimai/status/2122306508155482395",
